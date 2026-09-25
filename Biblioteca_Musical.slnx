@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Consola/Consola.csproj" Id="1b63ba90-d83d-47f7-aa57-a1aea52c6516" />
+  <Project Path="Libreria/Libreria.csproj" Id="3a7570d4-dc06-4e06-b960-cf0d10019002" />
+  <Project Path="Pruebas_Unitarias/Pruebas_Unitarias.csproj" Id="b56f2835-3a4b-4825-aac0-f9a6517c222c" />
+</Solution>
