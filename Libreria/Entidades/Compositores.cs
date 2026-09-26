@@ -11,5 +11,7 @@ namespace Libreria.Entidades
         public string? Apellido { get; set; }
         public string? Nacionalidad { get; set; }
         public DateTime? Fecha_Nacimiento { get; set; }
+
+        public List<Canciones_Compositores>? Canciones_Compositores { get; set; }
     }
 }

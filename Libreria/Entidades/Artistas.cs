@@ -13,5 +13,6 @@ namespace Libreria.Entidades
         public string? Biografia { get; set; }
 
         public List<Artistas_Sellos>? Artistas_Sellos { get; set; }
+        public List<Albumes_Artistas>? Albumes_Artistas { get; set; }
     }
 }
