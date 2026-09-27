@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Libreria.Entidades
 {
-    internal class Albumes
+    public class Albumes
     {
         public int Id { get; set; }
         public string? Titulo { get; set; }

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Libreria.Entidades
 {
-    internal class Canciones
+    public class Canciones
     {
         public int Id { get; set; }
         public string? Titulo { get; set; }
         public TimeSpan Duracion { get; set; }
         public int Numero_Pista { get; set; }
-        public int Id_Album { get; set; }
+        public int Album { get; set; }
 
         [ForeignKey("Album")] public Albumes? _Album { get; set; }
 

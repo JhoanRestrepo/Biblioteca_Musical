@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Libreria.Entidades
 {
-    internal class Artistas_Sellos
+    public class Artistas_Sellos
     {
         public int Id { get; set; }
-        public int Id_Artista { get; set; }
-        public int Id_Sello { get; set; }
+        public int Artista { get; set; }
+        public int Sello_Discografico { get; set; }
         public DateTime? Fecha_Inicio { get; set; }
         public DateTime? Fecha_Fin { get; set; }
         public string? Contrato { get; set; }

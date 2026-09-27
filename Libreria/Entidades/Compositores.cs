@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Libreria.Entidades
 {
-    internal class Compositores
+    public class Compositores
     {
         public int Id { get; set; }
         public string? Nombre { get; set; }
