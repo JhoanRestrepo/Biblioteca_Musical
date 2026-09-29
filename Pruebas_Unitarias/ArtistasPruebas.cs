@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Pruebas_Unitarias
 {
     [TestClass]
-    public sealed class AlbumesPruebas
+    public sealed class ArtistasPruebas
     {
         private IConexion conexion;
-        private Albumes? entidad = null;
+        private Artistas? entidad = null;
 
-        public AlbumesPruebas()
+        public ArtistasPruebas()
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,36 @@ namespace Pruebas_Unitarias
 
         public void Insertar()
         {
-            this.entidad = new Albumes()
+            this.entidad = new Artistas()
             {
-                Titulo = "Servicios Ambulatorioz",
-                Fecha_Lanzamiento = DateTime.Now,
-                Portada = "Servicios Ambulatorioz.JPG",
+                Nombre = "Test",
+                Nacionalidad = "Test",
+                Fecha_Inicio = DateTime.Now,
+                Biografia = "Test"
             };
-            this.conexion.Albumes!.Add(this.entidad!);
+            this.conexion.Artistas!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista = this.conexion.Albumes!.ToList();
+            var lista = this.conexion.Artistas!.ToList();
             if (lista.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Titulo = "Aranjuez";
+            this.entidad!.Nombre = "Test.2";
 
-            var entry = this.conexion!.Entry<Albumes>(this.entidad);
+            var entry = this.conexion!.Entry<Artistas>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Albumes!.Remove(this.entidad!);
+            this.conexion.Artistas!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

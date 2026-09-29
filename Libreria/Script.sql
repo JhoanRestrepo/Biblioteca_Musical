@@ -15,7 +15,7 @@ CREATE TABLE [Usuarios] (
 CREATE TABLE [Artistas] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(150) NULL,
-    [Pais] NVARCHAR(100) NULL,
+    [Nacionalidad] NVARCHAR(100) NULL,
     [Fecha_Inicio] SMALLDATETIME NOT NULL,
     [Biografia] NVARCHAR(MAX) NULL
 );
@@ -26,4 +26,13 @@ CREATE TABLE [Albumes] (
     [Titulo] NVARCHAR(150) NULL,
     [Fecha_Lanzamiento] SMALLDATETIME NOT NULL,
     [Portada] NVARCHAR(255) NULL
+);
+
+-- 4. Albumnes_Artistas
+CREATE TABLE [Albumes_Artistas] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Artista] INT NOT NULL,
+    [Album] INT NOT NULL,
+    FOREIGN KEY ([Artista]) REFERENCES [Artistas]([Id]),
+    FOREIGN KEY ([Album]) REFERENCES [Albumes]([Id])
 );

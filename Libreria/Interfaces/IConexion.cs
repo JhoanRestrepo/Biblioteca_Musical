@@ -11,9 +11,9 @@ namespace Libreria.Interfaces
     {
         string? StringConexion { get; set; }
 
+        DbSet<Artistas>? Artistas { get; set; }
         DbSet<Albumes>? Albumes { get; set; }
-        //DbSet<Albumes_Artistas>? Albumes_Artistas { get; set; }
-        //DbSet<Artistas>? Artistas { get; set; }
+        DbSet<Albumes_Artistas>? Albumes_Artistas { get; set; }
         //DbSet<Artistas_Sellos>? Artistas_Sellos { get; set; }
         //DbSet<Canciones>? Canciones { get; set; }
         //DbSet<Canciones_Compositores>? Canciones_Compositores { get; set; }
@@ -24,8 +24,6 @@ namespace Libreria.Interfaces
         //DbSet<Idiomas>? Idiomas { get; set; }
         //DbSet<Sellos_Discograficos> Sellos_Discograficos { get; set; }
         //DbSet<Usuarios>? Usuarios { get; set; }
-
-
 
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();
