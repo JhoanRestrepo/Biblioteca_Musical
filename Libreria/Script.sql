@@ -37,7 +37,7 @@ CREATE TABLE [Albumes_Artistas] (
     FOREIGN KEY ([Album]) REFERENCES [Albumes]([Id])
 );
 
-CREATE TABLE Artistas_Sellos
+--CREATE TABLE Artistas_Sellos0
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Artista INT NOT NULL,
