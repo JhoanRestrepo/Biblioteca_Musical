@@ -17,5 +17,8 @@ namespace Libreria.Implementaciones
         public DbSet<Artistas>? Artistas { get; set; }
         public DbSet<Albumes>? Albumes { get; set; }
         public DbSet<Albumes_Artistas>? Albumes_Artistas { get; set; }
+        public DbSet<Artistas_Sellos>? Artistas_Sellos { get; set; }
+        //public DbSet<Canciones>? Canciones { get; set; }
+        public DbSet<Canciones_Compositores>? Canciones_Compositores { get; set; }
     }
 }
