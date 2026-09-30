@@ -188,52 +188,54 @@ CREATE TABLE [Fav_Canciones] (
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
 
-    CONSTRAINT FK_Canciones_Generos_Genero
-        FOREIGN KEY (Genero)
-        REFERENCES Generos(Id)
+-- 20. Reproducciones
+CREATE TABLE [Reproducciones] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Usuario] INT NOT NULL,
+    [cancion] INT NOT NULL,
+    [fecha_hora] DATETIME2 NULL,
+    [duracion] TIME NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id]),
+    FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
 
-CREATE TABLE Canciones_Idiomas
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Cancion INT NOT NULL,
-    Idioma INT NOT NULL,
-    Idioma_Principal VARCHAR(255) NULL,
-    Porcentaje_Idioma FLOAT NULL,
-    Fecha_Registro DATETIME NULL,
+-- Datos iniciales para que las pruebas tengan registros relacionados
+-- 1. Usuarios
+INSERT INTO [Usuarios] ([Nombre], [Apellido], [Correo], [Fecha_registro])
+VALUES
+('Ana', 'Gómez', 'ana@example.com', 2026-09-29),
+('Luis', 'Pérez', 'luis@example.com', 2026-09-29),
+('María', 'Rodríguez', 'maria@example.com', 2026-09-29);
 
-    CONSTRAINT FK_Canciones_Idiomas_Cancion
-        FOREIGN KEY (Cancion)
-        REFERENCES Canciones(Id),
+-- 2. Artistas
+INSERT INTO [Artistas] ([Nombre], [Nacionalidad], [Fecha_Inicio], [Biografia])
+VALUES
+('Michael Jackson', 'Estadounidense', 1964-01-01, 'Cantante y bailarín.'),
+('Ryan Castro', 'Colombiano', 2017-01-01, 'Cantante colombiano.'),
+('Shakira', 'Colombiana', 1990-01-01, 'Cantante y compositora.');
 
-    CONSTRAINT FK_Canciones_Idiomas_Idioma
-        FOREIGN KEY (Idioma)
-        REFERENCES Idiomas(Id)
-);
+-- 3. Compositores
+INSERT INTO [Compositores]
+    ([Nombre], [Apellido], [Nacionalidad], [Fecha_Nacimiento])
+VALUES
+('Juan Luis', 'Guerra', 'Dominicana', 1957-06-07),
+('Shakira', 'Mebarak', 'Colombiana', 1977-02-02),
+('Rafael', 'Escalona', 'Colombiana', 1927-05-26);
 
-CREATE TABLE Compositores
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre VARCHAR(100) NULL,
-    Apellido VARCHAR(100) NULL,
-    Nacionalidad VARCHAR(100) NULL,
-    Fecha_Nacimiento DATETIME NULL
-);
+-- 4. Sellos discográficos
+INSERT INTO [Sellos_Discograficos]
+    ([Nombre], [Pais], [Fecha_Fundacion], [Sitio_Web])
+VALUES
+('Sony Music', 'Estados Unidos', 1929-09-01, 'https://www.sonymusic.com'),
+('Universal Music Group', 'Estados Unidos', 1934-09-01, 'https://www.universalmusic.com'),
+('Warner Music Group', 'Estados Unidos', 1958-03-19, 'https://www.wmg.com');
 
-CREATE TABLE Fav_Canciones
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Id_Favorito INT NOT NULL,
-    Id_Cancion INT NOT NULL,
-
-    CONSTRAINT FK_Fav_Canciones_Favorito
-        FOREIGN KEY (Id_Favorito)
-        REFERENCES Favoritos(Id),
-
-    CONSTRAINT FK_Fav_Canciones_Cancion
-        FOREIGN KEY (Id_Cancion)
-        REFERENCES Canciones(Id)
-);
+-- 5. Álbumes
+INSERT INTO [Albumes] ([Titulo], [Fecha_Lanzamiento], [Portada])
+VALUES
+('Thriller', 1982-11-30, 'thriller.jpg'),
+('Bad', 1987-08-31, 'bad.jpg'),
+('Dangerous', 1991-11-26, 'dangerous.jpg');
 
 -- 6. Géneros
 INSERT INTO [Generos] ([Nombre], [Descripcion], [popularidad])
@@ -264,41 +266,52 @@ VALUES
 (2, 2),
 (3, 3);
 
-CREATE TABLE Listas_Reproducciones
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre VARCHAR(100) NULL,
-    Fecha_Creacion DATETIME NULL,
-    Privacidad VARCHAR(50) NULL,
-    Id_Usuario INT NOT NULL,
+-- 10. Artistas y sellos discográficos
+INSERT INTO [Artistas_Sellos]
+    ([Artista], [Sello_Discografico], [Fecha_Inicio], [Fecha_Fin], [Contrato])
+VALUES
+(1, 1, 2020-01-01, NULL, 'Contrato exclusivo'),
+(2, 2, 2022-06-15, NULL, 'Contrato de grabación'),
+(3, 3, 2019-03-10, 2024-03-10, 'Contrato finalizado');
 
-    CONSTRAINT FK_Listas_Reproducciones_Usuario
-        FOREIGN KEY (Id_Usuario)
-        REFERENCES Usuarios(Id)
-);
+-- 11. Canciones y compositores
+INSERT INTO [Canciones_Compositores]
+    ([Cancion], [Compositor], [Porcentaje_Autoria], [Fecha_Registro])
+VALUES
+(1, 1, 100.00, 2026-09-29),
+(2, 2, 100.00, 2026-09-29),
+(3, 3, 100.00, 2026-09-29);
 
-CREATE TABLE LR_Canciones
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Id_Listas_Reproduccion INT NOT NULL,
-    Id_Cancion INT NOT NULL,
+-- 12. Canciones y géneros
+INSERT INTO [Canciones_Generos] ([Cancion], [Genero], [Principal])
+VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1);
 
-    CONSTRAINT FK_LR_Canciones_Lista_Reproduccion
-        FOREIGN KEY (Id_Listas_Reproduccion)
-        REFERENCES Listas_Reproducciones(Id),
+-- 13. Canciones e idiomas
+INSERT INTO [Canciones_Idiomas]
+    ([Cancion], [Idioma], [Idioma_Principal], [Porcentaje], [Fecha_Registro])
+VALUES
+(1, 1, 'Español', 100.00, 2026-09-29),
+(2, 2, 'Inglés', 100.00, 2026-09-29),
+(3, 3, 'Francés', 100.00, 2026-09-29);
 
-    CONSTRAINT FK_LR_Canciones_Cancion
-        FOREIGN KEY (Id_Cancion)
-        REFERENCES Canciones(Id)
-);
+-- 14. Suscripciones
+INSERT INTO [Suscripciones]
+    ([Usuario], [tipo_plan], [fecha_inicio], [fecha_fin])
+VALUES
+(1, 'Premium', 2026-09-01, 2026-10-01),
+(2, 'Gratis', 2026-09-15, NULL),
+(3, 'Familiar', 2026-09-20, 2026-12-20);
 
-CREATE TABLE Reproducciones
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Id_Usuario INT NOT NULL,
-    Id_Cancion INT NOT NULL,
-    Fecha_Hora DATETIME NULL,
-    Duracion TIME NULL,
+-- 15. Listas de reproducción
+INSERT INTO [Listas_Reproducciones]
+    ([nombre], [fecha_creacion], [privacidad], [usuario])
+VALUES
+('Favoritas para estudiar', 2026-09-29, 'Privada', 1),
+('Música para entrenar', 2026-09-29, 'Pública', 2),
+('Clásicos', 2026-09-29, 'Privada', 3);
 
 -- 16. Listas y canciones (LR_Canciones)
 INSERT INTO [LR_Canciones] ([Listas_reproduccion], [Cancion])
@@ -307,19 +320,20 @@ VALUES
 (2, 2),
 (3, 3);
 
-    CONSTRAINT FK_Reproducciones_Cancion
-        FOREIGN KEY (Id_Cancion)
-        REFERENCES Canciones(Id)
-);
+-- 17. Listas y canciones con posición
+INSERT INTO [Listas_Canciones]
+    ([Lista_reproduccion], [Cancion], [posicion], [fecha_agregada], [favorita])
+VALUES
+(1, 1, 1, 2026-09-29, 1),
+(2, 2, 1, 2026-09-29, 0),
+(3, 3, 1, 2026-09-29, 1);
 
-CREATE TABLE Sellos_Discograficos
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre VARCHAR(150) NULL,
-    Pais VARCHAR(100) NULL,
-    Fecha_Fundacion DATETIME NULL,
-    Sitio_Web VARCHAR(255) NULL
-);
+-- 18. Favoritos
+INSERT INTO [Favoritos] ([Usuario], [fecha_marcado], [activo])
+VALUES
+(1, 2026-09-29, 1),
+(2, 2026-09-29, 1),
+(3, 2026-09-29, 1);
 
 -- 19. Canciones guardadas en favoritos
 INSERT INTO [Fav_Canciones] ([Favorito], [Cancion])
