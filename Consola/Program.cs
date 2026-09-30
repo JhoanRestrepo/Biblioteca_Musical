@@ -1,1 +1,16 @@
-﻿Console.WriteLine("Hello, World!");
+﻿using Libreria.Implementaciones;
+using Libreria.Interfaces;
+
+try
+{
+    IConexion conexion = new Conexion();
+    conexion.StringConexion = "server=localhost;database=BibliotecaMusical;Integrated Security=True;TrustServerCertificate=true;";
+    var lista_albumes = conexion.Albumes!.ToList();
+    
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.ToString());
+}
+
+Console.WriteLine("presentacion_consola");

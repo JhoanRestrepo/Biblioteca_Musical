@@ -15,7 +15,7 @@ namespace Pruebas_Unitarias
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            this.conexion.StringConexion = "server=localhost;database=Biblioteca_Musical_db;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost;database=BibliotecaMusical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -48,7 +48,8 @@ namespace Pruebas_Unitarias
 
         private void Actualizar()
         {
-            this.entidad!.Titulo = "Servicios Ambulatorioz";
+            this.entidad!.Titulo = "Aranjuez";
+            this.entidad!.Portada = "Aranjuez.JPG";
 
             var entry = this.conexion!.Entry<Albumes>(this.entidad);
             entry.State = EntityState.Modified;
