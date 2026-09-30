@@ -17,7 +17,7 @@ namespace Libreria.Interfaces
         DbSet<Artistas>? Artistas { get; set; }
         //DbSet<Artistas_Sellos>? Artistas_Sellos { get; set; }
         //DbSet<Canciones>? Canciones { get; set; }
-        //DbSet<Canciones_Compositores>? Canciones_Compositores { get; set; }
+        DbSet<Canciones_Compositores>? Canciones_Compositores { get; set; }
         //DbSet<Canciones_Generos>? Canciones_Generos { get; set; }
         //DbSet<Canciones_Idiomas>? Canciones_Idiomas { get; set; }
         //DbSet<Compositores>? Compositores { get; set; }
