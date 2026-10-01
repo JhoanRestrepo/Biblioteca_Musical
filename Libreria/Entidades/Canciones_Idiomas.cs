@@ -11,7 +11,7 @@ namespace Libreria.Entidades
         public int Cancion { get; set; }
         public int Idioma { get; set; }
         public string? Idioma_Principal { get; set; }
-        public float? Porcentaje_Idioma { get; set; }
+        public decimal? Porcentaje { get; set; }
         public DateTime? Fecha_Registro { get; set; }
 
         [ForeignKey("Cancion")] public Canciones? _Cancion { get; set; }
