@@ -11,9 +11,9 @@ namespace Libreria.Entidades
         public int Cancion { get; set; }
         public int Posicion { get; set; }
         public DateTime Fecha_Agregada { get; set; } 
-        //public int Favorita { get; set; } //bool?
+        public int Favorita { get; set; } 
 
         [ForeignKey("Cancion")] public Canciones? _Cancion { get; set; }
-        //[ForeignKey("Favorita")] public Favoritas? _Favorita { get; set; }
+        [ForeignKey("Favorita")] public Favoritos? _Favorita { get; set; }
     }
 }

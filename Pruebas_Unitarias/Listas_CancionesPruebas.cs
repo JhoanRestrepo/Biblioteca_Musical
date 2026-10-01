@@ -2,19 +2,23 @@
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Pruebas_Unitarias
 {
     [TestClass]
-    public sealed class Artistas_SellosPruebas
+    public sealed class Listas_CancionesPruebas
     {
         private IConexion conexion;
-        private Artistas_Sellos? entidad = null;
+        private Listas_Canciones? entidad = null;
 
-        public Artistas_SellosPruebas()
+        public Listas_CancionesPruebas()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion ="server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion =
+                "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -28,22 +32,21 @@ namespace Pruebas_Unitarias
 
         public void Insertar()
         {
-            this.entidad = new Artistas_Sellos()
+            this.entidad = new Listas_Canciones()
             {
-                Artista = 3,
-                Sello_Discografico = 1,
-                Fecha_Inicio = DateTime.Now,
-                Fecha_Fin = null,
-                Contrato = "Contrato discográfico de prueba"
+                Cancion = 1,
+                Posicion = 1,
+                Fecha_Agregada = DateTime.Now,
+                Favorita = 1
             };
 
-            this.conexion.Artistas_Sellos!.Add(this.entidad);
+            this.conexion.Listas_Canciones!.Add(this.entidad);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista = this.conexion.Artistas_Sellos!.ToList();
+            var lista = this.conexion.Listas_Canciones!.ToList();
 
             if (lista.Count <= 0)
                 throw new Exception("Lista vacía");
@@ -51,17 +54,17 @@ namespace Pruebas_Unitarias
 
         private void Actualizar()
         {
-            this.entidad!.Contrato = "Contrato discográfico actualizado";
-            this.entidad.Fecha_Fin = DateTime.Now;
+            this.entidad!.Posicion = 2;
+            this.entidad.Fecha_Agregada = DateTime.Now;
 
-            var entry = this.conexion.Entry<Artistas_Sellos>(this.entidad);
+            var entry = this.conexion.Entry<Listas_Canciones>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Artistas_Sellos!.Remove(this.entidad!);
+            this.conexion.Listas_Canciones!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }
