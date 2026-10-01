@@ -2,9 +2,6 @@
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pruebas_Unitarias
 {
@@ -18,7 +15,7 @@ namespace Pruebas_Unitarias
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion =
-                "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+                "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]

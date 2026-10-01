@@ -151,9 +151,9 @@ CREATE TABLE [Listas_Reproducciones] (
 -- 16. Listas y canciones (tabla LR_Canciones del diagrama)
 CREATE TABLE [LR_Canciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Listas_reproduccion] INT NOT NULL,
+    [Lista_Reproduccion] INT NOT NULL,
     [Cancion] INT NOT NULL,
-    FOREIGN KEY ([Listas_reproduccion])
+    FOREIGN KEY ([Lista_Reproduccion])
         REFERENCES [Listas_Reproducciones]([Id]),
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
@@ -161,13 +161,10 @@ CREATE TABLE [LR_Canciones] (
 -- 17. Listas y canciones con posición (tabla Listas_Canciones)
 CREATE TABLE [Listas_Canciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Lista_reproduccion] INT NOT NULL,
     [Cancion] INT NOT NULL,
     [posicion] INT NOT NULL,
     [fecha_agregada] SMALLDATETIME NOT NULL,
-    [favorita] BIT NOT NULL,
-    FOREIGN KEY ([Lista_reproduccion])
-        REFERENCES [Listas_Reproducciones]([Id]),
+    [favorita] INT NOT NULL,
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
 
@@ -315,7 +312,7 @@ VALUES
 ('Clásicos', 2026-09-29, 'Privada', 3);
 
 -- 16. Listas y canciones (LR_Canciones)
-INSERT INTO [LR_Canciones] ([Listas_reproduccion], [Cancion])
+INSERT INTO [LR_Canciones] ([Lista_Reproduccion], [Cancion])
 VALUES
 (1, 1),
 (2, 2),
@@ -323,11 +320,11 @@ VALUES
 
 -- 17. Listas y canciones con posición
 INSERT INTO [Listas_Canciones]
-    ([Lista_reproduccion], [Cancion], [posicion], [fecha_agregada], [favorita])
+    ([Cancion], [posicion], [fecha_agregada], [favorita])
 VALUES
-(1, 1, 1, 2026-09-29, 1),
-(2, 2, 1, 2026-09-29, 0),
-(3, 3, 1, 2026-09-29, 1);
+(1, 1, 2026-09-29, 1),
+(2, 2, 2026-09-29, 0),
+(3, 3, 2026-09-29, 1);
 
 -- 18. Favoritos
 INSERT INTO [Favoritos] ([Usuario], [fecha_marcado], [activo])
