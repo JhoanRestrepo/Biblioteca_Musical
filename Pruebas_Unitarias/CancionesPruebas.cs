@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Pruebas_Unitarias
 {
     [TestClass]
-    public sealed class Albumes_ArtistasPruebas
+    public sealed class CancionesPruebas
     {
         private IConexion conexion;
-        private Albumes_Artistas? entidad = null;
+        private Canciones? entidad = null;
 
-        public Albumes_ArtistasPruebas()
+        public CancionesPruebas()
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -30,34 +30,39 @@ namespace Pruebas_Unitarias
 
         public void Insertar()
         {
-            this.entidad = new Albumes_Artistas()
+            this.entidad = new Canciones()
             {
-                Album = 1,
-                Artista = 1,
+                Titulo = "El Malo de la Película",
+                Duracion = new TimeSpan(0, 3, 47),
+                Numero_Pista = 11,
+                Album = 2
             };
-            this.conexion.Albumes_Artistas!.Add(this.entidad!);
+            this.conexion.Canciones!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista = this.conexion.Albumes_Artistas!.ToList();
+            var lista = this.conexion.Canciones!.ToList();
             if (lista.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
+            this.entidad!.Titulo = "La Funa";
+            this.entidad!.Duracion = new TimeSpan(0, 3, 31);
+            this.entidad!.Numero_Pista = 1;
             this.entidad!.Album = 2;
 
-            var entry = this.conexion!.Entry<Albumes_Artistas>(this.entidad);
+            var entry = this.conexion!.Entry<Canciones>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Albumes_Artistas!.Remove(this.entidad!);
+            this.conexion.Canciones!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

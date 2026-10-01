@@ -15,7 +15,8 @@ namespace Pruebas_Unitarias
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            //this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -31,8 +32,8 @@ namespace Pruebas_Unitarias
         {
             this.entidad = new Artistas()
             {
-                Nombre = "Alcolirykoz",
-                Nacionalidad = "Colombia",
+                Nombre = "AlcolirykoZ",
+                Nacionalidad = "Colombianos",
                 Fecha_Inicio = DateTime.Now,
                 Biografia = "AlcolirykoZ es un grupo de rap colombiano originario del barrio Aranjuez en Medellín, Antioquia. Formado en 1999"
             };
@@ -50,6 +51,7 @@ namespace Pruebas_Unitarias
         private void Actualizar()
         {
             this.entidad!.Nombre = "Juanes";
+            this.entidad!.Nacionalidad = "Colombiano";
             this.entidad!.Biografia = "Juan Esteban Aristizábal Vásquez, conocido artísticamente como Juanes, es un cantante, compositor y guitarrista colombiano de música pop latino y rock en español. Nació el 9 de agosto de 1972 en Medellín, Colombia. Juanes ha sido reconocido por su estilo musical que combina elementos del rock, pop y música tradicional colombiana, y ha ganado numerosos premios a lo largo de su carrera, incluyendo varios premios Grammy Latinos y Grammy Awards.";
 
             var entry = this.conexion!.Entry<Artistas>(this.entidad);

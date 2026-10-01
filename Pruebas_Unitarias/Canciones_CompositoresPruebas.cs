@@ -2,12 +2,10 @@
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pruebas_Unitarias
 {
+    [TestClass]
     public sealed class Canciones_CompositoresPruebas
     {
         private IConexion conexion;
@@ -16,7 +14,8 @@ namespace Pruebas_Unitarias
         public Canciones_CompositoresPruebas()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            //this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -32,8 +31,10 @@ namespace Pruebas_Unitarias
         {
             this.entidad = new Canciones_Compositores()
             {
-                Cancion = 1,
+                Cancion = 3,
                 Compositor = 1,
+                Porcentaje_Autoria = 50,
+                Fecha_Registro = DateTime.Now,
             };
 
             this.conexion.Canciones_Compositores!.Add(this.entidad!);
@@ -50,7 +51,9 @@ namespace Pruebas_Unitarias
         private void Actualizar()
         {
             this.entidad!.Cancion = 1;
-            this.entidad.Compositor = 1;
+            this.entidad.Compositor = 2;
+            this.entidad.Porcentaje_Autoria = 85;
+            this.entidad.Fecha_Registro = DateTime.Now;
 
             var entry = this.conexion!.Entry<Canciones_Compositores>(this.entidad);
             entry.State = EntityState.Modified;

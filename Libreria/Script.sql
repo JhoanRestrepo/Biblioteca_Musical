@@ -1,3 +1,4 @@
+/*
 CREATE DATABASE bd_Biblioteca_Musical;
 GO
 USE bd_Biblioteca_Musical;
@@ -255,9 +256,9 @@ VALUES
 -- Album debe tener los IDs 1, 2 y 3 en Albumes.
 INSERT INTO [Canciones] ([Titulo], [Duracion], [Numero_Pista], [Album])
 VALUES
-('Canción uno', '00:03:30', 1, 1),
-('Canción dos', '00:04:10', 1, 2),
-('Canción tres', '00:02:55', 1, 3);
+('Beat It', '00:04:19', 5, 1),
+('Dirty Diana', '00:04:41', 9, 2),
+('Give In to Me', '00:05:29', 10, 3);
 
 -- 9. Álbumes y artistas
 INSERT INTO [Albumes_Artistas] ([Artista], [Album])
@@ -348,3 +349,4 @@ VALUES
 (1, 1, '2026-09-29 14:30', '00:03:30'),
 (2, 2, '2026-09-29 15:10', '00:04:10'),
 (3, 3, '2026-09-29 16:05', '00:02:55');
+*/

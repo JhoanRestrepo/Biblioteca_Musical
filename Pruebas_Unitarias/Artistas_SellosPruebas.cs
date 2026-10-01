@@ -2,9 +2,6 @@
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pruebas_Unitarias
 {
@@ -18,7 +15,8 @@ namespace Pruebas_Unitarias
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            //this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -34,7 +32,7 @@ namespace Pruebas_Unitarias
         {
             this.entidad = new Artistas_Sellos()
             {
-                Artista = 1,
+                Artista = 3,
                 Sello_Discografico = 1,
                 Fecha_Inicio = DateTime.Now,
                 Fecha_Fin = null,
