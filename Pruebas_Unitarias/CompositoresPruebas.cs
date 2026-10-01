@@ -2,21 +2,24 @@
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Pruebas_Unitarias
 {
     [TestClass]
-    public sealed class Albumes_ArtistasPruebas
+    public sealed class CompositoresPruebas
     {
         private IConexion conexion;
-        private Albumes_Artistas? entidad = null;
+        private Compositores? entidad = null;
 
-        public Albumes_ArtistasPruebas()
+        public CompositoresPruebas()
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
             //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -30,34 +33,39 @@ namespace Pruebas_Unitarias
 
         public void Insertar()
         {
-            this.entidad = new Albumes_Artistas()
+            this.entidad = new Compositores()
             {
-                Album = 1,
-                Artista = 1,
+                Nombre = "Joaquín",
+                Apellido = "Rodrigo",
+                Nacionalidad = "Española",
+                Fecha_Nacimiento = new DateTime(1901, 11, 22)
             };
-            this.conexion.Albumes_Artistas!.Add(this.entidad!);
+
+            this.conexion.Compositores!.Add(this.entidad);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista = this.conexion.Albumes_Artistas!.ToList();
+            var lista = this.conexion.Compositores!.ToList();
+
             if (lista.Count <= 0)
-                throw new Exception("Lista vacia");
+                throw new Exception("Lista vacía");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Album = 2;
+            this.entidad!.Nacionalidad = "España";
 
-            var entry = this.conexion!.Entry<Albumes_Artistas>(this.entidad);
+            var entry = this.conexion.Entry<Compositores>(this.entidad);
             entry.State = EntityState.Modified;
-            this.conexion!.SaveChanges();
+
+            this.conexion.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Albumes_Artistas!.Remove(this.entidad!);
+            this.conexion.Compositores!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

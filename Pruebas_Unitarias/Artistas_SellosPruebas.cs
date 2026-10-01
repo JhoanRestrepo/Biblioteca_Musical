@@ -6,17 +6,16 @@ using Microsoft.EntityFrameworkCore;
 namespace Pruebas_Unitarias
 {
     [TestClass]
-    public sealed class Artistas_SellosPruebas
+    public sealed class Fav_CancionesPruebas
     {
         private IConexion conexion;
-        private Artistas_Sellos? entidad = null;
+        private Fav_Canciones? entidad = null;
 
-        public Artistas_SellosPruebas()
+        public Fav_CancionesPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            //this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion =
+                "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -30,37 +29,36 @@ namespace Pruebas_Unitarias
 
         public void Insertar()
         {
-            this.entidad = new Artistas_Sellos()
+            this.entidad = new Fav_Canciones()
             {
-                Artista = 3,
-                Sello_Discografico = 1,
-                Fecha_Inicio = DateTime.Now,
-                Fecha_Fin = null,
-                Contrato = "Contrato de prueba",
+                Favorito = 1,
+                Cancion = 1
             };
-            this.conexion.Artistas_Sellos!.Add(this.entidad!);
+
+            this.conexion.Fav_Canciones!.Add(this.entidad);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista = this.conexion.Artistas_Sellos!.ToList();
+            var lista = this.conexion.Fav_Canciones!.ToList();
+
             if (lista.Count <= 0)
-                throw new Exception("Lista vacia");
+                throw new Exception("Lista vacía");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Contrato = "Contrato actualizado";
+            this.entidad!.Cancion = 2;
 
-            var entry = this.conexion!.Entry<Artistas_Sellos>(this.entidad);
+            var entry = this.conexion.Entry<Fav_Canciones>(this.entidad);
             entry.State = EntityState.Modified;
-            this.conexion!.SaveChanges();
+            this.conexion.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Artistas_Sellos!.Remove(this.entidad!);
+            this.conexion.Fav_Canciones!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

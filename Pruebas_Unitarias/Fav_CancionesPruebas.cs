@@ -2,21 +2,24 @@
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Pruebas_Unitarias
+namespace Pruebas_Unarias
 {
     [TestClass]
-    public sealed class Albumes_ArtistasPruebas
+    public sealed class Fav_CancionesPruebas
     {
         private IConexion conexion;
-        private Albumes_Artistas? entidad = null;
+        private Fav_Canciones? entidad = null;
 
-        public Albumes_ArtistasPruebas()
+        public Fav_CancionesPruebas()
         {
             this.conexion = new Conexion();
             //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
             //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -30,34 +33,36 @@ namespace Pruebas_Unitarias
 
         public void Insertar()
         {
-            this.entidad = new Albumes_Artistas()
+            this.entidad = new Fav_Canciones()
             {
-                Album = 1,
-                Artista = 1,
+                Favorito = 1,
+                Cancion = 1
             };
-            this.conexion.Albumes_Artistas!.Add(this.entidad!);
+
+            this.conexion.Fav_Canciones!.Add(this.entidad);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista = this.conexion.Albumes_Artistas!.ToList();
+            var lista = this.conexion.Fav_Canciones!.ToList();
+
             if (lista.Count <= 0)
-                throw new Exception("Lista vacia");
+                throw new Exception("Lista vacía");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Album = 2;
+            this.entidad!.Cancion = 2;
 
-            var entry = this.conexion!.Entry<Albumes_Artistas>(this.entidad);
+            var entry = this.conexion.Entry<Fav_Canciones>(this.entidad);
             entry.State = EntityState.Modified;
-            this.conexion!.SaveChanges();
+            this.conexion.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Albumes_Artistas!.Remove(this.entidad!);
+            this.conexion.Fav_Canciones!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

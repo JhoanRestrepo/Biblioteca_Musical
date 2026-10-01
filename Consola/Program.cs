@@ -4,7 +4,8 @@ using Libreria.Interfaces;
 try
 {
     IConexion conexion = new Conexion();
-    conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+    //conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+    conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
     var lista_albumes = conexion.Albumes!.ToList();
     
 }
