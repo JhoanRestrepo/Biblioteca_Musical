@@ -1,13 +1,10 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-
-namespace Pruebas_Unarias
+namespace Pruebas_Unitarias
 {
     [TestClass]
     public sealed class SuscripcionesPruebas
@@ -18,9 +15,7 @@ namespace Pruebas_Unarias
         public SuscripcionesPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            //this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -36,7 +31,7 @@ namespace Pruebas_Unarias
         {
             this.entidad = new Suscripciones()
             {
-                Usuario = 1,
+                Usuario = 2,
                 Tipo_Plan = "Premium",
                 Fecha_Inicio = DateTime.Now,
                 Fecha_Fin = DateTime.Now.AddMonths(1)
@@ -56,8 +51,8 @@ namespace Pruebas_Unarias
 
         private void Actualizar()
         {
-            this.entidad!.Tipo_Plan = "Familiar";
-            this.entidad.Fecha_Fin = DateTime.Now.AddMonths(3);
+            this.entidad!.Tipo_Plan = "Estudiante";
+            this.entidad.Fecha_Fin = DateTime.Now.AddMonths(6);
 
             var entry = this.conexion.Entry<Suscripciones>(this.entidad);
             entry.State = EntityState.Modified;

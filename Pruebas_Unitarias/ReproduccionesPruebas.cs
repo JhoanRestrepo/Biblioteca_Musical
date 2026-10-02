@@ -1,9 +1,10 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pruebas_Unarias
+namespace Pruebas_Unitarias
 {
     [TestClass]
     public sealed class ReproduccionesPruebas
@@ -14,9 +15,7 @@ namespace Pruebas_Unarias
         public ReproduccionesPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            //this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -32,10 +31,10 @@ namespace Pruebas_Unarias
         {
             this.entidad = new Reproducciones()
             {
-                Usuario = 1,
-                Cancion = 1,
+                Usuario = 3,
+                Cancion = 2,
                 Fecha_Hora = DateTime.Now,
-                Duracion = new TimeSpan(0, 3, 30)
+                Duracion = new TimeSpan(0, 5, 17)
             };
 
             this.conexion.Reproducciones!.Add(this.entidad);
@@ -52,6 +51,8 @@ namespace Pruebas_Unarias
 
         private void Actualizar()
         {
+            this.entidad!.Cancion = 1;
+            this.entidad!.Fecha_Hora = DateTime.Now.AddHours(1);
             this.entidad!.Duracion = new TimeSpan(0, 4, 15);
 
             var entry = this.conexion.Entry<Reproducciones>(this.entidad);

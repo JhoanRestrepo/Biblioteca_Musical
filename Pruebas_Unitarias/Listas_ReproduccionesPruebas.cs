@@ -1,9 +1,10 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pruebas_Unarias
+namespace Pruebas_Unitarias
 {
     [TestClass]
     public sealed class Listas_ReproduccionesPruebas
@@ -14,9 +15,7 @@ namespace Pruebas_Unarias
         public Listas_ReproduccionesPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -34,7 +33,7 @@ namespace Pruebas_Unarias
             {
                 Nombre = "Lista de prueba",
                 Fecha_Creacion = DateTime.Now,
-                Privacidad = "Publica",
+                Privacidad = "Privada",
                 Usuario = 1
             };
 
@@ -52,8 +51,8 @@ namespace Pruebas_Unarias
 
         private void Actualizar()
         {
-            this.entidad!.Nombre = "Lista actualizada";
-            this.entidad.Privacidad = "Privada";
+            this.entidad!.Nombre = "Lista Colaborativa";
+            this.entidad.Privacidad = "Publica";
 
             var entry = this.conexion.Entry<Listas_Reproducciones>(this.entidad);
             entry.State = EntityState.Modified;

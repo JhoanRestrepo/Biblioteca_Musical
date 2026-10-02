@@ -1,6 +1,7 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
 
 namespace Pruebas_Unitarias
@@ -14,7 +15,7 @@ namespace Pruebas_Unitarias
         public Artistas_SellosPruebas()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion ="server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]

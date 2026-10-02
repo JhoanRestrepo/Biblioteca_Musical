@@ -1,15 +1,11 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pruebas_Unitarias
 {
-    namespace Pruebas_Unitarias
-    {
         [TestClass]
         public sealed class IdiomasPruebas
         {
@@ -19,9 +15,7 @@ namespace Pruebas_Unitarias
             public IdiomasPruebas()
             {
                 this.conexion = new Conexion();
-                //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-                //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-                this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+                this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
             }
 
             [TestMethod]
@@ -38,7 +32,7 @@ namespace Pruebas_Unitarias
                 this.entidad = new Idiomas()
                 {
                     Nombre = "Portugués brasileño",
-                    Codigo = "pt-BR",
+                    Codigo = "pt-br",
                     Descripcion = "Portugués hablado en Brasil",
                     Activo = true
                 };
@@ -57,9 +51,12 @@ namespace Pruebas_Unitarias
 
             private void Actualizar()
             {
-                this.entidad!.Descripcion = "Idioma oficial de Brasil";
+                this.entidad!.Nombre = "Italiano";
+                this.entidad!.Codigo = "it";
+                this.entidad!.Descripcion = "Idioma oficial de Italia";
+                this.entidad!.Activo = true;
 
-                var entry = this.conexion.Entry<Idiomas>(this.entidad);
+            var entry = this.conexion.Entry<Idiomas>(this.entidad);
                 entry.State = EntityState.Modified;
                 this.conexion.SaveChanges();
             }
@@ -70,5 +67,5 @@ namespace Pruebas_Unitarias
                 this.conexion.SaveChanges();
             }
         }
-    }
+    
 }

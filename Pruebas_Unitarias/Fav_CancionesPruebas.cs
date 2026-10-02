@@ -1,12 +1,10 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pruebas_Unarias
+namespace Pruebas_Unitarias
 {
     [TestClass]
     public sealed class Fav_CancionesPruebas
@@ -17,9 +15,7 @@ namespace Pruebas_Unarias
         public Fav_CancionesPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]

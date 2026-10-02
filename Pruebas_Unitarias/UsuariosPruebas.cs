@@ -1,12 +1,10 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pruebas_Unarias
+namespace Pruebas_Unitarias
 {
     [TestClass]
     public sealed class UsuariosPruebas
@@ -17,9 +15,7 @@ namespace Pruebas_Unarias
         public UsuariosPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -35,9 +31,9 @@ namespace Pruebas_Unarias
         {
             this.entidad = new Usuarios()
             {
-                Nombre = "Usuario",
-                Apellido = "Prueba",
-                Correo = "usuario.prueba@gmail.com",
+                Nombre = "Henry",
+                Apellido = "Carrasco",
+                Correo = "henry278@gmail.com",
                 Fecha_Registro = DateTime.Now
             };
 
@@ -55,9 +51,10 @@ namespace Pruebas_Unarias
 
         private void Actualizar()
         {
-            this.entidad!.Nombre = "Usuario Actualizado";
-            this.entidad.Apellido = "Prueba Actualizada";
-            this.entidad.Correo = "usuario.actualizado@gmail.com";
+            this.entidad!.Nombre = "Luisa";
+            this.entidad.Apellido = "Rodriguez";
+            this.entidad.Correo = "rodriguezl445@gmail.com";
+            this.entidad.Fecha_Registro = DateTime.Now.AddDays(+10);
 
             var entry = this.conexion.Entry<Usuarios>(this.entidad);
             entry.State = EntityState.Modified;

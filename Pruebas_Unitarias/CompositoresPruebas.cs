@@ -1,10 +1,8 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pruebas_Unitarias
 {
@@ -17,9 +15,7 @@ namespace Pruebas_Unitarias
         public CompositoresPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -35,9 +31,8 @@ namespace Pruebas_Unitarias
         {
             this.entidad = new Compositores()
             {
-                Nombre = "Joaquín",
-                Apellido = "Rodrigo",
-                Nacionalidad = "Española",
+                Nombre = "Darío Gómez",
+                Nacionalidad = "Español",
                 Fecha_Nacimiento = new DateTime(1901, 11, 22)
             };
 
@@ -55,7 +50,7 @@ namespace Pruebas_Unitarias
 
         private void Actualizar()
         {
-            this.entidad!.Nacionalidad = "España";
+            this.entidad!.Nacionalidad = "Colombiano";
 
             var entry = this.conexion.Entry<Compositores>(this.entidad);
             entry.State = EntityState.Modified;

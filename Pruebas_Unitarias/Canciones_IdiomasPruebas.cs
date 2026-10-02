@@ -1,6 +1,7 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
 
 namespace Pruebas_Unitarias
@@ -14,8 +15,7 @@ namespace Pruebas_Unitarias
         public Canciones_IdiomasPruebas()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            //this.conexion.StringConexion = "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -32,9 +32,8 @@ namespace Pruebas_Unitarias
             this.entidad = new Canciones_Idiomas()
             {
                 Cancion = 3,
-                Idioma = 1,
-                Idioma_Principal = "Italiano",
-                Porcentaje = 100,
+                Idioma = 2,
+                Porcentaje = 20,
                 Fecha_Registro = DateTime.Now,
             };
 
@@ -51,10 +50,9 @@ namespace Pruebas_Unitarias
 
         private void Actualizar()
         {
-            this.entidad!.Cancion = 1;
-            this.entidad.Idioma = 2;
-            this.entidad.Idioma_Principal = "Portugues";
-            this.entidad.Porcentaje = 50;
+            this.entidad!.Cancion = 2;
+            this.entidad.Idioma = 1;
+            this.entidad.Porcentaje = 25;
 
 
             var entry = this.conexion!.Entry<Canciones_Idiomas>(this.entidad);

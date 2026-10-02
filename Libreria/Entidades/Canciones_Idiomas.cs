@@ -10,7 +10,6 @@ namespace Libreria.Entidades
         public int Id { get; set; }
         public int Cancion { get; set; }
         public int Idioma { get; set; }
-        public string? Idioma_Principal { get; set; }
         public decimal? Porcentaje { get; set; }
         public DateTime? Fecha_Registro { get; set; }
 

@@ -1,12 +1,10 @@
 ﻿using Libreria.Entidades;
 using Libreria.Implementaciones;
 using Libreria.Interfaces;
+using Libreria.Nucleo;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pruebas_Unarias
+namespace Pruebas_Unitarias
 {
     [TestClass]
     public sealed class GenerosPruebas
@@ -17,9 +15,7 @@ namespace Pruebas_Unarias
         public GenerosPruebas()
         {
             this.conexion = new Conexion();
-            //this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
-            //this.conexion.StringConexion = "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
-            this.conexion.StringConexion = "server=localhost\\DEV;database=Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -35,9 +31,9 @@ namespace Pruebas_Unarias
         {
             this.entidad = new Generos()
             {
-                Nombre = "Género de prueba",
-                Descripcion = "Descripción del género de prueba",
-                popularidad = 1
+                Nombre = "Hip Hop",
+                Descripcion = "El hip hop es un movimiento cultural y musical urbano que nació en el barrio del Bronx, en Nueva York, a principios de la década de 1970",
+                popularidad = 92
             };
 
             this.conexion.Generos!.Add(this.entidad);
@@ -54,9 +50,9 @@ namespace Pruebas_Unarias
 
         private void Actualizar()
         {
-            this.entidad!.Nombre = "Género actualizado";
-            this.entidad!.Descripcion = "Descripción actualizada";
-            this.entidad!.popularidad = 2;
+            this.entidad!.Nombre = "Metal";
+            this.entidad!.Descripcion = "El metal es un género musical del rock que nació a finales de los años 60 y principios de los 70 en el Reino Unido y Estados Unidos.";
+            this.entidad!.popularidad = 69;
 
             var entry = this.conexion.Entry<Generos>(this.entidad);
             entry.State = EntityState.Modified;

@@ -25,7 +25,6 @@ CREATE TABLE [Artistas] (
 CREATE TABLE [Compositores] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(100) NULL,
-    [Apellido] NVARCHAR(100) NULL,
     [Nacionalidad] NVARCHAR(100) NULL,
     [Fecha_Nacimiento] SMALLDATETIME NULL
 );
@@ -121,7 +120,6 @@ CREATE TABLE [Canciones_Idiomas] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Cancion] INT NOT NULL,
     [Idioma] INT NOT NULL,
-    [Idioma_Principal] NVARCHAR(100) NULL,
     [Porcentaje] DECIMAL(5,2) NULL,
     [Fecha_Registro] SMALLDATETIME NULL,
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id]),
@@ -214,11 +212,11 @@ VALUES
 
 -- 3. Compositores
 INSERT INTO [Compositores]
-    ([Nombre], [Apellido], [Nacionalidad], [Fecha_Nacimiento])
+    ([Nombre], [Nacionalidad], [Fecha_Nacimiento])
 VALUES
-('Juan Luis', 'Guerra', 'Dominicana', 1957-06-07),
-('Shakira', 'Mebarak', 'Colombiana', 1977-02-02),
-('Rafael', 'Escalona', 'Colombiana', 1927-05-26);
+('Juan Luis', 'Dominicano', 1957-06-07),
+('Shakira', 'Colombiana', 1977-02-02),
+('Rafael Escalona', 'Colombiano', 1927-05-26);
 
 -- 4. Sellos discográficos
 INSERT INTO [Sellos_Discograficos]
@@ -289,11 +287,11 @@ VALUES
 
 -- 13. Canciones e idiomas
 INSERT INTO [Canciones_Idiomas]
-    ([Cancion], [Idioma], [Idioma_Principal], [Porcentaje], [Fecha_Registro])
+    ([Cancion], [Idioma], [Porcentaje], [Fecha_Registro])
 VALUES
-(1, 1, 'Español', 100.00, 2026-09-29),
-(2, 2, 'Inglés', 100.00, 2026-09-29),
-(3, 3, 'Francés', 100.00, 2026-09-29);
+(1, 1, 100.00, 2026-09-29),
+(2, 2, 75.00, 2026-09-29),
+(3, 3, 80.00, 2026-09-29);
 
 -- 14. Suscripciones
 INSERT INTO [Suscripciones]
