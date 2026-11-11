@@ -15,7 +15,6 @@ namespace Pruebas_Unitarias
         public LR_CancionesPruebas()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]

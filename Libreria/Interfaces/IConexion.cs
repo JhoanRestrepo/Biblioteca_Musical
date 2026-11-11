@@ -9,9 +9,6 @@ namespace Libreria.Interfaces
 {
     public interface IConexion
     {
-        string? StringConexion { get; set; }
-
-
         DbSet<Albumes>? Albumes { get; set; }
         DbSet<Albumes_Artistas>? Albumes_Artistas { get; set; }
         DbSet<Artistas>? Artistas { get; set; }

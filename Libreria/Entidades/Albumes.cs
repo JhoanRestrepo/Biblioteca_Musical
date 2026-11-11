@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Libreria.Entidades
@@ -11,7 +12,7 @@ namespace Libreria.Entidades
         public DateTime? Fecha_Lanzamiento { get; set; }
         public string? Portada { get; set; }
 
-        public List<Albumes_Artistas>? Albumes_Artistas { get; set; }
-        public List<Canciones>? Canciones { get; set; }
+        [NotMapped] public List<Albumes_Artistas>? Albumes_Artistas { get; set; }
+        [NotMapped] public List<Canciones>? Canciones { get; set; }
     }
 }

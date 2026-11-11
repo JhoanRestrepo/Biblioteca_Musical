@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Libreria.Entidades
@@ -11,6 +12,6 @@ namespace Libreria.Entidades
         public string? Nacionalidad { get; set; }
         public DateTime? Fecha_Nacimiento { get; set; }
 
-        public List<Canciones_Compositores>? Canciones_Compositores { get; set; }
+        [NotMapped] public List<Canciones_Compositores>? Canciones_Compositores { get; set; }
     }
 }

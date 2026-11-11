@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Libreria.Entidades
@@ -12,6 +13,6 @@ namespace Libreria.Entidades
         public DateTime? Fecha_Fundacion { get; set; }
         public string? Sitio_Web { get; set; }
 
-        public List<Artistas_Sellos>? Artistas_Sellos { get; set; }
+        [NotMapped] public List<Artistas_Sellos>? Artistas_Sellos { get; set; }
     }
 }

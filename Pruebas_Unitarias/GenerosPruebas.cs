@@ -15,7 +15,6 @@ namespace Pruebas_Unitarias
         public GenerosPruebas()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion = Datos_Generales.ObtenerStringConexion();
         }
 
         [TestMethod]
@@ -51,7 +50,7 @@ namespace Pruebas_Unitarias
         private void Actualizar()
         {
             this.entidad!.Nombre = "Metal";
-            this.entidad!.Descripcion = "El metal es un género musical del rock que nació a finales de los años 60 y principios de los 70 en el Reino Unido y Estados Unidos.";
+            this.entidad!.Descripcion = "El metal es un género musical del rock que nació a Fecha_Lanzamientoes de los años 60 y principios de los 70 en el Reino Unido y Estados Unidos.";
             this.entidad!.popularidad = 69;
 
             var entry = this.conexion.Entry<Generos>(this.entidad);

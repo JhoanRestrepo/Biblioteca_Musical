@@ -1,5 +1,8 @@
 <Solution>
   <Project Path="Consola/Consola.csproj" Id="1b63ba90-d83d-47f7-aa57-a1aea52c6516" />
+  <Project Path="Front_Musica/Front_Musica.csproj" Id="a4bb1fd6-c744-4659-ac75-5ff77b295fc4" />
   <Project Path="Libreria/Libreria.csproj" Id="3a7570d4-dc06-4e06-b960-cf0d10019002" />
+  <Project Path="Libreria_Front/Libreria_Front.csproj" Id="17f5ceeb-b196-45da-8c1c-7af96002f628" />
   <Project Path="Pruebas_Unitarias/Pruebas_Unitarias.csproj" Id="b56f2835-3a4b-4825-aac0-f9a6517c222c" />
+  <Project Path="Servicio_Musica/Servicio_Musica.csproj" Id="cfce6222-a5d3-4e75-a793-98750f6e689f" />
 </Solution>

@@ -14,6 +14,6 @@ namespace Libreria.Entidades
 
         [ForeignKey("Usuario")] public Usuarios? _Usuario { get; set; }
 
-        public List<Fav_Canciones>? Fav_Canciones { get; set; }
+        [NotMapped] public List<Fav_Canciones>? Fav_Canciones { get; set; }
     }
 }
