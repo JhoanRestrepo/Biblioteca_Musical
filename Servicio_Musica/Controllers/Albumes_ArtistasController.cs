@@ -37,13 +37,19 @@ namespace Servicio_Musica.Controllers
             return this.IAlbumes_ArtistasAplicacion.Consultar();
         }
 
-        [HttpPut]
+        [HttpPost]
+        public List<Albumes_Artistas> Buscar(Albumes_Artistas entidad)
+        {
+            return this.IAlbumes_ArtistasAplicacion.Buscar(entidad);
+        }
+
+        [HttpPost]
         public Albumes_Artistas Actualizar(Albumes_Artistas entidad)
         {
             return this.IAlbumes_ArtistasAplicacion.Actualizar(entidad);
         }
 
-        [HttpDelete]
+        [HttpPost]
         public Albumes_Artistas Borrar(Albumes_Artistas entidad)
         {
             return this.IAlbumes_ArtistasAplicacion.Borrar(entidad);

@@ -1,7 +1,6 @@
 using Libreria_Front.Interfaces;
 using Libreria_Front.Implementaciones;
 
-
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +10,7 @@ try
     builder.Services.AddControllers();
     builder.Services.AddScoped<IComunicaciones, Comunicaciones>();
     builder.Services.AddScoped<IAlbumesPresentacion, AlbumesPresentacion>();
+    builder.Services.AddScoped<IAlbumes_ArtistasPresentacion, Albumes_ArtistasPresentacion>();
 
     var app = builder.Build();
 

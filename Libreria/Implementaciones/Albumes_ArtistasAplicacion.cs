@@ -57,6 +57,16 @@ namespace Libreria.Implementaciones
                 .Take(10)
                 .ToList();
         }
+        public List<Albumes_Artistas> Buscar(Albumes_Artistas entidad)
+        {
+            return this.IConexion.Albumes_Artistas!
+                .Include(x => x._Album)
+                .Include(x => x._Artista)
+                .Where(x => x._Album!.Titulo!.Contains(entidad._Album!.Titulo!) ||
+                            x._Artista!.Nombre!.Contains(entidad._Artista!.Nombre!))
+                .Take(10)
+                .ToList();
+        }
 
         public Albumes_Artistas Borrar(Albumes_Artistas entidad)
         {
