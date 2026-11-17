@@ -344,4 +344,13 @@ VALUES
 (1, 1, '2026-09-29 14:30', '00:03:30'),
 (2, 2, '2026-09-29 15:10', '00:04:10'),
 (3, 3, '2026-09-29 16:05', '00:02:55');
+
+CREATE TABLE [Auditorias] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Accion] NVARCHAR(255) NOT NULL,
+    [Usuario] INT NULL,
+    [Fecha] SMALLDATETIME NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+
+    
 */
