@@ -359,5 +359,11 @@ CREATE TABLE [Auditorias] (
     [UsuarioP] NVARCHAR(255) NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 
-    
+    CREATE TABLE [Permisos] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Nombre] NVARCHAR(255) NOT NULL,
+    [Descripcion] NVARCHAR(255) NOT NULL,
+    [Codigo] NVARCHAR(255) NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 */
