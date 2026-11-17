@@ -14,10 +14,10 @@
             return "Server=(localdb)\\MSSQLLocalDB;Database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
             */
             //Usar el que convenga según su versión de SQL Server
-            //return "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            return "server=localhost;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
 
             //return Environment.GetEnvironmentVariable("StringConexion")!;
-            return "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
+            //return "server=localhost\\DEV;database=bd_Biblioteca_Musical;Integrated Security=True;TrustServerCertificate=true;";
         }
     }
 }

@@ -11,18 +11,24 @@ namespace Front_Musica.Pages.Ventanas
     {
         private IAlbumes_ArtistasPresentacion IAlbumes_ArtistasPresentacion;
         private IAlbumesPresentacion IAlbumesPresentacion;
+        private IArtistasPresentacion IArtistasPresentacion;
+
 
         public Albumes_ArtistasModel(IAlbumes_ArtistasPresentacion IAlbumes_ArtistasPresentacion, 
-            IAlbumesPresentacion IAlbumesPresentacion)
+                                    IAlbumesPresentacion IAlbumesPresentacion,
+                                    IArtistasPresentacion IArtistasPresentacion)
         {
             this.IAlbumes_ArtistasPresentacion = IAlbumes_ArtistasPresentacion;
             this.IAlbumesPresentacion = IAlbumesPresentacion;
+            this.IArtistasPresentacion = IArtistasPresentacion;
+
             this.Filtro = new Albumes_Artistas();
             Filtro!._Album = new Albumes();
             Filtro!._Artista = new Artistas();
         }
 
         [BindProperty] public List<Albumes> Albumes { get; set; }
+        [BindProperty] public List<Artistas> Artistas { get; set; }
         [BindProperty] public List<Albumes_Artistas> Lista { get; set; }
         [BindProperty] public Albumes_Artistas? Filtro { get; set; }
         [BindProperty] public Albumes_Artistas? Actual { get; set; }
@@ -30,13 +36,23 @@ namespace Front_Musica.Pages.Ventanas
         [BindProperty] public bool Borrar { get; set; } = false;
         [BindProperty] public bool Nuevo { get; set; } = false;
 
+        public void OnGet() { 
+            
+            CargarListas();
+            OnPostBtConsultar();
+        }
 
-        public void OnGet() { OnPostBtConsultar(); }
+        private void CargarListas()
+        {
+            Albumes = IAlbumesPresentacion.Consultar();
+            Artistas = IArtistasPresentacion.Consultar();
+        }
 
         public void OnPostBtConsultar()
         {
             try
             {
+                CargarListas();
                 Filtro!._Album.Titulo = Filtro!._Album.Titulo ?? "";
                 Filtro!._Artista.Nombre = Filtro!._Artista.Nombre ?? "";
                 Lista = this.IAlbumes_ArtistasPresentacion.Buscar(Filtro!);
@@ -51,8 +67,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                CargarListas();
                 Formulario = true;
                 this.Actual = new Albumes_Artistas();
+                Filtro!._Album.Titulo = Filtro!._Album.Titulo;
+                Filtro!._Artista.Nombre = Filtro!._Artista.Nombre;
+                Lista = this.IAlbumes_ArtistasPresentacion.Buscar(Filtro);
             }
             catch (Exception ex)
             {
@@ -75,6 +95,7 @@ namespace Front_Musica.Pages.Ventanas
             }
             finally
             {
+                CargarListas();
                 OnPostBtConsultar();
             }
         }

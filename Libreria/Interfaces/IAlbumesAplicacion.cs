@@ -1,4 +1,5 @@
 ﻿using Libreria.Entidades;
+using Libreria.Implementaciones;
 
 namespace Libreria.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Libreria.Interfaces
         List<Albumes> Consultar();
         List<Albumes> Buscar(Albumes entidad);
         Albumes Borrar(Albumes entidad);
+        List<Albumes_Artistas> Buscar(AlbumesAplicacion album);
     }
 }

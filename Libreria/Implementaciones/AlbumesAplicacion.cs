@@ -80,5 +80,10 @@ namespace Libreria.Implementaciones
                 string.IsNullOrEmpty(entidad.Portada) ||
                 entidad.Fecha_Lanzamiento == null;
         }
+
+        public List<Albumes_Artistas> Buscar(AlbumesAplicacion album)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

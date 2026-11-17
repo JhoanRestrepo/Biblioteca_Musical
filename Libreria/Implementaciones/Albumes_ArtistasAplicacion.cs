@@ -18,8 +18,8 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (entidad.Album == 0 ||
-                entidad.Artista == 0)
+            if (entidad._Album.Id == 0 ||
+                entidad._Artista.Id == 0)
                 throw new Exception("Faltan valores");
 
             if (!this.IConexion.Albumes!.Any(x => x.Id == entidad.Album))

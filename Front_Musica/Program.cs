@@ -10,6 +10,7 @@ try
     builder.Services.AddControllers();
     builder.Services.AddScoped<IComunicaciones, Comunicaciones>();
     builder.Services.AddScoped<IAlbumesPresentacion, AlbumesPresentacion>();
+    builder.Services.AddScoped<IArtistasPresentacion, ArtistasPresentacion>();
     builder.Services.AddScoped<IAlbumes_ArtistasPresentacion, Albumes_ArtistasPresentacion>();
 
     var app = builder.Build();

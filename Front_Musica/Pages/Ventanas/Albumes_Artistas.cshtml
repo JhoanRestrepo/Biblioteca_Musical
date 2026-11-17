@@ -22,10 +22,10 @@
                    class="btn btn-secondary"
                    asp-page-handler="BtGuardar"/>
             <input id="flAlbumes"
-                   placeholder="Albumes"
+                   placeholder="Album"
                    asp-for="@Model.Filtro!._Album!.Titulo" />
             <input id="flArtistas"
-                   placeholder="Artistas"
+                   placeholder="Artista"
                    asp-for="@Model.Filtro!._Artista!.Nombre" />
         </div>
 
@@ -37,15 +37,17 @@
                     Albumes
                 </label>
                 <input id="nmAlbumes"
-                       asp-for="@Model.Actual!._Album.Titulo" />
+                       asp-for="@Model.Actual!.Album" />
                 <br />
                 <label>
                     Artista
                 </label>
                 <input id="nmArtista"
-                       asp-for="@Model.Actual!._Artista.Nombre" />
+                       asp-for="@Model.Actual!.Artista" />
             </div>
         }
+
+        
 
         @if (ViewData.ContainsKey("Mensaje"))
         {
@@ -63,22 +65,21 @@
         {
             <div>
                 <h3>Album</h3>
-
-                <label>
-                    Albumes
-                </label>
-                <input id="nmAlbumes"
-                       asp-for="@Model.Actual!.Album" />
-                <br />
-
-                <label>
-                    Artista
-                </label>
-                <select id="nmTipo"
+                <select id="nm_Album"
                         class="form-control"
-                        asp-for="@Model.Actual!.Album"
-                        asp-items="@(new SelectList(Model.Albumes, "Id", "Titulo"))">
+                        asp-for="@Model.Actual!._Album!.Id"
+                        asp-items="@(new SelectList(Model.Albumes!, "Id", "Titulo"))">
                 </select>
+                <br />
+                <h3>Artista</h3>
+                <select id="nm_Artista"
+                        class="form-control"
+                        asp-for="@Model.Actual!._Artista!.Nombre"
+                        asp-items="@(new SelectList(Model.Artistas!, "Id", "Nombre"))">
+                </select>
+
+                <p> Total álbumes: @Model.Albumes?.Count() </p>
+                <p> Total artistas: @Model.Artistas?.Count() </p>
             </div>
         }
 
