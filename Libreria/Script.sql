@@ -355,15 +355,16 @@ CREATE TABLE [Auditorias] (
     CREATE TABLE [Roles] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Administrador] NVARCHAR(255) NOT NULL,
-    [Usuario] INT NULL,
+    [Usuario] INT NOT NULL,
     [UsuarioP] NVARCHAR(255) NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 
     CREATE TABLE [Permisos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(255) NOT NULL,
+    [Usuario] INT NOT NULL,
     [Descripcion] NVARCHAR(255) NOT NULL,
     [Codigo] NVARCHAR(255) NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
-    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+  
 */
