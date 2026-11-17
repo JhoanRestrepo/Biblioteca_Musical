@@ -352,5 +352,12 @@ CREATE TABLE [Auditorias] (
     [Fecha] SMALLDATETIME NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 
+    CREATE TABLE [Roles] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Administrador] NVARCHAR(255) NOT NULL,
+    [Usuario] INT NULL,
+    [UsuarioP] NVARCHAR(255) NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+
     
 */
