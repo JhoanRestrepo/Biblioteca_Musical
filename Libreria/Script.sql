@@ -6,7 +6,7 @@ GO
 -- 1. Usuarios
 CREATE TABLE [Usuarios] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(100) NULL,
+    [Nombre] NVARCHAR(100) NULL,
     [Apellido] NVARCHAR(100) NULL,
     [Correo] NVARCHAR(150) NULL,
     [Fecha_registro] SMALLDATETIME NOT NULL
@@ -15,7 +15,7 @@ CREATE TABLE [Usuarios] (
 -- 2. Artistas
 CREATE TABLE [Artistas] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(150) NULL,
+    [Nombre] NVARCHAR(150) NULL,
     [Nacionalidad] NVARCHAR(100) NULL,
     [Fecha_Inicio] SMALLDATETIME NOT NULL,
     [Biografia] NVARCHAR(MAX) NULL
@@ -24,7 +24,7 @@ CREATE TABLE [Artistas] (
 -- 3. Compositores
 CREATE TABLE [Compositores] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(100) NULL,
+    [Nombre] NVARCHAR(100) NULL,
     [Nacionalidad] NVARCHAR(100) NULL,
     [Fecha_Nacimiento] SMALLDATETIME NULL
 );
@@ -32,7 +32,7 @@ CREATE TABLE [Compositores] (
 -- 4. Sellos discográficos
 CREATE TABLE [Sellos_Discograficos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(150) NULL,
+    [Nombre] NVARCHAR(150) NULL,
     [Pais] NVARCHAR(100) NULL,
     [Fecha_Fundacion] SMALLDATETIME NULL,
     [Sitio_Web] NVARCHAR(255) NULL
@@ -49,7 +49,7 @@ CREATE TABLE [Albumes] (
 -- 6. Géneros
 CREATE TABLE [Generos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(100) NULL,
+    [Nombre] NVARCHAR(100) NULL,
     [Descripcion] NVARCHAR(500) NULL,
     [popularidad] INT NOT NULL
 );
@@ -57,8 +57,8 @@ CREATE TABLE [Generos] (
 -- 7. Idiomas
 CREATE TABLE [Idiomas] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(100) NULL,
-    [Titulo] NVARCHAR(20) NULL,
+    [Nombre] NVARCHAR(100) NULL,
+    [Codigo] NVARCHAR(20) NULL,
     [Descripcion] NVARCHAR(500) NULL,
     [Activo] BIT NOT NULL
 );
@@ -139,7 +139,7 @@ CREATE TABLE [Suscripciones] (
 -- 15. Listas de reproducción
 CREATE TABLE [Listas_Reproducciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Titulo] NVARCHAR(100) NULL,
+    [nombre] NVARCHAR(100) NULL,
     [fecha_creacion] SMALLDATETIME NULL,
     [privacidad] NVARCHAR(50) NULL,
     [usuario] INT NOT NULL,
@@ -197,14 +197,14 @@ CREATE TABLE [Reproducciones] (
 
 -- Datos iniciales para que las pruebas tengan registros relacionados
 -- 1. Usuarios
-INSERT INTO [Usuarios] ([Titulo], [Apellido], [Correo], [Fecha_registro])
+INSERT INTO [Usuarios] ([Nombre], [Apellido], [Correo], [Fecha_registro])
 VALUES
 ('Ana', 'Gómez', 'ana@example.com', 2026-09-29),
 ('Luis', 'Pérez', 'luis@example.com', 2026-09-29),
 ('María', 'Rodríguez', 'maria@example.com', 2026-09-29);
 
 -- 2. Artistas
-INSERT INTO [Artistas] ([Titulo], [Nacionalidad], [Fecha_Inicio], [Biografia])
+INSERT INTO [Artistas] ([Nombre], [Nacionalidad], [Fecha_Inicio], [Biografia])
 VALUES
 ('Michael Jackson', 'Estadounidense', 1964-01-01, 'Cantante y bailarín.'),
 ('Ryan Castro', 'Colombiano', 2017-01-01, 'Cantante colombiano.'),
@@ -212,7 +212,7 @@ VALUES
 
 -- 3. Compositores
 INSERT INTO [Compositores]
-    ([Titulo], [Nacionalidad], [Fecha_Nacimiento])
+    ([Nombre], [Nacionalidad], [Fecha_Nacimiento])
 VALUES
 ('Juan Luis', 'Dominicano', 1957-06-07),
 ('Shakira', 'Colombiana', 1977-02-02),
@@ -220,7 +220,7 @@ VALUES
 
 -- 4. Sellos discográficos
 INSERT INTO [Sellos_Discograficos]
-    ([Titulo], [Pais], [Fecha_Fundacion], [Sitio_Web])
+    ([Nombre], [Pais], [Fecha_Fundacion], [Sitio_Web])
 VALUES
 ('Sony Music', 'Estados Unidos', 1929-09-01, 'https://www.sonymusic.com'),
 ('Universal Music Group', 'Estados Unidos', 1934-09-01, 'https://www.universalmusic.com'),
@@ -234,14 +234,14 @@ VALUES
 ('Dangerous', 1991-11-26, 'dangerous.jpg');
 
 -- 6. Géneros
-INSERT INTO [Generos] ([Titulo], [Descripcion], [popularidad])
+INSERT INTO [Generos] ([Nombre], [Descripcion], [popularidad])
 VALUES
 ('Rock', 'Género de música rock.', 80),
 ('Salsa', 'Género musical bailable.', 75),
 ('Reguetón', 'Género urbano latino.', 90);
 
 -- 7. Idiomas
-INSERT INTO [Idiomas] ([Titulo], [Titulo], [Descripcion], [Activo])
+INSERT INTO [Idiomas] ([Nombre], [Codigo], [Descripcion], [Activo])
 VALUES
 ('Español', 'es', 'Idioma español.', 1),
 ('Inglés', 'en', 'Idioma inglés.', 1),
@@ -268,7 +268,7 @@ INSERT INTO [Artistas_Sellos]
 VALUES
 (1, 1, 2020-01-01, NULL, 'Contrato exclusivo'),
 (2, 2, 2022-06-15, NULL, 'Contrato de grabación'),
-(3, 3, 2019-03-10, 2024-03-10, 'Contrato Fecha_Lanzamientoizado');
+(3, 3, 2019-03-10, 2024-03-10, 'Contrato finalizado');
 
 -- 11. Canciones y compositores
 INSERT INTO [Canciones_Compositores]
@@ -303,7 +303,7 @@ VALUES
 
 -- 15. Listas de reproducción
 INSERT INTO [Listas_Reproducciones]
-    ([Titulo], [fecha_creacion], [privacidad], [usuario])
+    ([nombre], [fecha_creacion], [privacidad], [usuario])
 VALUES
 ('Favoritas para estudiar', 2026-09-29, 'Privada', 1),
 ('Música para entrenar', 2026-09-29, 'Pública', 2),
@@ -344,5 +344,4 @@ VALUES
 (1, 1, '2026-09-29 14:30', '00:03:30'),
 (2, 2, '2026-09-29 15:10', '00:04:10'),
 (3, 3, '2026-09-29 16:05', '00:02:55');
-
 */
