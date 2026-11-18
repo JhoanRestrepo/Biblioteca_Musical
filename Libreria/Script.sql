@@ -43,7 +43,7 @@ CREATE TABLE [Albumes] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Titulo] NVARCHAR(150) NULL,
     [Fecha_Lanzamiento] SMALLDATETIME NOT NULL,
-    [Portada] NVARCHAR(255) NULL
+    [Portada] NVARCHAR(MAX) NULL
 );
 
 -- 6. Géneros
@@ -195,6 +195,35 @@ CREATE TABLE [Reproducciones] (
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
 
+-- 21. Auditorias
+CREATE TABLE [Auditorias] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Accion] NVARCHAR(255) NOT NULL,
+    [Usuario] INT NULL,
+    [Fecha] SMALLDATETIME NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+);
+
+-- 22. Roles
+    CREATE TABLE [Roles] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Administrador] NVARCHAR(255) NOT NULL,
+    [Usuario] INT NOT NULL,
+    [UsuarioP] NVARCHAR(255) NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+);
+
+-- 23. Permisos
+    CREATE TABLE [Permisos] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Nombre] NVARCHAR(255) NOT NULL,
+    [Usuario] INT NOT NULL,
+    [Descripcion] NVARCHAR(255) NOT NULL,
+    [Codigo] NVARCHAR(255) NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
+);
+
+
 -- Datos iniciales para que las pruebas tengan registros relacionados
 -- 1. Usuarios
 INSERT INTO [Usuarios] ([Nombre], [Apellido], [Correo], [Fecha_registro])
@@ -229,9 +258,9 @@ VALUES
 -- 5. Álbumes
 INSERT INTO [Albumes] ([Titulo], [Fecha_Lanzamiento], [Portada])
 VALUES
-('Thriller', 1982-11-30, 'thriller.jpg'),
-('Bad', 1987-08-31, 'bad.jpg'),
-('Dangerous', 1991-11-26, 'dangerous.jpg');
+('Thriller', 1982-11-30, ''),
+('Bad', 1987-08-31, ''),
+('Dangerous', 1991-11-26, '');
 
 -- 6. Géneros
 INSERT INTO [Generos] ([Nombre], [Descripcion], [popularidad])
@@ -344,27 +373,4 @@ VALUES
 (1, 1, '2026-09-29 14:30', '00:03:30'),
 (2, 2, '2026-09-29 15:10', '00:04:10'),
 (3, 3, '2026-09-29 16:05', '00:02:55');
-
-CREATE TABLE [Auditorias] (
-    [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Accion] NVARCHAR(255) NOT NULL,
-    [Usuario] INT NULL,
-    [Fecha] SMALLDATETIME NOT NULL,
-    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
-
-    CREATE TABLE [Roles] (
-    [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Administrador] NVARCHAR(255) NOT NULL,
-    [Usuario] INT NOT NULL,
-    [UsuarioP] NVARCHAR(255) NOT NULL,
-    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
-
-    CREATE TABLE [Permisos] (
-    [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Nombre] NVARCHAR(255) NOT NULL,
-    [Usuario] INT NOT NULL,
-    [Descripcion] NVARCHAR(255) NOT NULL,
-    [Codigo] NVARCHAR(255) NOT NULL,
-    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
-  
 */

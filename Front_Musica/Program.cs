@@ -1,39 +1,37 @@
 using Libreria_Front.Interfaces;
 using Libreria_Front.Implementaciones;
 
-try
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddControllers();
+builder.Services.AddScoped<IComunicaciones, Comunicaciones>();
+builder.Services.AddScoped<IAlbumesPresentacion, AlbumesPresentacion>();
+builder.Services.AddScoped<IArtistasPresentacion, ArtistasPresentacion>();
+builder.Services.AddScoped<IAlbumes_ArtistasPresentacion, Albumes_ArtistasPresentacion>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddRazorPages();
+builder.Services.AddSession(options =>
 {
-    var builder = WebApplication.CreateBuilder(args);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
 
-    builder.Services.AddRazorPages();
-
-    builder.Services.AddControllers();
-    builder.Services.AddScoped<IComunicaciones, Comunicaciones>();
-    builder.Services.AddScoped<IAlbumesPresentacion, AlbumesPresentacion>();
-    builder.Services.AddScoped<IArtistasPresentacion, ArtistasPresentacion>();
-    builder.Services.AddScoped<IAlbumes_ArtistasPresentacion, Albumes_ArtistasPresentacion>();
-
-    var app = builder.Build();
+var app = builder.Build();
 
 
-    if (!app.Environment.IsDevelopment())
-    {
-        app.UseExceptionHandler("/Error");
-        app.UseHsts();
-    }
-
-    app.UseHttpsRedirection();
-    app.UseRouting();
-    app.UseAuthorization();
-    app.MapStaticAssets();
-    app.MapRazorPages()
-       .WithStaticAssets();
-
-    app.Run();
-}
-catch (Exception ex)
+if (!app.Environment.IsDevelopment())
 {
-    Console.WriteLine($"Error occurred: {ex.Message}");
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
-
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+app.MapStaticAssets();
+app.MapRazorPages()
+   .WithStaticAssets();
+app.UseSession();
+app.Run();

@@ -9,6 +9,6 @@ namespace Libreria.Entidades
         public int Id { get; set; }
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
-        public string? codigo { get; set; }
+        public string? Codigo { get; set; }
     }
 }

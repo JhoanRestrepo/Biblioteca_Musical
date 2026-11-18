@@ -17,6 +17,7 @@ namespace Libreria.Implementaciones
         public DbSet<Albumes_Artistas>? Albumes_Artistas { get; set; }
         public DbSet<Artistas>? Artistas { get; set; }
         public DbSet<Artistas_Sellos>? Artistas_Sellos { get; set; }
+        public DbSet<Auditorias>? Auditorias { get; set; }
         public DbSet<Canciones>? Canciones { get; set; }
         public DbSet<Canciones_Compositores>? Canciones_Compositores { get; set; }
         public DbSet<Canciones_Generos>? Canciones_Generos { get; set; }
@@ -29,7 +30,9 @@ namespace Libreria.Implementaciones
         public DbSet<Listas_Canciones>? Listas_Canciones { get; set; }
         public DbSet<Listas_Reproducciones>? Listas_Reproducciones { get; set; }
         public DbSet<LR_Canciones>? LR_Canciones { get; set; }
+        public DbSet<Permisos>? Permisos { get; set; }
         public DbSet<Reproducciones>? Reproducciones { get; set; }
+        public DbSet<Roles>? Roles { get; set; }
         public DbSet<Sellos_Discograficos>? Sellos_Discograficos { get; set; }
         public DbSet<Suscripciones>? Suscripciones { get; set; }
         public DbSet<Usuarios>? Usuarios { get; set; }

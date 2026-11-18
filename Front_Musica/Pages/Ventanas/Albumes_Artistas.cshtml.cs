@@ -52,6 +52,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                var variable_session = HttpContext.Session.GetString("Usuario");
+                if (String.IsNullOrEmpty(variable_session))
+                {
+                    HttpContext.Response.Redirect("/");
+                    return;
+                }
                 CargarListas();
                 Filtro!._Album.Titulo = Filtro!._Album.Titulo ?? "";
                 Filtro!._Artista.Nombre = Filtro!._Artista.Nombre ?? "";

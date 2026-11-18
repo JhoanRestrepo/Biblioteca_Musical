@@ -17,6 +17,7 @@ namespace Front_Musica.Pages.Ventanas
             this.Filtro = new Albumes();
         }
 
+        public IFormFile? FormFile { get; set; }
         [BindProperty] public List<Albumes> Lista { get; set; }
         [BindProperty] public Albumes? Filtro { get; set; }
         [BindProperty] public Albumes? Actual { get; set; }
@@ -31,6 +32,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                var variable_session = HttpContext.Session.GetString("Usuario");
+                if (String.IsNullOrEmpty(variable_session))
+                {
+                    HttpContext.Response.Redirect("/");
+                    return;
+                }
                 Filtro!.Titulo = Filtro!.Titulo ?? "";
                 Lista = this.IAlbumesPresentacion.Buscar(Filtro!);
             }
@@ -57,6 +64,13 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                if (FormFile != null)
+                {
+                    var memoryStream = new MemoryStream();
+                    FormFile.CopyToAsync(memoryStream).Wait();
+                    Actual!.Portada = Convert.ToBase64String(memoryStream.ToArray());
+                    memoryStream.Dispose();
+                }
                 if (this.Actual!.Id == 0)
                     this.Actual = this.IAlbumesPresentacion.Insertar(this.Actual!);
                 else
