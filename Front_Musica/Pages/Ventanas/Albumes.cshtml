@@ -26,6 +26,53 @@
                    asp-for="@Model.Filtro!.Titulo"/>
         </div>
 
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Album</h3>
+
+                <label>
+                    Titulo
+                </label>
+                <input id="nmTitulo"
+                       asp-for="@Model.Actual!.Titulo" />
+                <br />
+
+                <label>
+                    Fecha_Lanzamiento
+                </label>
+                <input id="nmFecha_Lanzamiento"
+                       asp-for="@Model.Actual!.Fecha_Lanzamiento" />
+                <br />
+
+                <label>
+                    Portada
+                </label>
+                @if (Model.Actual!.Portada != null)
+                {
+                    <img height="100"
+                         width="100"
+                         src="data:image;base64,
+                    @System.Convert.ToBase64String(
+                    Convert.FromBase64String(
+                    Model.Actual!.Portada))" />
+                }
+                <input type="file"
+                       asp-for="FormFile" />
+            </div>
+        }
+        
         @if (Model.Nuevo)
         {
             <div>
@@ -45,47 +92,15 @@
                 <label>
                     Portada
                 </label>
-                <input id="nmPortada"
-                       asp-for="@Model.Actual!.Portada" />
-            </div>
-        }
-
-        @if (ViewData.ContainsKey("Mensaje"))
-        {
-            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
-            ;
-        }
-        
-        @if (Model.Formulario || Model.Borrar)
-        {
-            <input type="hidden"
-                   asp-for="@Model.Actual!.Id" />
-        }
-
-        @if (Model.Formulario)
-        {
-            <div>
-                <h3>Album</h3>
-
-                <label>
-                    Titulo
-                </label>
-                <input id=nmTitulo"
-                       asp-for="@Model.Actual!.Titulo" />
-                <br />
-
-                <label>
-                    Fecha_Lanzamiento
-                </label>
-                <input id=nmFecha_Lanzamiento"
-                       asp-for="@Model.Actual!.Fecha_Lanzamiento" />
-                <br />
-
-                <label>
-                    Portada
-                </label>
-                <input id=nmPortada"
-                       asp-for="@Model.Actual!.Portada" />
+                @if (Model.Actual!.Portada != null)
+                {
+                    <img height="100"
+                         width="100"
+                         src="data:image;base64,
+                    @System.Convert.ToBase64String(
+                    Convert.FromBase64String(
+                    Model.Actual!.Portada))" />
+                }
             </div>
         }
 
@@ -131,7 +146,16 @@
                         foreach (var elemento in Model.Lista)
                         {
                             <tr>
-                                <td>@elemento.Portada</td>
+                                <td>
+                                    @if (elemento.Portada != null)
+                                    {
+                                    <img height="60"
+                                         width="60"
+                                         src="data:image;base64,
+                                            @System.Convert.ToBase64String(
+                                            Convert.FromBase64String(elemento.Portada))" />
+                                    }
+                                </td>
                                 <td>@elemento.Titulo</td>
                                 <td>@elemento.Fecha_Lanzamiento!.Value.Year</td>
                                 <td>

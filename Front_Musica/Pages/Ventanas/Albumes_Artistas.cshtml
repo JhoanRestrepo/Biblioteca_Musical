@@ -67,14 +67,14 @@
                 <h3>Album</h3>
                 <select id="nm_Album"
                         class="form-control"
-                        asp-for="@Model.Actual!._Album!.Id"
+                        asp-for="@Model.Actual!.Album!"
                         asp-items="@(new SelectList(Model.Albumes!, "Id", "Titulo"))">
                 </select>
                 <br />
                 <h3>Artista</h3>
                 <select id="nm_Artista"
                         class="form-control"
-                        asp-for="@Model.Actual!._Artista!.Nombre"
+                        asp-for="@Model.Actual!.Artista!"
                         asp-items="@(new SelectList(Model.Artistas!, "Id", "Nombre"))">
                 </select>
 
