@@ -22,9 +22,10 @@ namespace Libreria.Implementaciones
                 throw new Exception("Ya se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Codigo) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
-                throw new Exception("Faltan valores");
+                string.IsNullOrEmpty(entidad.Apellido) ||
+                string.IsNullOrEmpty(entidad.Correo) ||
+                string.IsNullOrEmpty(entidad.Fecha_Registro)) 
+               throw new Exception("Faltan valores");
 
             this.IConexion.Usuarios!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -38,8 +39,9 @@ namespace Libreria.Implementaciones
                 throw new Exception("No se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Codigo) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+                 string.IsNullOrEmpty(entidad.Apellido) ||
+                 string.IsNullOrEmpty(entidad.Correo) ||
+                 string.IsNullOrEmpty(entidad.Fecha_Registro))
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Usuarios>(entidad);

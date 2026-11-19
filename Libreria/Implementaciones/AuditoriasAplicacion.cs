@@ -1,10 +1,13 @@
 ﻿using Libreria.Entidades;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Libreria.Implementaciones
 {
-    public class AuditoriasAplicacion : IAuditoriaAplicacion
+    public class AuditoriasAplicacion : IAuditoriasAuditoriasAplicacion
     {
         private IConexion IConexion;
 
@@ -13,77 +16,61 @@ namespace Libreria.Implementaciones
             this.IConexion = IConexion;
         }
 
-        public Auditoria Insertar(Auditoria entidad)
+        public Auditorias Insertar(Auditorias entidad)
         {
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Titulo) ||
-                string.IsNullOrEmpty(entidad.Portada))
+            if (string.IsNullOrEmpty(entidad.Accion) ||
+                string.IsNullOrEmpty(entidad.Usuario) ||
+                string.IsNullOrEmpty(entidad.Fecha))
                 throw new Exception("Faltan valores");
 
-            if (entidad.Fecha_Lanzamiento == null)
-                entidad.Fecha_Lanzamiento = DateTime.Now;
-
-            this.IConexion.Auditoria!.Add(entidad!);
+            this.IConexion.Auditorias!.Add(entidad!);
             this.IConexion.SaveChanges();
 
             return entidad;
         }
 
-        public Auditoria Actualizar(Auditoria entidad)
+        public Auditorias Actualizar(Auditorias entidad)
         {
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Titulo) ||
-                string.IsNullOrEmpty(entidad.Portada))
+            if (string.IsNullOrEmpty(entidad.Accion) ||
+                string.IsNullOrEmpty(entidad.Usuario) ||
+                string.IsNullOrEmpty(entidad.Fecha))
                 throw new Exception("Faltan valores");
 
-            if (entidad.Fecha_Lanzamiento == null)
-                entidad.Fecha_Lanzamiento = DateTime.Now;
-
-            var entry = this.IConexion!.Entry<Auditoria>(entidad);
+            var entry = this.IConexion!.Entry<Auditorias>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion!.SaveChanges();
             return entidad;
         }
 
-        public List<Auditoria> Buscar(Auditoria entidad)
+        public List<Auditorias> Buscar(Auditorias entidad)
         {
-            return this.IConexion.Auditoria!
-                .Where(x => x.Titulo!.Contains(entidad.Titulo!))
+            return this.IConexion.Auditorias!
+                .Where(x => x.Accion!.Contains(entidad.Accion!))
                 .Take(10)
                 .ToList();
         }
 
-        public List<Auditoria> Consultar()
+        public List<Auditorias> Consultar()
         {
-            return this.IConexion.Auditoria!
+            return this.IConexion.Auditorias!
                 .Take(10)
                 .ToList();
         }
 
-        public Auditoria Borrar(Auditoria entidad)
+        public Auditorias Borrar(Auditorias entidad)
         {
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            this.IConexion.Auditoria!.Remove(entidad!);
+            this.IConexion.Auditorias!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
-        }
-
-        private bool Validar(Auditoria entidad)
-        {
-            return string.IsNullOrEmpty(entidad.Titulo) ||
-                string.IsNullOrEmpty(entidad.Portada) ||
-                entidad.Fecha_Lanzamiento == null;
-        }
-
-        public List<Auditoria_Artistas> Buscar(AuditoriasAplicacion album)
-        {
-            throw new NotImplementedException();
         }
     }
 }

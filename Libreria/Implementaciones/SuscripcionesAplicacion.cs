@@ -21,9 +21,10 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Codigo) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+            if (string.IsNullOrEmpty(entidad.Usuario) ||
+                string.IsNullOrEmpty(entidad.Tipo_Plan) ||
+                string.IsNullOrEmpty(entidad.Fecha_Inicio) ||
+                string.IsNullOrEmpty(entidad.Fecha_Fin))
                 throw new Exception("Faltan valores");
 
             this.IConexion.Suscripciones!.Add(entidad!);
@@ -37,9 +38,11 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Codigo) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+            if (string.IsNullOrEmpty(entidad.Usuario) ||
+                string.IsNullOrEmpty(entidad.Tipo_Plan) ||
+                string.IsNullOrEmpty(entidad.Fecha_Inicio) ||
+                string.IsNullOrEmpty(entidad.Fecha_Fin))
+
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Suscripciones>(entidad);
@@ -51,7 +54,7 @@ namespace Libreria.Implementaciones
         public List<Suscripciones> Buscar(Suscripciones entidad)
         {
             return this.IConexion.Suscripciones!
-                .Where(x => x.Nombre!.Contains(entidad.Nombre!))
+                .Where(x => x.Usuario!.Contains(entidad.Usuario!))
                 .Take(10)
                 .ToList();
         }
