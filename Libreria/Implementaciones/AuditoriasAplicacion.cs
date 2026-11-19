@@ -26,6 +26,9 @@ namespace Libreria.Implementaciones
                 string.IsNullOrEmpty(entidad.Fecha))
                 throw new Exception("Faltan valores");
 
+            if (entidad.Fecha_Lanzamiento == null)
+                entidad.Fecha_Lanzamiento = DateTime.Now;
+
             this.IConexion.Auditorias!.Add(entidad!);
             this.IConexion.SaveChanges();
 
