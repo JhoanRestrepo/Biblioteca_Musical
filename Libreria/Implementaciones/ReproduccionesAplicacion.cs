@@ -21,11 +21,17 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Usuario) ||
-                string.IsNullOrEmpty(entidad.Cancion) ||
-                string.IsNullOrEmpty(entidad.Fecha_Hora) ||
-                    string.IsNullOrEmpty(entidad.Duracion))
+            if (entidad._Usuario!.Id == 0 ||
+                entidad._Cancion!.Id == 0 ||
+                entidad.Fecha_Hora == null ||
+                entidad.Duracion == null)
                 throw new Exception("Faltan valores");
+
+            if (!this.IConexion.Usuarios!.Any(x => x.Id == entidad.Usuario))
+                throw new Exception("El usuario no existe");
+
+            if (!this.IConexion.Canciones!.Any(x => x.Id == entidad.Cancion))
+                throw new Exception("La canción no existe");
 
             this.IConexion.Reproducciones!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -38,10 +44,10 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Usuario) ||
-                string.IsNullOrEmpty(entidad.Cancion) ||
-                string.IsNullOrEmpty(entidad.Fecha_Hora) ||
-                    string.IsNullOrEmpty(entidad.Duracion))
+            if (entidad.Usuario == 0 ||
+                entidad.Cancion == 0 ||
+                entidad.Fecha_Hora == null ||
+                entidad.Duracion == null)
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Reproducciones>(entidad);
@@ -50,17 +56,22 @@ namespace Libreria.Implementaciones
             return entidad;
         }
 
-        public List<Reproducciones> Buscar(Reproducciones entidad)
+        public List<Reproducciones> Consultar()
         {
             return this.IConexion.Reproducciones!
-                .Where(x => x.Usuario!.Contains(entidad.Usuario!))
+                .Include(x => x._Usuario)
+                .Include(x => x._Cancion)
                 .Take(10)
                 .ToList();
         }
 
-        public List<Reproducciones> Consultar()
+        public List<Reproducciones> Buscar(Reproducciones entidad)
         {
             return this.IConexion.Reproducciones!
+                .Include(x => x._Usuario)
+                .Include(x => x._Cancion)
+                .Where(x => x._Usuario!.Nombre!.Contains(entidad._Usuario!.Nombre!) ||
+                            x._Cancion!.Titulo!.Contains(entidad._Cancion!.Titulo!))
                 .Take(10)
                 .ToList();
         }
@@ -73,6 +84,14 @@ namespace Libreria.Implementaciones
             this.IConexion.Reproducciones!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Reproducciones entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Usuario.ToString()) ||
+                string.IsNullOrEmpty(entidad.Cancion.ToString()) ||
+                string.IsNullOrEmpty(entidad.Fecha_Hora.ToString()) ||
+                string.IsNullOrEmpty(entidad.Duracion.ToString());
         }
     }
 }

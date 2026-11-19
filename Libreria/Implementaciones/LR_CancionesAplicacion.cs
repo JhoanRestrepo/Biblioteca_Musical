@@ -21,8 +21,15 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Titulo))
+            if (entidad._Lista_Reproduccion!.Id == 0 ||
+                entidad._Cancion!.Id == 0)
                 throw new Exception("Faltan valores");
+
+            if (!this.IConexion.Listas_Reproducciones!.Any(x => x.Id == entidad.Lista_Reproduccion))
+                throw new Exception("La lista de reproducción no existe");
+
+            if (!this.IConexion.Canciones!.Any(x => x.Id == entidad.Cancion))
+                throw new Exception("La canción no existe");
 
             this.IConexion.LR_Canciones!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -35,7 +42,8 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Titulo))
+            if (entidad.Lista_Reproduccion == 0 ||
+                entidad.Cancion == 0)
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<LR_Canciones>(entidad);
@@ -47,8 +55,10 @@ namespace Libreria.Implementaciones
         public List<LR_Canciones> Buscar(LR_Canciones entidad)
         {
             return this.IConexion.LR_Canciones!
-                .Include(x => x._Album)
-                .Where(x => x.Titulo!.Contains(entidad.Titulo!))
+                .Include(x => x._Lista_Reproduccion)
+                .Include(x => x._Cancion)
+                .Where(x => x._Lista_Reproduccion!.Nombre!.Contains(entidad._Lista_Reproduccion!.Nombre!) ||
+                            x._Cancion!.Titulo!.Contains(entidad._Cancion!.Titulo!))
                 .Take(10)
                 .ToList();
         }
@@ -56,7 +66,8 @@ namespace Libreria.Implementaciones
         public List<LR_Canciones> Consultar()
         {
             return this.IConexion.LR_Canciones!
-                .Include(x => x._Album)
+                .Include(x => x._Lista_Reproduccion)
+                .Include(x => x._Cancion)
                 .Take(10)
                 .ToList();
         }
@@ -69,6 +80,12 @@ namespace Libreria.Implementaciones
             this.IConexion.LR_Canciones!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(LR_Canciones entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Lista_Reproduccion.ToString()) ||
+                string.IsNullOrEmpty(entidad.Cancion.ToString());
         }
     }
 }

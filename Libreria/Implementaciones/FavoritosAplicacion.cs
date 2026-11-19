@@ -21,8 +21,12 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (entidad.Fecha_Marcado == null)
-                entidad.Fecha_Marcado = DateTime.Now;
+            if (entidad.Usuario == 0 ||
+                entidad.Fecha_Marcado == null)
+                throw new Exception("Faltan valores");
+
+            if (!this.IConexion.Usuarios!.Any(x => x.Id == entidad.Usuario))
+                throw new Exception("El usuario no existe");
 
             this.IConexion.Favoritos!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -35,8 +39,9 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (entidad.Fecha_Marcado == null)
-                entidad.Fecha_Marcado = DateTime.Now;
+            if (entidad.Usuario == 0 ||
+                entidad.Fecha_Marcado == null)
+                throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Favoritos>(entidad);
             entry.State = EntityState.Modified;
@@ -44,17 +49,19 @@ namespace Libreria.Implementaciones
             return entidad;
         }
 
-        public List<Favoritos> Buscar(Favoritos entidad)
+        public List<Favoritos> Consultar()
         {
             return this.IConexion.Favoritos!
-                .Where(x => x.Usuario == entidad.Usuario)
+                .Include(x => x._Usuario)
                 .Take(10)
                 .ToList();
         }
 
-        public List<Favoritos> Consultar()
+        public List<Favoritos> Buscar(Favoritos entidad)
         {
             return this.IConexion.Favoritos!
+                .Include(x => x._Usuario)
+                .Where(x => x._Usuario!.Nombre!.Contains(entidad._Usuario!.Nombre!))
                 .Take(10)
                 .ToList();
         }
@@ -67,6 +74,12 @@ namespace Libreria.Implementaciones
             this.IConexion.Favoritos!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Favoritos entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Usuario.ToString()) ||
+                string.IsNullOrEmpty(entidad.Fecha_Marcado.ToString());
         }
     }
 }

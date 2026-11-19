@@ -22,7 +22,8 @@ namespace Libreria.Implementaciones
                 throw new Exception("Ya se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Nacionalidad))
+                string.IsNullOrEmpty(entidad.Nacionalidad) ||
+                entidad.Fecha_Nacimiento == null)
                 throw new Exception("Faltan valores");
 
             this.IConexion.Compositores!.Add(entidad!);
@@ -37,7 +38,8 @@ namespace Libreria.Implementaciones
                 throw new Exception("No se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Nacionalidad))
+                string.IsNullOrEmpty(entidad.Nacionalidad) ||
+                entidad.Fecha_Nacimiento == null)
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Compositores>(entidad);
@@ -46,17 +48,18 @@ namespace Libreria.Implementaciones
             return entidad;
         }
 
-        public List<Compositores> Buscar(Compositores entidad)
+        public List<Compositores> Consultar()
         {
             return this.IConexion.Compositores!
-                .Where(x => x.Nombre!.Contains(entidad.Nombre!))
                 .Take(10)
                 .ToList();
         }
 
-        public List<Compositores> Consultar()
+        public List<Compositores> Buscar(Compositores entidad)
         {
             return this.IConexion.Compositores!
+                .Where(x => x.Nombre!.Contains(entidad.Nombre!) ||
+                            x.Nacionalidad!.Contains(entidad.Nacionalidad!))
                 .Take(10)
                 .ToList();
         }
@@ -69,6 +72,13 @@ namespace Libreria.Implementaciones
             this.IConexion.Compositores!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Compositores entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Nacionalidad) ||
+                string.IsNullOrEmpty(entidad.Fecha_Nacimiento.ToString());
         }
     }
 }

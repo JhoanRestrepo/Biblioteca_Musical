@@ -18,8 +18,7 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (entidad.Artista == 0 ||
-                entidad.Sello_Discografico == 0)
+            if (Validar(entidad))
                 throw new Exception("Faltan valores");
 
             if (!this.IConexion.Artistas!.Any(x => x.Id == entidad.Artista))
@@ -45,19 +44,28 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (entidad.Artista == 0 ||
-                entidad.Sello_Discografico == 0)
+            if (Validar(entidad))
                 throw new Exception("Faltan valores");
 
             if (entidad.Fecha_Inicio == null ||
                 entidad.Fecha_Fin == null)
                 entidad.Fecha_Inicio = DateTime.Now;
-                entidad.Fecha_Fin = DateTime.Now;     
+            entidad.Fecha_Fin = DateTime.Now;
 
             var entry = this.IConexion!.Entry<Artistas_Sellos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion!.SaveChanges();
             return entidad;
+        }
+
+        public List<Artistas_Sellos> Buscar(Artistas_Sellos entidad)
+        {
+            return this.IConexion.Artistas_Sellos!
+                .Include(x => x._Artista)
+                .Include(x => x._Sello_Discografico)
+                .Where(x => x.Artista == entidad.Artista)
+                .Take(10)
+                .ToList();
         }
 
         public List<Artistas_Sellos> Consultar()
@@ -76,6 +84,14 @@ namespace Libreria.Implementaciones
             this.IConexion.Artistas_Sellos!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Artistas_Sellos entidad)
+        {
+            return entidad.Artista == 0 ||
+                entidad.Sello_Discografico == 0 ||
+                entidad.Fecha_Inicio == null ||
+                entidad.Fecha_Fin == null;
         }
     }
 }

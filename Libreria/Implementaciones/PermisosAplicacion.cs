@@ -22,8 +22,8 @@ namespace Libreria.Implementaciones
                 throw new Exception("Ya se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Codigo) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+                string.IsNullOrEmpty(entidad.Descripcion) ||
+                string.IsNullOrEmpty(entidad.Codigo))
                 throw new Exception("Faltan valores");
 
             this.IConexion.Permisos!.Add(entidad!);
@@ -38,8 +38,8 @@ namespace Libreria.Implementaciones
                 throw new Exception("No se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Codigo) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+                string.IsNullOrEmpty(entidad.Descripcion) ||
+                string.IsNullOrEmpty(entidad.Codigo))
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Permisos>(entidad);
@@ -71,6 +71,13 @@ namespace Libreria.Implementaciones
             this.IConexion.Permisos!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Permisos entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Descripcion) ||
+                string.IsNullOrEmpty(entidad.Codigo);
         }
     }
 }

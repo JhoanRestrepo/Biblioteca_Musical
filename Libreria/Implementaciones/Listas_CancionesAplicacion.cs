@@ -21,6 +21,17 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
+            if (entidad.Cancion == 0 ||
+                entidad.Posicion == 0 ||
+                entidad.Favorita == 0)
+                throw new Exception("Faltan valores");
+
+            if (!this.IConexion.Canciones!.Any(x => x.Id == entidad.Cancion))
+                throw new Exception("La canción no existe");
+
+            if (!this.IConexion.Favoritos!.Any(x => x.Id == entidad.Favorita))
+                throw new Exception("La lista no existe");
+
             this.IConexion.Listas_Canciones!.Add(entidad!);
             this.IConexion.SaveChanges();
 
@@ -31,6 +42,11 @@ namespace Libreria.Implementaciones
         {
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
+
+            if (entidad.Cancion == 0 ||
+                entidad.Posicion == 0 ||
+                entidad.Favorita == 0)
+                throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Listas_Canciones>(entidad);
             entry.State = EntityState.Modified;
@@ -61,6 +77,13 @@ namespace Libreria.Implementaciones
             this.IConexion.Listas_Canciones!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Listas_Canciones entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Cancion.ToString()) ||
+                string.IsNullOrEmpty(entidad.Posicion.ToString()) ||
+                string.IsNullOrEmpty(entidad.Favorita.ToString());
         }
     }
 }

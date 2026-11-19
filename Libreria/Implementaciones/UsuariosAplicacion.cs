@@ -24,8 +24,8 @@ namespace Libreria.Implementaciones
             if (string.IsNullOrEmpty(entidad.Nombre) ||
                 string.IsNullOrEmpty(entidad.Apellido) ||
                 string.IsNullOrEmpty(entidad.Correo) ||
-                string.IsNullOrEmpty(entidad.Fecha_Registro)) 
-               throw new Exception("Faltan valores");
+                entidad.Fecha_Registro == null)
+                throw new Exception("Faltan valores");
 
             this.IConexion.Usuarios!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -39,9 +39,9 @@ namespace Libreria.Implementaciones
                 throw new Exception("No se guardo");
 
             if (string.IsNullOrEmpty(entidad.Nombre) ||
-                 string.IsNullOrEmpty(entidad.Apellido) ||
-                 string.IsNullOrEmpty(entidad.Correo) ||
-                 string.IsNullOrEmpty(entidad.Fecha_Registro))
+                string.IsNullOrEmpty(entidad.Apellido) ||
+                string.IsNullOrEmpty(entidad.Correo) ||
+                entidad.Fecha_Registro == null)
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Usuarios>(entidad);
@@ -73,6 +73,14 @@ namespace Libreria.Implementaciones
             this.IConexion.Usuarios!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Usuarios entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Apellido) ||
+                string.IsNullOrEmpty(entidad.Correo) ||
+                string.IsNullOrEmpty(entidad.Fecha_Registro.ToString());
         }
     }
 }

@@ -21,11 +21,14 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Usuario) ||
+            if (entidad._Usuario!.Id == 0 ||
                 string.IsNullOrEmpty(entidad.Tipo_Plan) ||
-                string.IsNullOrEmpty(entidad.Fecha_Inicio) ||
-                string.IsNullOrEmpty(entidad.Fecha_Fin))
+                entidad.Fecha_Inicio == null ||
+                entidad.Fecha_Fin == null)
                 throw new Exception("Faltan valores");
+
+            if (!this.IConexion.Usuarios!.Any(x => x.Id == entidad.Usuario))
+                throw new Exception("El usuario no existe");
 
             this.IConexion.Suscripciones!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -38,11 +41,10 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Usuario) ||
+            if (entidad.Usuario == 0 ||
                 string.IsNullOrEmpty(entidad.Tipo_Plan) ||
-                string.IsNullOrEmpty(entidad.Fecha_Inicio) ||
-                string.IsNullOrEmpty(entidad.Fecha_Fin))
-
+                entidad.Fecha_Inicio == null ||
+                entidad.Fecha_Fin == null)
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Suscripciones>(entidad);
@@ -54,7 +56,8 @@ namespace Libreria.Implementaciones
         public List<Suscripciones> Buscar(Suscripciones entidad)
         {
             return this.IConexion.Suscripciones!
-                .Where(x => x.Usuario!.Contains(entidad.Usuario!))
+                .Include(x => x._Usuario)
+                .Where(x => x.Tipo_Plan!.Contains(entidad.Tipo_Plan!))
                 .Take(10)
                 .ToList();
         }
@@ -62,6 +65,7 @@ namespace Libreria.Implementaciones
         public List<Suscripciones> Consultar()
         {
             return this.IConexion.Suscripciones!
+                .Include(x => x._Usuario)
                 .Take(10)
                 .ToList();
         }
@@ -74,6 +78,14 @@ namespace Libreria.Implementaciones
             this.IConexion.Suscripciones!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Suscripciones entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Usuario.ToString()) ||
+                string.IsNullOrEmpty(entidad.Tipo_Plan) ||
+                string.IsNullOrEmpty(entidad.Fecha_Inicio.ToString()) ||
+                string.IsNullOrEmpty(entidad.Fecha_Fin.ToString());
         }
     }
 }

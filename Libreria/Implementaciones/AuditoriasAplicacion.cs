@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Libreria.Implementaciones
 {
-    public class AuditoriasAplicacion : IAuditoriasAuditoriasAplicacion
+    public class AuditoriasAplicacion : IAuditoriasAplicacion
     {
         private IConexion IConexion;
 
@@ -21,13 +21,10 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Accion) ||
-                string.IsNullOrEmpty(entidad.Usuario) ||
-                string.IsNullOrEmpty(entidad.Fecha))
+            if (string.IsNullOrEmpty(entidad.Accion))
                 throw new Exception("Faltan valores");
 
-            if (entidad.Fecha_Lanzamiento == null)
-                entidad.Fecha_Lanzamiento = DateTime.Now;
+            entidad.Fecha = DateTime.Now;
 
             this.IConexion.Auditorias!.Add(entidad!);
             this.IConexion.SaveChanges();
@@ -40,10 +37,10 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Accion) ||
-                string.IsNullOrEmpty(entidad.Usuario) ||
-                string.IsNullOrEmpty(entidad.Fecha))
+            if (string.IsNullOrEmpty(entidad.Accion))
                 throw new Exception("Faltan valores");
+
+            entidad.Fecha = DateTime.Now;
 
             var entry = this.IConexion!.Entry<Auditorias>(entidad);
             entry.State = EntityState.Modified;
@@ -74,6 +71,12 @@ namespace Libreria.Implementaciones
             this.IConexion.Auditorias!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Auditorias entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Accion) ||
+                string.IsNullOrEmpty(entidad.Fecha.ToString());
         }
     }
 }

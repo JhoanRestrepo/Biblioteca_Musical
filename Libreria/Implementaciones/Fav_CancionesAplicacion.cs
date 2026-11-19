@@ -21,6 +21,16 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
+            if (entidad.Favorito == 0 ||
+                entidad.Cancion == 0)
+                throw new Exception("Faltan valores");
+
+            if (!this.IConexion.Favoritos!.Any(x => x.Id == entidad.Favorito))
+                throw new Exception("El favorito no existe");
+
+            if (!this.IConexion.Canciones!.Any(x => x.Id == entidad.Cancion))
+                throw new Exception("La canción no existe");
+
             this.IConexion.Fav_Canciones!.Add(entidad!);
             this.IConexion.SaveChanges();
 
@@ -32,23 +42,31 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
+            if (entidad.Favorito == 0 ||
+                entidad.Cancion == 0)
+                throw new Exception("Faltan valores");
+
             var entry = this.IConexion!.Entry<Fav_Canciones>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion!.SaveChanges();
             return entidad;
         }
 
-        public List<Fav_Canciones> Buscar(Fav_Canciones entidad)
+        public List<Fav_Canciones> Consultar()
         {
             return this.IConexion.Fav_Canciones!
-                .Where(x => x.Cancion == entidad.Cancion)
+                .Include(x => x._Favorito)
+                .Include(x => x._Cancion)
                 .Take(10)
                 .ToList();
         }
 
-        public List<Fav_Canciones> Consultar()
+        public List<Fav_Canciones> Buscar(Fav_Canciones entidad)
         {
             return this.IConexion.Fav_Canciones!
+                .Include(x => x._Favorito)
+                .Include(x => x._Cancion)
+                .Where(x => x._Cancion!.Titulo!.Contains(entidad._Cancion!.Titulo!))
                 .Take(10)
                 .ToList();
         }
@@ -61,6 +79,12 @@ namespace Libreria.Implementaciones
             this.IConexion.Fav_Canciones!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Fav_Canciones entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Favorito.ToString()) ||
+                string.IsNullOrEmpty(entidad.Cancion.ToString());
         }
     }
 }

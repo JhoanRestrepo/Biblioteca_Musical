@@ -10,6 +10,6 @@ namespace Libreria.Interfaces
         List<LR_Canciones> Consultar();
         List<LR_Canciones> Buscar(LR_Canciones entidad);
         LR_Canciones Borrar(LR_Canciones entidad);
-        List<Albumes_LR_Canciones> Buscar(LR_CancionesAplicacion artista);
+        
     }
 }

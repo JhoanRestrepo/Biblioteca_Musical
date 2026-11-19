@@ -22,8 +22,8 @@ namespace Libreria.Implementaciones
                 throw new Exception("Ya se guardo");
 
             if (string.IsNullOrEmpty(entidad.Administrador) ||
-                string.IsNullOrEmpty(entidad.UsuarioP) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+                entidad.Descripcion == null ||
+                string.IsNullOrEmpty(entidad.Usuario))
                 throw new Exception("Faltan valores");
 
             this.IConexion.Roles!.Add(entidad!);
@@ -38,8 +38,8 @@ namespace Libreria.Implementaciones
                 throw new Exception("No se guardo");
 
             if (string.IsNullOrEmpty(entidad.Administrador) ||
-                string.IsNullOrEmpty(entidad.UsuarioP) ||
-                string.IsNullOrEmpty(entidad.Descripcion))
+                entidad.Descripcion == null ||
+                string.IsNullOrEmpty(entidad.Usuario))
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Roles>(entidad);
@@ -71,6 +71,13 @@ namespace Libreria.Implementaciones
             this.IConexion.Roles!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Roles entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Administrador) ||
+                string.IsNullOrEmpty(entidad.Descripcion.ToString()) ||
+                string.IsNullOrEmpty(entidad.Usuario);
         }
     }
 }

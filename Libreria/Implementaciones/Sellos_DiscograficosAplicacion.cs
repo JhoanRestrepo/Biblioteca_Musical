@@ -18,8 +18,7 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Pais))
+            if (Validar(entidad))
                 throw new Exception("Faltan valores");
 
             if (entidad.Fecha_Fundacion == null)
@@ -36,8 +35,7 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Nombre) ||
-                string.IsNullOrEmpty(entidad.Pais))
+            if (Validar(entidad))
                 throw new Exception("Faltan valores");
 
             if (entidad.Fecha_Fundacion == null)
@@ -47,6 +45,14 @@ namespace Libreria.Implementaciones
             entry.State = EntityState.Modified;
             this.IConexion!.SaveChanges();
             return entidad;
+        }
+
+        public List<Sellos_Discograficos> Buscar(Sellos_Discograficos entidad)
+        {
+            return this.IConexion.Sellos_Discograficos!
+                .Where(x => x.Nombre!.Contains(entidad.Nombre!))
+                .Take(10)
+                .ToList();
         }
 
         public List<Sellos_Discograficos> Consultar()
@@ -63,6 +69,12 @@ namespace Libreria.Implementaciones
             this.IConexion.Sellos_Discograficos!.Remove(entidad!);
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        private bool Validar(Sellos_Discograficos entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Pais);
         }
     }
 }

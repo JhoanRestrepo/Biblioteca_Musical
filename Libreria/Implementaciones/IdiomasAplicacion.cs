@@ -72,5 +72,12 @@ namespace Libreria.Implementaciones
             this.IConexion.SaveChanges();
             return entidad;
         }
+
+        private bool Validar(Idiomas entidad)
+        {
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Codigo) ||
+                string.IsNullOrEmpty(entidad.Descripcion);
+        }
     }
 }

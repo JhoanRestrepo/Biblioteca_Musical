@@ -10,6 +10,6 @@ namespace Libreria.Interfaces
         List<Auditorias> Consultar();
         List<Auditorias> Buscar(Auditorias entidad);
         Auditorias Borrar(Auditorias entidad);
-        List<Auditorias_Artistas> Buscar(AuditoriasAplicacion album);
+        
     }
 }
