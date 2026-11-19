@@ -10,6 +10,7 @@ builder.Services.AddScoped<IComunicaciones, Comunicaciones>();
 builder.Services.AddScoped<IAlbumesPresentacion, AlbumesPresentacion>();
 builder.Services.AddScoped<IArtistasPresentacion, ArtistasPresentacion>();
 builder.Services.AddScoped<IAlbumes_ArtistasPresentacion, Albumes_ArtistasPresentacion>();
+builder.Services.AddScoped<ICancionesPresentacion, CancionesPresentacion>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddRazorPages();

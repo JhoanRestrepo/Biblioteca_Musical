@@ -31,7 +31,7 @@ namespace Servicio_Musica.Controllers
             return this.IAlbumes_ArtistasAplicacion.Insertar(entidad);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IEnumerable<Albumes_Artistas> Consultar()
         {
             return this.IAlbumes_ArtistasAplicacion.Consultar();

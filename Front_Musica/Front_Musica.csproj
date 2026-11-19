@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Music\Beat It.mp3" />
+    <Content Remove="wwwroot\Music\Dirty Diana.mp3" />
+    <Content Remove="wwwroot\Music\Give In to Me.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Music\Beat It.mp3" />
+    <None Include="wwwroot\Music\Dirty Diana.mp3" />
+    <None Include="wwwroot\Music\Give In to Me.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 

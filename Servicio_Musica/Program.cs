@@ -10,6 +10,7 @@ builder.Services.AddScoped<IAlbumesAplicacion, AlbumesAplicacion>();
 builder.Services.AddScoped<IArtistas_SellosAplicacion, Artistas_SellosAplicacion>();
 builder.Services.AddScoped<IArtistasAplicacion, ArtistasAplicacion>();
 builder.Services.AddScoped<ISellos_DiscograficosAplicacion, Sellos_DiscograficosAplicacion>();
+builder.Services.AddScoped<ICancionesAplicacion, CancionesAplicacion>();
 
 var app = builder.Build();
 

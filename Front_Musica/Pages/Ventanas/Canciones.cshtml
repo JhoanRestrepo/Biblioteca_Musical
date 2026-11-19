@@ -1,0 +1,223 @@
+﻿@page
+@model CancionesModel
+@{
+    ViewData["Title"] = "Canciones";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Canciones</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flTitulo"
+                   placeholder="Titulo"
+                   asp-for="@Model.Filtro!.Titulo"/>
+        </div>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Album</h3>
+
+                <label>
+                    Portada
+                </label>
+                @if (Model.Actual!._Album?.Portada != null)
+                {
+                    <img height="100"
+                         width="100"
+                         src="data:image;base64,
+                    @System.Convert.ToBase64String(
+                    Convert.FromBase64String(
+                    Model.Actual!._Album?.Portada))" />
+                }
+                <input type="file"
+                       asp-for="FormFile" />
+            
+                <label>
+                    Titulo
+                </label>
+                <input id="nmTitulo"
+                       asp-for="@Model.Actual!.Titulo" />
+                <br />
+
+                <label>
+                    Duracion
+                </label>
+                <input id="nmDuracion"
+                       asp-for="@Model.Actual!.Duracion" />
+                <br />
+
+                <label>
+                    Numero de Pista
+                </label>
+                <input id="nmNumero_Pista"
+                       asp-for="@Model.Actual!.Numero_Pista" />
+                <br />
+
+                <h3>Album</h3>
+                <select id="nm_Album"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Album!"
+                        asp-items="@(new SelectList(Model.Albumes!, "Id", "Titulo"))">
+                </select>
+                <br />
+
+            </div>
+        }
+        
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>Album</h3>
+                <label>
+                    Titulo
+                </label>
+                <input id="nmTitulo"
+                       asp-for="@Model.Actual!.Titulo" />
+                <br />
+                <label>
+                    Duracion
+                </label>
+                <input id="nmDuracion"
+                       asp-for="@Model.Actual!.Duracion" />
+                <br />
+
+                <label>
+                    Numero de Pista
+                </label>
+                <input id="nmNumero_Pista"
+                       asp-for="@Model.Actual!.Numero_Pista" />
+                <br />
+
+                <label>
+                    Album
+                </label>
+                <input id="nmAlbum"
+                       asp-for="@Model.Actual!.Album" />
+                <br />
+                <label>
+                    Portada
+                </label>
+                @if (Model.Actual!._Album!.Portada != null)
+                {
+                    <img height="100"
+                         width="100"
+                         src="data:image;base64,
+                    @System.Convert.ToBase64String(
+                     Convert.FromBase64String(
+                     Model.Actual!._Album!.Portada))" />
+                }
+                <input type="file"
+                       asp-for="FormFile" />
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar el album con información
+                        @Model.Actual!.Titulo,
+                        @Model.Actual!._Album
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Portada</th>
+                        <th>Titulo</th>
+                        <th>Duracion</th>
+                        <th>Numero de Pista</th>
+                        <th>Album</th>
+                        <th>Acción</th>
+                        <th>Reproducir</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>
+                                    @if (elemento._Album!.Portada != null)
+                                    {
+                                        <img height="60"
+                                             width="60"
+                                             src="data:image;base64,
+                                        @System.Convert.ToBase64String(
+                                        Convert.FromBase64String(elemento._Album!.Portada))" />
+                                    }
+                                </td>
+                                <td>@elemento.Titulo</td>
+                                <td>@elemento.Duracion!.ToString(@"mm\:ss")</td>
+                                <td>@elemento.Numero_Pista</td>
+                                <td>@elemento._Album!.Titulo</td>
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                    <td>
+                                        <audio controls preload="metadata">
+                                            <source src="@Url.Content($"~/Music/{elemento.Titulo}.mp3")" type="audio/mpeg">
+                                            Tu navegador no soporta el elemento de audio.
+                                        </audio>
+                                    </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
