@@ -1,0 +1,76 @@
+﻿using Libreria.Entidades;
+using Libreria.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Libreria.Implementaciones
+{
+    public class RolesAplicacion : IRolesAplicacion
+    {
+        private IConexion IConexion;
+
+        public RolesAplicacion(IConexion IConexion)
+        {
+            this.IConexion = IConexion;
+        }
+
+        public Roles Insertar(Roles entidad)
+        {
+            if (entidad.Id != 0)
+                throw new Exception("Ya se guardo");
+
+            if (string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Codigo) ||
+                string.IsNullOrEmpty(entidad.Descripcion))
+                throw new Exception("Faltan valores");
+
+            this.IConexion.Roles!.Add(entidad!);
+            this.IConexion.SaveChanges();
+
+            return entidad;
+        }
+
+        public Roles Actualizar(Roles entidad)
+        {
+            if (entidad.Id == 0)
+                throw new Exception("No se guardo");
+
+            if (string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Codigo) ||
+                string.IsNullOrEmpty(entidad.Descripcion))
+                throw new Exception("Faltan valores");
+
+            var entry = this.IConexion!.Entry<Roles>(entidad);
+            entry.State = EntityState.Modified;
+            this.IConexion!.SaveChanges();
+            return entidad;
+        }
+
+        public List<Roles> Buscar(Roles entidad)
+        {
+            return this.IConexion.Roles!
+                .Where(x => x.Nombre!.Contains(entidad.Nombre!))
+                .Take(10)
+                .ToList();
+        }
+
+        public List<Roles> Consultar()
+        {
+            return this.IConexion.Roles!
+                .Take(10)
+                .ToList();
+        }
+
+        public Roles Borrar(Roles entidad)
+        {
+            if (entidad.Id == 0)
+                throw new Exception("No se guardo");
+
+            this.IConexion.Roles!.Remove(entidad!);
+            this.IConexion.SaveChanges();
+            return entidad;
+        }
+    }
+}
