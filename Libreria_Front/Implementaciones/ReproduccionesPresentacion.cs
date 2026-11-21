@@ -1,9 +1,12 @@
 ﻿using Libreria.Entidades;
 using Libreria_Front.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Libreria_Front.Implementaciones
 {
-    public class ReproduccionesPresentacion : IReproduccionesPresentacion
+   public class ReproduccionesPresentacion : IReproduccionesPresentacion
     {
         private IComunicaciones IComunicaciones;
 
@@ -21,7 +24,7 @@ namespace Libreria_Front.Implementaciones
                 throw new Exception("Falta informacion");
 
             var task = this.IComunicaciones.Ejecutar<Reproducciones>(
-                "Reproducciones/Actualizar", 
+                "Reproducciones/Actualizar",
                 entidad);
             task.Wait();
             return task.Result;

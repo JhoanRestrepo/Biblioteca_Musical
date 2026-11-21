@@ -1,5 +1,8 @@
 ﻿using Libreria.Entidades;
 using Libreria_Front.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Libreria_Front.Implementaciones
 {
@@ -21,7 +24,7 @@ namespace Libreria_Front.Implementaciones
                 throw new Exception("Falta informacion");
 
             var task = this.IComunicaciones.Ejecutar<Roles>(
-                "Roles/Actualizar", 
+                "Roles/Actualizar",
                 entidad);
             task.Wait();
             return task.Result;
