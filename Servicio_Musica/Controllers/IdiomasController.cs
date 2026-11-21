@@ -11,13 +11,13 @@ namespace Servicio_Musica.Controllers
     public class IdiomasController : ControllerBase
     {
         // 1. Declarar las 3 interfaces de aplicación
-        private IIdiomasAplicacion IIdiomasAplicacion;
+        private I_IdiomasAplicacion I_IdiomasAplicacion;
 
         // 2. Inicializar las 3 dependencias en el constructor
-        public IdiomasController(IIdiomasAplicacion IIdiomasAplicacion)
+        public IdiomasController(I_IdiomasAplicacion I_IdiomasAplicacion)
         {
 
-            this.IIdiomasAplicacion = IIdiomasAplicacion;
+            this.I_IdiomasAplicacion = I_IdiomasAplicacion;
             
         }
 
@@ -28,31 +28,31 @@ namespace Servicio_Musica.Controllers
         [HttpPost]
         public Idiomas Insertar(Idiomas entidad)
         {
-            return this.IIdiomasAplicacion.Insertar(entidad);
+            return this.I_IdiomasAplicacion.Insertar(entidad);
         }
 
         [HttpPost]
         public List<Idiomas> Buscar(Idiomas entidad)
         {
-            return this.IIdiomasAplicacion.Buscar(entidad);
+            return this.I_IdiomasAplicacion.Buscar(entidad);
         }
         
         [HttpPost]
         public IEnumerable<Idiomas> Consultar()
         {
-            return this.IIdiomasAplicacion.Consultar();
+            return this.I_IdiomasAplicacion.Consultar();
         }
 
         [HttpPost]
         public Idiomas Actualizar(Idiomas entidad)
         {
-            return this.IIdiomasAplicacion.Actualizar(entidad);
+            return this.I_IdiomasAplicacion.Actualizar(entidad);
         }
 
         [HttpPost]
         public Idiomas Borrar(Idiomas entidad)
         {
-            return this.IIdiomasAplicacion.Borrar(entidad);
+            return this.I_IdiomasAplicacion.Borrar(entidad);
         }
 
     }
