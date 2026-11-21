@@ -33,8 +33,10 @@ namespace Libreria.Implementaciones
         public DbSet<Permisos>? Permisos { get; set; }
         public DbSet<Reproducciones>? Reproducciones { get; set; }
         public DbSet<Roles>? Roles { get; set; }
+        public DbSet<Roles_Permisos>? Roles_Permisos { get; set; }
         public DbSet<Sellos_Discograficos>? Sellos_Discograficos { get; set; }
         public DbSet<Suscripciones>? Suscripciones { get; set; }
         public DbSet<Usuarios>? Usuarios { get; set; }
+        public DbSet<Usuarios_Roles>? Usuarios_Roles { get; set; }
     }
 }

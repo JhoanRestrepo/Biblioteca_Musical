@@ -13,10 +13,11 @@ namespace Libreria.Entidades
             public string? Correo { get; set; }
             public DateTime? Fecha_Registro { get; set; }
 
-            [NotMapped]public List<Suscripciones>? Suscripciones { get; set; }
-            [NotMapped] public List<Listas_Reproducciones>? Listas_Reproducciones { get; set; }
             [NotMapped] public List<Favoritos>? Favoritos { get; set; }
+            [NotMapped] public List<Listas_Reproducciones>? Listas_Reproducciones { get; set; }
             [NotMapped] public List<Reproducciones>? Reproducciones { get; set; }
+            [NotMapped]public List<Usuarios_Roles>? Usuarios_Roles { get; set; }
+            [NotMapped]public List<Suscripciones>? Suscripciones { get; set; }
         }
     }
 

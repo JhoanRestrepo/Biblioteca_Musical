@@ -75,8 +75,7 @@ namespace Libreria_Front.Implementaciones
         private bool Validar(Albumes entidad)
         {
             return string.IsNullOrEmpty(entidad.Titulo) ||
-                entidad.Fecha_Lanzamiento == null ||
-                string.IsNullOrEmpty(entidad.Portada);
+                entidad.Fecha_Lanzamiento == null;
         }
     }
 }

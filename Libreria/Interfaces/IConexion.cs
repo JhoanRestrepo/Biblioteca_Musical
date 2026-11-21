@@ -29,9 +29,11 @@ namespace Libreria.Interfaces
         DbSet<Permisos>? Permisos { get; set; }
         DbSet<Reproducciones>? Reproducciones { get; set; }
         DbSet<Roles>? Roles { get; set; }
+        DbSet<Roles_Permisos>? Roles_Permisos { get; set; }
         DbSet<Sellos_Discograficos> Sellos_Discograficos { get; set; }
         DbSet<Suscripciones>? Suscripciones { get; set; }
         DbSet<Usuarios>? Usuarios { get; set; }
+        DbSet<Usuarios_Roles>? Usuarios_Roles { get; set; }
 
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();

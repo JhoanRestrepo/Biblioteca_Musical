@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Libreria.Implementaciones
 {
-    public class IdiomasAplicacion : IIdiomasAplicacion
+    public class IdiomasAplicacion : I_IdiomasAplicacion
     {
         private IConexion IConexion;
 

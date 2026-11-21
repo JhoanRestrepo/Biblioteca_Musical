@@ -32,7 +32,7 @@ namespace Pruebas_Unitarias
             {
                 Titulo = "Servicios Ambulatorioz",
                 Fecha_Lanzamiento = DateTime.Now,
-                Portada = "Servicios Ambulatorioz.JPG",
+                Portada = "",
             };
             this.conexion.Albumes!.Add(this.entidad!);
             this.conexion.SaveChanges();

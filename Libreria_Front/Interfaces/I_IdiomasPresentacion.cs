@@ -1,11 +1,8 @@
 ﻿using Libreria.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Libreria.Interfaces
+namespace Libreria_Front.Interfaces
 {
-    public interface IIdiomasAplicacion
+    public interface I_IdiomasPresentacion
     {
         Idiomas Insertar(Idiomas entidad);
         Idiomas Actualizar(Idiomas entidad);

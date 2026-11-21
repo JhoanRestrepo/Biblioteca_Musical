@@ -207,9 +207,7 @@ CREATE TABLE [Auditorias] (
 -- 22. Roles
     CREATE TABLE [Roles] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [Administrador] NVARCHAR(255) NOT NULL,
-    [Usuario] INT NOT NULL,
-    [UsuarioP] NVARCHAR(255) NOT NULL,
+    [Descripcion] NVARCHAR(255) NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 );
 
@@ -217,12 +215,28 @@ CREATE TABLE [Auditorias] (
     CREATE TABLE [Permisos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(255) NOT NULL,
-    [Usuario] INT NOT NULL,
-    [Descripcion] NVARCHAR(255) NOT NULL,
     [Codigo] NVARCHAR(255) NOT NULL,
+    [Descripcion] NVARCHAR(255) NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 );
 
+-- 24. Usuarios y Roles
+CREATE TABLE [Usuarios_Roles] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Usuario] INT NOT NULL,
+    [Rol] INT NOT NULL,
+    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id]),
+    FOREIGN KEY ([Rol]) REFERENCES [Roles]([Id])
+);
+
+-- 25. Roles y Permisos
+CREATE TABLE [Roles_Permisos] (
+    [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Rol] INT NOT NULL,
+    [Permiso] INT NOT NULL,
+    FOREIGN KEY ([Rol]) REFERENCES [Roles]([Id]),
+    FOREIGN KEY ([Permiso]) REFERENCES [Permisos]([Id])
+);
 
 -- Datos iniciales para que las pruebas tengan registros relacionados
 -- 1. Usuarios
