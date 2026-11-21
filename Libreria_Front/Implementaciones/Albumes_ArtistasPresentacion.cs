@@ -74,8 +74,8 @@ namespace Libreria_Front.Implementaciones
 
         private bool Validar(Albumes_Artistas entidad)
         {
-            return entidad.Album == null ||
-                entidad.Artista == null;
+            return entidad.Album == 0 ||
+                entidad.Artista == 0;
 
 
 

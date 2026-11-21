@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddScoped<IComunicaciones, Comunicaciones>();
 builder.Services.AddScoped<IAlbumes_ArtistasPresentacion, Albumes_ArtistasPresentacion>();
 builder.Services.AddScoped<IAlbumesPresentacion, AlbumesPresentacion>();
 builder.Services.AddScoped<IArtistas_SellosPresentacion, Artistas_SellosPresentacion>();
