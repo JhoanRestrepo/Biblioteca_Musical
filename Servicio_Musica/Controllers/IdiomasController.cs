@@ -11,10 +11,10 @@ namespace Servicio_Musica.Controllers
     public class IdiomasController : ControllerBase
     {
         // 1. Declarar las 3 interfaces de aplicación
-        private IIdiomasAplicacion IIdiomasAplicacion;
+        private I_IdiomasAplicacion IIdiomasAplicacion;
 
         // 2. Inicializar las 3 dependencias en el constructor
-        public IdiomasController(IIdiomasAplicacion IIdiomasAplicacion)
+        public IdiomasController(I_IdiomasAplicacion IIdiomasAplicacion)
         {
 
             this.IIdiomasAplicacion = IIdiomasAplicacion;
