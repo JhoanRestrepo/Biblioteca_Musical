@@ -21,7 +21,7 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Descripcion))
+            if (string.IsNullOrEmpty(entidad.Nombre) || string.IsNullOrEmpty(entidad.Descripcion))
                 throw new Exception("Faltan valores");
 
             this.IConexion.Roles!.Add(entidad!);
@@ -35,7 +35,7 @@ namespace Libreria.Implementaciones
             if (entidad.Id == 0)
                 throw new Exception("No se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Descripcion))
+            if (string.IsNullOrEmpty(entidad.Nombre) || string.IsNullOrEmpty(entidad.Descripcion))
                 throw new Exception("Faltan valores");
 
             var entry = this.IConexion!.Entry<Roles>(entidad);
@@ -47,7 +47,7 @@ namespace Libreria.Implementaciones
         public List<Roles> Buscar(Roles entidad)
         {
             return this.IConexion.Roles!
-                .Where(x => x.Descripcion!.Contains(entidad.Descripcion!))
+                .Where(x => x.Nombre!.Contains(entidad.Nombre!))
                 .Take(10)
                 .ToList();
         }
@@ -71,7 +71,8 @@ namespace Libreria.Implementaciones
 
         private bool Validar(Roles entidad)
         {
-            return string.IsNullOrEmpty(entidad.Descripcion);
+            return string.IsNullOrEmpty(entidad.Nombre) ||
+                string.IsNullOrEmpty(entidad.Descripcion);
         }
     }
 }

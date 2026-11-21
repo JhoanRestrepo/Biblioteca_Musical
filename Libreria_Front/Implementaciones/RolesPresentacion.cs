@@ -77,7 +77,8 @@ namespace Libreria_Front.Implementaciones
 
         private bool Validar(Roles entidad)
         {
-            return string.IsNullOrEmpty(entidad.Descripcion);
+            return string.IsNullOrEmpty(entidad.Nombre) || 
+                string.IsNullOrEmpty(entidad.Descripcion);
         }
     }
 }

@@ -65,8 +65,7 @@ namespace Libreria.Implementaciones
         {
             return this.IConexion.Canciones!
                 .Include(x => x._Album)
-                .Where(x => x.Titulo!.Contains(entidad.Titulo!) ||
-                            x._Album!.Titulo!.Contains(entidad._Album!.Titulo!))
+                .Where(x => x.Titulo!.Contains(entidad.Titulo!))
                 .Take(10)
                 .ToList();
         }

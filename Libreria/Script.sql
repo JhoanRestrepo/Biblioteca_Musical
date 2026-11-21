@@ -207,8 +207,8 @@ CREATE TABLE [Auditorias] (
 -- 22. Roles
     CREATE TABLE [Roles] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
+    [Nombre] NVARCHAR(255) NOT NULL,
     [Descripcion] NVARCHAR(255) NOT NULL,
-    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 );
 
 -- 23. Permisos
@@ -217,7 +217,6 @@ CREATE TABLE [Auditorias] (
     [Nombre] NVARCHAR(255) NOT NULL,
     [Codigo] NVARCHAR(255) NOT NULL,
     [Descripcion] NVARCHAR(255) NOT NULL,
-    FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 );
 
 -- 24. Usuarios y Roles
@@ -387,4 +386,22 @@ VALUES
 (1, 1, '2026-09-29 14:30', '00:03:30'),
 (2, 2, '2026-09-29 15:10', '00:04:10'),
 (3, 3, '2026-09-29 16:05', '00:02:55');
+
+-- 22. Roles
+INSERT INTO [Roles]
+    ([Nombre], [Descripcion])
+VALUES
+('Administrador', 'Acceso completo al sistema'),
+('Empleado', 'Puede gestionar los registros musicales'),
+('Consulta', 'Puede consultar información del sistema');
+
+-- 23. Permisos
+INSERT INTO [Permisos]
+    ([Nombre], [Codigo], [Descripcion])
+VALUES
+('Consultar', '010', 'Puede consultar albumes, canciones, etc'),
+('Editar', '020', 'Puede editar albumes, canciones, etc'),
+('Eliminar', '030', 'Puede eliminar albumes, canciones, etc');
+
+
 */
