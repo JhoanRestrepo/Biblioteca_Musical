@@ -1,0 +1,174 @@
+﻿@page
+@model UsuariosModel
+@{
+    ViewData["Title"] = "Usuarios";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Usuarios</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flNombre"
+                   placeholder="Nombre"
+                   asp-for="@Model.Filtro!.Nombre"/>
+        </div>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Album</h3>
+
+                <label>
+                    Nombre
+                </label>
+                <input id="nmNombre"
+                       asp-for="@Model.Actual!.Nombre" />
+                <br />
+                <label>
+                    Apellido
+                </label>
+                <input id="nmApellido"
+                       asp-for="@Model.Actual!.Apellido" />
+                <br />
+                <label>
+                    Correo
+                </label>
+                <input id="nmCorreo"
+                       asp-for="@Model.Actual!.Correo" />
+                <br />
+
+                <label>
+                    Fecha_Registro
+                </label>
+                <input id="nmFecha_Registro"
+                       asp-for="@Model.Actual!.Fecha_Registro" />
+                <br />
+            </div>
+        }
+        
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>Album</h3>
+                <label>
+                    Nombre
+                </label>
+                <input id="nmNombre"
+                       asp-for="@Model.Actual!.Nombre" />
+                <br />
+                <label>
+                    Apellido
+                </label>
+                <input id="nmApellido"
+                       asp-for="@Model.Actual!.Apellido" />
+                <br />
+                <label>
+                    Correo
+                </label>
+                <input id="nmCorreo"
+                       asp-for="@Model.Actual!.Correo" />
+                <br />
+                <label>
+                    Fecha_Registro
+                </label>
+                <input id="nmFecha_Registro"
+                       asp-for="@Model.Actual!.Fecha_Registro" />
+                <br />
+                
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar el album con información
+                        @Model.Actual!.Nombre,
+                        @Model.Actual!.Apellido
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Fecha de Registro</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>
+                                </td>
+                                <td>@elemento.Nombre</td>
+                                <td>@elemento.Apellido</td>
+                                <td>@elemento.Correo</td>
+                                <td>@elemento.Fecha_Registro!.Value.Year</td>
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>

@@ -1,0 +1,153 @@
+﻿@page
+@model LR_CancionesModel
+@{
+    ViewData["Title"] = "LR_Canciones";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">LR_Canciones</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flCanciones"
+                   placeholder="Cancion"
+                   asp-for="@Model.Filtro!._Cancion!.Titulo" />
+            <input id="flGeneros"
+                   placeholder="Genero"
+                   asp-for="@Model.Filtro!._Genero!.Nombre" />
+        </div>
+
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>LR_Cancion</h3>
+                <label>
+                    Lista_Reproduccion
+                </label>
+                <input id="nmLista_Reproduccion"
+                       asp-for="@Model.Actual!.Lista_Reproduccion" />
+                <br />
+                <label>
+                    Cancion
+                </label>
+                <input id="nmCancion"
+                       asp-for="@Model.Actual!.Cancion" />
+                <br />
+                
+            </div>
+        }
+
+        
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            ;
+        }
+        
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Lista_Reproduccion</h3>
+                <select id="nm_Listas_Reproduccion"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Lista_Reproduccion!"
+                        asp-items="@(new SelectList(Model.Listas_Reproducciones!, "Id", "Titulo"))">
+                </select>
+                <br />
+                <h3>Cancion</h3>
+                <select id="nm_Cancion"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Cancion!"
+                        asp-items="@(new SelectList(Model.Canciones!, "Id", "Nombre"))">
+                </select>
+                <br />
+                <p> Total Listas_Reproducciones: @Model.Listas_Reproducciones?.Count() </p>
+                <p> Total canciones: @Model.Canciones?.Count() </p>
+                
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar la LR_Cancion con información
+                        @Model.Actual!._Cancion,
+                        @Model.Actual!._Lista_Reproduccion
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Lista_Reproduccion</th>
+                        <th>Cancion</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Lista_Reproduccion!.Nombre</td>
+                                <td>@elemento._Cancion!.Titulo</td>
+                                
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
