@@ -47,7 +47,10 @@ namespace Libreria.Implementaciones
         public List<Canciones_Compositores> Buscar(Canciones_Compositores entidad)
         {
             return this.IConexion.Canciones_Compositores!
-                .Where(x => x.Cancion == entidad.Cancion)
+                .Include(x => x._Cancion)
+                .Include(x => x._Compositor)
+                .Where(x => x._Cancion!.Titulo!.Contains(entidad._Cancion!.Titulo!) ||
+                            x._Compositor!.Nombre!.Contains(entidad._Compositor!.Nombre!))
                 .Take(10)
                 .ToList();
         }

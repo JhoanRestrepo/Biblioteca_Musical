@@ -63,7 +63,8 @@ namespace Libreria.Implementaciones
             return this.IConexion.Artistas_Sellos!
                 .Include(x => x._Artista)
                 .Include(x => x._Sello_Discografico)
-                .Where(x => x.Artista == entidad.Artista)
+                .Where(x => x._Artista!.Nombre!.Contains(entidad._Artista!.Nombre!) ||
+                            x._Sello_Discografico!.Nombre!.Contains(entidad._Sello_Discografico!.Nombre!))
                 .Take(10)
                 .ToList();
         }

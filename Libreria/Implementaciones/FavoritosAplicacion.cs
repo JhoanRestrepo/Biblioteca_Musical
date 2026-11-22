@@ -60,12 +60,9 @@ namespace Libreria.Implementaciones
         public List<Favoritos> Buscar(Favoritos entidad)
         {
             return this.IConexion.Favoritos!
-                .Include(x => x._Usuario)
-                .Where(x => x._Usuario!.Nombre!.Contains(entidad._Usuario!.Nombre!))
                 .Take(10)
                 .ToList();
         }
-
         public Favoritos Borrar(Favoritos entidad)
         {
             if (entidad.Id == 0)

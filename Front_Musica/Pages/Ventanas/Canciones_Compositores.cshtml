@@ -1,0 +1,179 @@
+﻿@page
+@model Canciones_CompositoresModel
+@{
+    ViewData["Title"] = "Canciones_Compositores";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Canciones_Compositores</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flCanciones"
+                   placeholder="Cancion"
+                   asp-for="@Model.Filtro!._Cancion!.Titulo" />
+            <input id="flCompositores"
+                   placeholder="Compositor"
+                   asp-for="@Model.Filtro!._Compositor!.Nombre" />
+        </div>
+
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>Cancion_Compositor</h3>
+                <label>
+                    Cancion
+                </label>
+                <input id="nmCancion"
+                       asp-for="@Model.Actual!.Cancion" />
+                <br />
+                <label>
+                    Compositor
+                </label>
+                <input id="nmCompositor"
+                       asp-for="@Model.Actual!.Compositor" />
+                <br />
+                <label>
+                    Porcentaje_Autoria
+                </label>
+                <input id="nmPorcentaje_Autoria"
+                       asp-for="@Model.Actual!.Porcentaje_Autoria" />
+                <br />
+                <label>
+                    Fecha_Registro
+                </label>
+                <input id="nmFecha_Registro"
+                       asp-for="@Model.Actual!.Fecha_Registro" />
+            </div>
+        }
+
+        
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            ;
+        }
+        
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Cancion</h3>
+                <select id="nm_Cancion"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Cancion!"
+                        asp-items="@(new SelectList(Model.Canciones!, "Id", "Titulo"))">
+                </select>
+                <br />
+                <h3>Compositor</h3>
+                <select id="nm_Compositor"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Compositor!"
+                        asp-items="@(new SelectList(Model.Compositores!, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Porcentaje_Autoria
+                </label>
+                <input id="nmPorcentaje_Autoria"
+                       asp-for="@Model.Actual!.Porcentaje_Autoria" />
+                <br />
+
+                <label>
+                    Fecha_Registro
+                </label>
+                <input id="nmFecha_Registro"
+                       asp-for="@Model.Actual!.Fecha_Registro" />
+
+                <p> Total canciones: @Model.Canciones?.Count() </p>
+                <p> Total compositores: @Model.Compositores?.Count() </p>
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar la cancion_compositor con información
+                        @Model.Actual!._Cancion,
+                        @Model.Actual!._Compositor
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Cancion</th>
+                        <th>Compositor</th>
+                        <th>Porcentaje_Autoria</th>
+                        <th>Fecha_Registro</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Cancion!.Titulo</td>
+                                <td>@elemento._Compositor!.Nombre</td>
+                                <td>@elemento.Porcentaje_Autoria</td>
+                                <td>@elemento.Fecha_Registro.Year</td>
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>

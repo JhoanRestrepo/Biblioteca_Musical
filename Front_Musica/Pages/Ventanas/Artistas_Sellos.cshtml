@@ -1,0 +1,194 @@
+﻿@page
+@model Artistas_SellosModel
+@{
+    ViewData["Title"] = "Artistas_Sellos";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Artistas_Sellos</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flArtistas"
+                   placeholder="Artista"
+                   asp-for="@Model.Filtro!._Artista!.Nombre" />
+            <input id="flSellos"
+                   placeholder="Sello"
+                   asp-for="@Model.Filtro!._Sello_Discografico!.Nombre" />
+        </div>
+
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>Artista_Sello</h3>
+                <label>
+                    Artista
+                </label>
+                <input id="nmArtista"
+                       asp-for="@Model.Actual!.Artista" />
+                <br />
+                <label>
+                    Sello_Discografico
+                </label>
+                <input id="nmSello_Discografico"
+                       asp-for="@Model.Actual!.Sello_Discografico" />
+                <br />
+                <label>
+                    Fecha_Inicio
+                </label>
+                <input id="nmFecha_Inicio"
+                       asp-for="@Model.Actual!.Fecha_Inicio" />
+                <br />
+                <label>
+                    Fecha_Fin
+                </label>
+                <input id="nmFecha_Fin"
+                       asp-for="@Model.Actual!.Fecha_Fin" />
+                <br />
+                <label>
+                    Contrato
+                </label>
+                <input id="nmContrato"
+                       asp-for="@Model.Actual!.Contrato" />
+            </div>
+        }
+
+        
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            ;
+        }
+        
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Artista</h3>
+                <select id="nm_Artista"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Artista!"
+                        asp-items="@(new SelectList(Model.Artistas!, "Id", "Nombre"))">
+                </select>
+                <br />
+                <h3>Sello_Discografico</h3>
+                <select id="nm_Sello_Discografico"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Sello_Discografico!"
+                        asp-items="@(new SelectList(Model.Sellos_Discograficos!, "Id", "Nombre"))">
+                </select>
+                <br />
+
+                <label>
+                    Fecha_Inicio
+                </label>
+                <input id="nmFecha_Inicio"
+                       asp-for="@Model.Actual!.Fecha_Inicio" />
+                <br />
+
+                <label>
+                    Fecha_Fin
+                </label>
+                <input id="nmFecha_Fin"
+                       asp-for="@Model.Actual!.Fecha_Fin" />
+                <br />
+
+                <label>
+                    Contrato
+                </label>
+                <input id="nmContrato"
+                       asp-for="@Model.Actual!.Contrato" />
+
+                <p> Total artistas: @Model.Artistas?.Count() </p>
+                <p> Total sellos: @Model.Sellos_Discograficos?.Count() </p>
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar el artista_sello con información
+                        @Model.Actual!._Artista,
+                        @Model.Actual!._Sello_Discografico
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Artista</th>
+                        <th>Sello_Discografico</th>
+                        <th>Fecha_Inicio</th>
+                        <th>Fecha_Fin</th>
+                        <th>Contrato</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Artista!.Nombre</td>
+                                <td>@elemento._Sello_Discografico!.Nombre</td>
+                                <td>@elemento.Fecha_Inicio?.Year</td>
+                                <td>@elemento.Fecha_Fin?.Year</td>
+                                <td>@elemento.Contrato</td>
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
