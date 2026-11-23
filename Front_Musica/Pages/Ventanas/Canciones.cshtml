@@ -151,7 +151,7 @@
                     </h3>
 
                     <h4>
-                        ¿Quiere borrar la canción
+                        ¿Quiere borrar la canción 
                         @Model.Actual!.Titulo,
                         del album
                         @Model.Actual!._Album.Titulo
@@ -168,8 +168,6 @@
             </div>
         }
 
-</form>
-
         @if (!Model.Formulario)
         {
             <br />
@@ -185,22 +183,58 @@
                         <th>Acción</th>
                         <th>Reproducir</th>
                     </tr>
+                    <div id="barra-reproductor" class="fixed-bottom p-3 border-top bg-light shadow d-flex align-items-center justify-content-between gap-3" style="z-index: 1030;">
+                        <div class="d-flex align-items-center gap-3">
+                            <img id="portada-cancion-activa"
+                                 src=""
+                                 alt="Portada"
+                                 width="100"
+                                 height="100"
+                                 class="rounded d-none"
+                                 style="object-fit: cover;" />
+                            <div>
+                                <small class="text-muted d-block">Reproduciendo ahora</small>
+                                <strong id="titulo-cancion-activa" class="d-block">Ninguna canción seleccionada</strong>
+                                <small id="album-cancion-activa" class="text-muted"></small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 w-50">
+                            <button type="button" id="btn-prev" class="btn btn-outline-secondary btn-sm" title="Anterior" disabled>
+                                ⏮
+                            </button>
+                            <audio id="reproductor-unico" controls preload="metadata" class="flex-grow-1">
+                                Tu navegador no soporta audio HTML5.
+                            </audio>
+                            <button type="button" id="btn-next" class="btn btn-outline-secondary btn-sm" title="Siguiente" disabled>
+                                ⏭
+                            </button>
+                        </div>
+                    </div>
                     @if (Model != null && Model.Lista != null)
                     {
                         foreach (var elemento in Model.Lista)
                         {
-                            <tr>
-                                <td>
-                                    @if (elemento._Album!.Portada != null)
-                                    {
-                                        <img height="60"
-                                             width="60"
-                                             src="@(elemento._Album!.Portada.Contains('/') ||
+                            var rutaAudio = Url.Content($"~/Music/{elemento.Titulo}.mp3");
+                            var portadaSrc = "";
+
+                            if (elemento._Album!.Portada != null)
+                            {
+                                portadaSrc = elemento._Album!.Portada.Contains('/') ||
                                              elemento._Album!.Portada.Contains('+') ||
                                              elemento._Album!.Portada.Contains('=') ||
                                              elemento._Album!.Portada.Length > 200
-                                             ? "data:image/jpeg;base64," + elemento._Album!.Portada
-                                             : Url.Content("~/Portadas/" + elemento._Album!.Portada))"
+                                    ? "data:image/jpeg;base64," + elemento._Album!.Portada
+                                    : Url.Content("~/Portadas/" + elemento._Album!.Portada);
+                            }
+
+                            <tr>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(portadaSrc))
+                                    {
+                                        <img height="60"
+                                             width="60"
+                                             src="@portadaSrc"
                                              alt="@elemento.Titulo" />
                                     }
                                 </td>
@@ -209,38 +243,126 @@
                                 <td>@elemento.Numero_Pista</td>
                                 <td>@elemento._Album!.Titulo</td>
                                 <td>
-                                    <form method="post">
-                                        <button type="submit"
-                                                class="btn btn-secondary"
-                                                asp-page-handler="BtEditar"
-                                                asp-route-data="@elemento.Id">
-                                            Editar
-                                        </button>
-                                    </form>
-
-                                    <form method="post">
-                                        <button type="submit"
-                                                class="btn btn-secondary"
-                                                asp-page-handler="BtPregBorrar"
-                                                asp-route-data="@elemento.Id">
-                                            Borrar
-                                        </button>
-                                    </form>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
                                 </td>
-
                                 <td>
-                                    <audio controls preload="metadata">
-                                        <source src="@Url.Content($"~/Music/{elemento.Titulo}.mp3")"
-                                                type="audio/mpeg">
-                                        Tu navegador no soporta el elemento de audio.
-                                    </audio>
+                                    <button type="button"
+                                            class="btn btn-secondary btn-reproducir"
+                                            data-src="@rutaAudio"
+                                            data-titulo="@elemento.Titulo"
+                                            data-album="@elemento._Album!.Titulo"
+                                            data-portada="@portadaSrc">
+                                        ▶ Reproducir
+                                    </button>
                                 </td>
-
                             </tr>
                         }
                     }
+                    <div class="pb-5 mb-4"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const reproductor = document.getElementById("reproductor-unico");
+                            const tituloActivo = document.getElementById("titulo-cancion-activa");
+                            const albumActivo = document.getElementById("album-cancion-activa");
+                            const portadaActiva = document.getElementById("portada-cancion-activa");
+                            const btnPrev = document.getElementById("btn-prev");
+                            const btnNext = document.getElementById("btn-next");
+                            const botones = Array.from(document.querySelectorAll(".btn-reproducir"));
+
+                            let indiceActual = -1;
+
+                            function actualizarEstadoBotonesNav() {
+                                const hayCanciones = botones.length > 0;
+                                if (btnPrev instanceof HTMLButtonElement) {
+                                    btnPrev.disabled = !hayCanciones;
+                                }
+                                if (btnNext instanceof HTMLButtonElement) {
+                                    btnNext.disabled = !hayCanciones;
+                                }
+                            }
+
+                            function reproducirPorIndice(index = 0) {
+                                if (botones.length === 0) return;
+
+                                const posicion = Number(index);
+                                const total = botones.length;
+                                indiceActual = ((posicion % total) + total) % total;
+
+                                const boton = botones[indiceActual];
+                                const src = boton.getAttribute("data-src");
+                                const titulo = boton.getAttribute("data-titulo");
+                                const album = boton.getAttribute("data-album");
+                                const portada = boton.getAttribute("data-portada");
+
+                                if (!src || !(reproductor instanceof HTMLAudioElement)) return;
+
+                                reproductor.src = src;
+
+                                if (tituloActivo) {
+                                    tituloActivo.textContent = titulo || "Canción";
+                                }
+
+                                if (albumActivo) {
+                                    albumActivo.textContent = album ? "Álbum: " + album : "";
+                                }
+
+                                if (portadaActiva instanceof HTMLImageElement) {
+                                    if (portada) {
+                                        portadaActiva.src = portada;
+                                        portadaActiva.alt = titulo || "Portada";
+                                        portadaActiva.classList.remove("d-none");
+                                    } else {
+                                        portadaActiva.src = "";
+                                        portadaActiva.classList.add("d-none");
+                                    }
+                                }
+
+                                reproductor.play();
+                            }
+
+                            actualizarEstadoBotonesNav();
+
+                            botones.forEach(function (boton, idx) {
+                                boton.addEventListener("click", function () {
+                                    reproducirPorIndice(idx);
+                                });
+                            });
+
+                            if (btnPrev instanceof HTMLButtonElement) {
+                                btnPrev.addEventListener("click", function () {
+                                    const destino = indiceActual === -1 ? 0 : indiceActual - 1;
+                                    reproducirPorIndice(destino);
+                                });
+                            }
+
+                            if (btnNext instanceof HTMLButtonElement) {
+                                btnNext.addEventListener("click", function () {
+                                    const destino = indiceActual === -1 ? 0 : indiceActual + 1;
+                                    reproducirPorIndice(destino);
+                                });
+                            }
+
+                            if (reproductor instanceof HTMLAudioElement) {
+                                reproductor.addEventListener("ended", function () {
+                                    if (indiceActual !== -1) {
+                                        reproducirPorIndice(indiceActual + 1);
+                                    }
+                                });
+                            }
+                        });
+                    </script>
                 </table>
             </div>
         }
 
     </div>
+</form>
