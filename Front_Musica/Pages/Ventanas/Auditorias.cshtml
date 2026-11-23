@@ -12,23 +12,24 @@
             <input type="submit"
                    value="Consultar"
                    class="btn btn-secondary"
-                   asp-page-handler="BtConsultar"/>
+                   asp-page-handler="BtConsultar" />
             <input type="submit"
                    value="Nuevo"
                    class="btn btn-secondary"
-                   asp-page-handler="BtNuevo"/>
+                   asp-page-handler="BtNuevo" />
             <input type="submit"
                    value="Guardar"
                    class="btn btn-secondary"
-                   asp-page-handler="BtGuardar"/>
+                   asp-page-handler="BtGuardar" />
             <input id="flAccion"
                    placeholder="Accion"
-                   asp-for="@Model.Filtro!.Accion"/>
+                   asp-for="@Model.Filtro!.Accion" />
         </div>
 
         @if (ViewData.ContainsKey("Mensaje"))
         {
-            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            ;
         }
 
         @if (Model.Formulario || Model.Borrar)
@@ -63,7 +64,7 @@
                        asp-for="@Model.Actual!.Fecha" />
             </div>
         }
-        
+
         @if (Model.Nuevo)
         {
             <div>
@@ -122,6 +123,7 @@
                     <tr>
                         <th>Accion</th>
                         <th>Usuario</th>
+                        <th>Correo</th>
                         <th>Fecha</th>
                         <th>Acción</th>
                     </tr>
@@ -131,8 +133,9 @@
                         {
                             <tr>
                                 <td>@elemento.Accion</td>
-                                <td>@elemento.Usuario</td>
-                                <td>@elemento.Fecha.Year</td>
+                                <td>@elemento._Usuario?.Nombre</td>
+                                <td>@elemento._Usuario?.Correo</td>
+                                <td>@elemento.Fecha</td>
                                 <td>
                                     <input type="submit"
                                            value="Editar"

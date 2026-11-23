@@ -51,6 +51,7 @@ namespace Libreria.Implementaciones
         public List<Auditorias> Buscar(Auditorias entidad)
         {
             return this.IConexion.Auditorias!
+                .Include(x => x._Usuario)
                 .Where(x => x.Accion!.Contains(entidad.Accion!))
                 .Take(10)
                 .ToList();
@@ -59,6 +60,7 @@ namespace Libreria.Implementaciones
         public List<Auditorias> Consultar()
         {
             return this.IConexion.Auditorias!
+                .Include(x => x._Usuario)
                 .Take(10)
                 .ToList();
         }
