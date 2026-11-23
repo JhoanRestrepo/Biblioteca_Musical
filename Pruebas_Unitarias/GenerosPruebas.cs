@@ -32,7 +32,7 @@ namespace Pruebas_Unitarias
             {
                 Nombre = "Hip Hop",
                 Descripcion = "El hip hop es un movimiento cultural y musical urbano que nació en el barrio del Bronx, en Nueva York, a principios de la década de 1970",
-                popularidad = 92
+                Popularidad = 92
             };
 
             this.conexion.Generos!.Add(this.entidad);
@@ -51,7 +51,7 @@ namespace Pruebas_Unitarias
         {
             this.entidad!.Nombre = "Metal";
             this.entidad!.Descripcion = "El metal es un género musical del rock que nació a Fecha_Lanzamientoes de los años 60 y principios de los 70 en el Reino Unido y Estados Unidos.";
-            this.entidad!.popularidad = 69;
+            this.entidad!.Popularidad = 69;
 
             var entry = this.conexion.Entry<Generos>(this.entidad);
             entry.State = EntityState.Modified;

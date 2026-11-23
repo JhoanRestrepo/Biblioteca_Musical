@@ -10,7 +10,7 @@ namespace Libreria.Entidades
         public int Id { get; set; }
         public int Cancion { get; set; }
         public int Posicion { get; set; }
-        public DateTime Fecha_Agregada { get; set; } 
+        public DateTime? Fecha_Agregada { get; set; } 
         public int Favorita { get; set; } 
 
         [ForeignKey("Cancion")] public Canciones? _Cancion { get; set; }

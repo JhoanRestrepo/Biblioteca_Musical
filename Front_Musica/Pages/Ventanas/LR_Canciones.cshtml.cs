@@ -11,15 +11,15 @@ namespace Front_Musica.Pages.Ventanas
     {
         private ILR_CancionesPresentacion ILR_CancionesPresentacion;
         private ICancionesPresentacion ICancionesPresentacion;
-        private IGenerosPresentacion IGenerosPresentacion;
+        private IListas_ReproduccionesPresentacion IListas_ReproduccionesPresentacion;
 
         public LR_CancionesModel(ILR_CancionesPresentacion ILR_CancionesPresentacion,
             ICancionesPresentacion ICancionesPresentacion,
-            IGenerosPresentacion IGenerosPresentacion)
+            IListas_ReproduccionesPresentacion IListas_ReproduccionesPresentacion)
         {
             this.ILR_CancionesPresentacion = ILR_CancionesPresentacion;
             this.ICancionesPresentacion = ICancionesPresentacion;
-            this.IGenerosPresentacion = IGenerosPresentacion;
+            this.IListas_ReproduccionesPresentacion = IListas_ReproduccionesPresentacion;
             this.Filtro = new LR_Canciones();
             this.Filtro._Cancion = new Canciones();
             this.Filtro._Lista_Reproduccion = new Listas_Reproducciones();
@@ -27,7 +27,7 @@ namespace Front_Musica.Pages.Ventanas
 
         [BindProperty] public List<LR_Canciones> Lista { get; set; }
         [BindProperty] public List<Canciones>? Canciones { get; set; }
-        [BindProperty] public List<Generos>? Generos { get; set; }
+        [BindProperty] public List<Listas_Reproducciones>? Listas_Reproducciones { get; set; }
         [BindProperty] public LR_Canciones? Filtro { get; set; }
         [BindProperty] public LR_Canciones? Actual { get; set; }
         [BindProperty] public bool Formulario { get; set; } = false;
@@ -64,7 +64,7 @@ namespace Front_Musica.Pages.Ventanas
                 Formulario = true;
                 this.Actual = new LR_Canciones();
                 this.Canciones = this.ICancionesPresentacion.Buscar(new Canciones() { Titulo = "" });
-                this.Generos = this.IGenerosPresentacion.Buscar(new Generos() { Nombre = "" });
+                this.Listas_Reproducciones = this.IListas_ReproduccionesPresentacion.Buscar(new Listas_Reproducciones() { Nombre = "" });
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace Front_Musica.Pages.Ventanas
                 OnPostBtConsultar();
                 this.Actual = this.Lista.FirstOrDefault(x => x.Id == Convert.ToInt32(data));
                 this.Canciones = this.ICancionesPresentacion.Buscar(new Canciones() { Titulo = "" });
-                this.Generos = this.IGenerosPresentacion.Buscar(new Generos() { Nombre = "" });
+                this.Listas_Reproducciones = this.IListas_ReproduccionesPresentacion.Buscar(new Listas_Reproducciones() { Nombre = "" });
             }
             catch (Exception ex)
             {

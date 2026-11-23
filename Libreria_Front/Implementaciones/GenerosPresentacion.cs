@@ -76,7 +76,7 @@ namespace Libreria_Front.Implementaciones
         {
             return string.IsNullOrEmpty(entidad.Nombre) ||
                 string.IsNullOrEmpty(entidad.Descripcion) ||
-                entidad.popularidad == null;
+                entidad.Popularidad == 0;
         }
     }
 }

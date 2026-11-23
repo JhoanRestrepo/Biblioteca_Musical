@@ -18,76 +18,36 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Albumes">Albumes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Artistas">Artistas</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Artistas_Sellos">Artistas_Sellos</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Auditorias">Auditorias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Canciones">Canciones</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Canciones_Compositores">Canciones_Compositores</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Canciones_Generos">Canciones_Generos</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Canciones_Idiomas">Canciones_Idiomas</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Compositores">Compositores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Fav_Canciones">Fav_Canciones</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Favoritos">Favoritos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Albumes_Artistas">Albumes_Artistas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Permisos">Permisos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Generos">Generos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Listas_Canciones">Listas_Canciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Roles">Roles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Listas_Reproducciones">Listas_Reproducciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Suscripciones">Suscripciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/LR_Canciones">LR_Canciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Usuarios">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Reproducciones">Reproducciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Sellos_Discograficos">Sellos_Discograficos</a>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Música
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Albumes">Albumes</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Artistas">Artistas</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Canciones">Canciones</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Compositores">Compositores</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Generos">Generos</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Favoritos">Favoritos</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Fav_Canciones">Fav_Canciones</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Relaciones y Control
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Albumes_Artistas">Albumes_Artistas</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Artistas_Sellos">Artistas_Sellos</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Canciones_Compositores">Canciones_Compositores</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Canciones_Generos">Canciones_Generos</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Canciones_Idiomas">Canciones_Idiomas</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Auditorias">Auditorias</a></li>
+                        <li><a class="dropdown-item" asp-page="/Ventanas/Permisos">Permisos</a></li>
+                    </ul>
+                </li>
                     </ul>
                 </div>
             </div>

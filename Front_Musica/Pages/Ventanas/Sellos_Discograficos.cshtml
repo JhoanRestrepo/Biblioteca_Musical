@@ -148,16 +148,6 @@
                         foreach (var elemento in Model.Lista)
                         {
                             <tr>
-                                <td>
-                                    @if (elemento.Portada != null)
-                                    {
-                                    <img height="60"
-                                         width="60"
-                                         src="data:image;base64,
-                                            @System.Convert.ToBase64String(
-                                            Convert.FromBase64String(elemento.Portada))" />
-                                    }
-                                </td>
                                 <td>@elemento.Nombre</td>
                                 <td>@elemento.Pais</td>
                                 <td>@elemento.Fecha_Fundacion!.Value.Year</td>

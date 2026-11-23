@@ -7,7 +7,7 @@ using Libreria.Nucleo;
 namespace Servicio_Musica.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")] // Ruta base: http://localhost:5034/Album/
+    [Route("[controller]/[action]")]
     public class GenerosController : ControllerBase
     {
         // 1. Declarar las 3 interfaces de aplicación

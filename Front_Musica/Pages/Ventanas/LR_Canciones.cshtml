@@ -26,7 +26,7 @@
                    asp-for="@Model.Filtro!._Cancion!.Titulo" />
             <input id="flGeneros"
                    placeholder="Genero"
-                   asp-for="@Model.Filtro!._Genero!.Nombre" />
+                   asp-for="@Model.Filtro!._Lista_Reproduccion!.Nombre" />
         </div>
 
         @if (Model.Nuevo)
@@ -70,7 +70,7 @@
                 <select id="nm_Listas_Reproduccion"
                         class="form-control"
                         asp-for="@Model.Actual!.Lista_Reproduccion!"
-                        asp-items="@(new SelectList(Model.Listas_Reproducciones!, "Id", "Titulo"))">
+                        asp-items="@(new SelectList(Model.Listas_Reproducciones!, "Id", "Nombre"))">
                 </select>
                 <br />
                 <h3>Cancion</h3>

@@ -10,12 +10,18 @@
     <Content Remove="wwwroot\Music\Beat It.mp3" />
     <Content Remove="wwwroot\Music\Dirty Diana.mp3" />
     <Content Remove="wwwroot\Music\Give In to Me.mp3" />
+    <Content Remove="wwwroot\Portadas\Bad.jpg" />
+    <Content Remove="wwwroot\Portadas\Dangerous.jpg" />
+    <Content Remove="wwwroot\Portadas\Thriller.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\Music\Beat It.mp3" />
     <None Include="wwwroot\Music\Dirty Diana.mp3" />
     <None Include="wwwroot\Music\Give In to Me.mp3" />
+    <None Include="wwwroot\Portadas\Bad.jpg" />
+    <None Include="wwwroot\Portadas\Dangerous.jpg" />
+    <None Include="wwwroot\Portadas\Thriller.jpg" />
   </ItemGroup>
 
   <ItemGroup>

@@ -187,9 +187,8 @@
                                     {
                                         <img height="60"
                                              width="60"
-                                             src="data:image;base64,
-                                        @System.Convert.ToBase64String(
-                                        Convert.FromBase64String(elemento._Album!.Portada))" />
+                                             src="@Url.Content("~/Portadas/" + elemento._Album!.Portada)"
+                                             alt="@elemento.Titulo" />
                                     }
                                 </td>
                                 <td>@elemento.Titulo</td>

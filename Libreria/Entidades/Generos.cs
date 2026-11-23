@@ -10,7 +10,7 @@ namespace Libreria.Entidades
         public int Id { get; set; }
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
-        public int popularidad { get; set; }
+        public int Popularidad { get; set; }
 
         [NotMapped] public List<Canciones_Generos>? Canciones_Generos { get; set; }
     }

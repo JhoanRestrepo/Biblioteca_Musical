@@ -51,7 +51,7 @@ CREATE TABLE [Generos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(100) NULL,
     [Descripcion] NVARCHAR(500) NULL,
-    [popularidad] INT NOT NULL
+    [Popularidad] INT NOT NULL
 );
 
 -- 7. Idiomas
@@ -271,12 +271,12 @@ VALUES
 -- 5. Álbumes
 INSERT INTO [Albumes] ([Titulo], [Fecha_Lanzamiento], [Portada])
 VALUES
-('Thriller', 1982-11-30, ''),
-('Bad', 1987-08-31, ''),
-('Dangerous', 1991-11-26, '');
+('Thriller', 1982-11-30, 'Thriller.jpg'),
+('Bad', 1987-08-31, 'Bad.jpg'),
+('Dangerous', 1991-11-26, 'Dangerous.jpg');
 
 -- 6. Géneros
-INSERT INTO [Generos] ([Nombre], [Descripcion], [popularidad])
+INSERT INTO [Generos] ([Nombre], [Descripcion], [Popularidad])
 VALUES
 ('Rock', 'Género de música rock.', 80),
 ('Salsa', 'Género musical bailable.', 75),
@@ -402,6 +402,5 @@ VALUES
 ('Consultar', '010', 'Puede consultar albumes, canciones, etc'),
 ('Editar', '020', 'Puede editar albumes, canciones, etc'),
 ('Eliminar', '030', 'Puede eliminar albumes, canciones, etc');
-
 
 */
