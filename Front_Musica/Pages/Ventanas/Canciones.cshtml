@@ -151,7 +151,7 @@
                     </h3>
 
                     <h4>
-                        ¿Quiere borrar la canción con información
+                        ¿Quiere borrar la canción
                         @Model.Actual!.Titulo,
                         del album
                         @Model.Actual!._Album.Titulo
@@ -167,6 +167,8 @@
                 </div>
             </div>
         }
+
+</form>
 
         @if (!Model.Formulario)
         {
@@ -207,21 +209,30 @@
                                 <td>@elemento.Numero_Pista</td>
                                 <td>@elemento._Album!.Titulo</td>
                                 <td>
-                                    <input type="submit"
-                                           value="Editar"
-                                           class="btn btn-secondary"
-                                           asp-page-handler="BtEditar"
-                                           asp-route-data="@elemento.Id" />
-                                    <input type="submit"
-                                           value="Borrar"
-                                           class="btn btn-secondary"
-                                           asp-page-handler="BtPregBorrar"
-                                           asp-route-data="@elemento.Id" />
+                                    <form method="post">
+                                        <button type="submit"
+                                                class="btn btn-secondary"
+                                                asp-page-handler="BtEditar"
+                                                asp-route-data="@elemento.Id">
+                                            Editar
+                                        </button>
+                                    </form>
+
+                                    <form method="post">
+                                        <button type="submit"
+                                                class="btn btn-secondary"
+                                                asp-page-handler="BtPregBorrar"
+                                                asp-route-data="@elemento.Id">
+                                            Borrar
+                                        </button>
+                                    </form>
                                 </td>
+
                                 <td>
                                     <audio controls preload="metadata">
                                         <source src="@Url.Content($"~/Music/{elemento.Titulo}.mp3")"
                                                 type="audio/mpeg">
+                                        Tu navegador no soporta el elemento de audio.
                                     </audio>
                                 </td>
 
@@ -233,4 +244,3 @@
         }
 
     </div>
-</form>

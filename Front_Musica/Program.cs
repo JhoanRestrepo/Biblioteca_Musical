@@ -35,14 +35,12 @@ builder.Services.AddScoped<IUsuariosPresentacion, UsuariosPresentacion>();
 builder.Services.AddScoped<IUsuarios_RolesPresentacion, Usuarios_RolesPresentacion>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddRazorPages();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
 
 var app = builder.Build();
-
 
 if (!app.Environment.IsDevelopment())
 {
@@ -51,10 +49,18 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseSession();
+
 app.UseAuthorization();
+
 app.MapStaticAssets();
+
 app.MapRazorPages()
    .WithStaticAssets();
-app.UseSession();
+
 app.Run();
