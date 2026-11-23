@@ -396,7 +396,7 @@ INSERT INTO [Roles]
 VALUES
 ('Administrador', 'Acceso completo al sistema'),
 ('Empleado', 'Puede gestionar los registros musicales'),
-('Consulta', 'Puede consultar información del sistema');
+('Cliente', 'Puede consultar cierta información del sistema');
 
 -- 23. Permisos
 INSERT INTO [Permisos]
@@ -405,5 +405,23 @@ VALUES
 ('Consultar', '010', 'Puede consultar albumes, canciones, etc'),
 ('Editar', '020', 'Puede editar albumes, canciones, etc'),
 ('Eliminar', '030', 'Puede eliminar albumes, canciones, etc');
+
+-- 24. Usuarios_Roles
+INSERT INTO [Usuarios_Roles]
+    ([Usuario], [Rol])
+VALUES
+(1, 1),
+(2, 2),
+(3, 2);
+-- 25. Roles_Permisos
+INSERT INTO [Roles_Permisos]
+    ([Rol], [Permiso])
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 2),
+(3, 3);
 
 */
