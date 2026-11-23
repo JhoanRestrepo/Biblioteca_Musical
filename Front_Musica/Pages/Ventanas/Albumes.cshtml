@@ -94,8 +94,8 @@
                 {
                     <img height="60"
                          width="60"
-                         src="@Url.Content("~/Portadas/" + Model.Actual!.Portada)"
-                         alt="@Model.Actual!.Titulo" />
+                         src="data:image/jpeg;base64,@Model.Actual.Portada"
+                         alt="@Model.Actual.Titulo" />
                 }
             </div>
         }
@@ -147,7 +147,12 @@
                                     {
                                         <img height="60"
                                              width="60"
-                                             src="@Url.Content("~/Portadas/" + elemento.Portada)"
+                                             src="@(elemento.Portada.Contains('/') ||
+                                             elemento.Portada.Contains('+') ||
+                                             elemento.Portada.Contains('=') ||
+                                             elemento.Portada.Length > 200
+                                             ? "data:image/jpeg;base64," + elemento.Portada
+                                             : Url.Content("~/Portadas/" + elemento.Portada))"
                                              alt="@elemento.Titulo" />
                                     }
                                 </td>

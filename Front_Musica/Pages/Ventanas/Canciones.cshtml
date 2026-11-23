@@ -47,12 +47,15 @@
                 </label>
                 @if (Model.Actual!._Album?.Portada != null)
                 {
-                    <img height="100"
-                         width="100"
-                         src="data:image;base64,
-                    @System.Convert.ToBase64String(
-                    Convert.FromBase64String(
-                    Model.Actual!._Album?.Portada))" />
+                    <img height="60"
+                         width="60"
+                         src="@(Model.Actual!._Album!.Portada.Contains('/') ||
+                         Model.Actual!._Album!.Portada.Contains('+') ||
+                         Model.Actual!._Album!.Portada.Contains('=') ||
+                         Model.Actual!._Album!.Portada.Length > 200
+                         ? "data:image/jpeg;base64," + Model.Actual!._Album!.Portada
+                         : Url.Content("~/Portadas/" + Model.Actual!._Album!.Portada))"
+                         alt="@Model.Actual!.Titulo" />
                 }
                 <input type="file"
                        asp-for="FormFile" />
@@ -124,12 +127,15 @@
                 </label>
                 @if (Model.Actual!._Album!.Portada != null)
                 {
-                    <img height="100"
-                         width="100"
-                         src="data:image;base64,
-                    @System.Convert.ToBase64String(
-                     Convert.FromBase64String(
-                     Model.Actual!._Album!.Portada))" />
+                    <img height="60"
+                         width="60"
+                         src="@(Model.Actual!._Album!.Portada.Contains('/') ||
+                         Model.Actual!._Album!.Portada.Contains('+') ||
+                         Model.Actual!._Album!.Portada.Contains('=') ||
+                         Model.Actual!._Album!.Portada.Length > 200
+                         ? "data:image/jpeg;base64," + Model.Actual!._Album!.Portada
+                         : Url.Content("~/Portadas/" + Model.Actual!._Album!.Portada))"
+                         alt="@Model.Actual!.Titulo" />
                 }
                 <input type="file"
                        asp-for="FormFile" />
@@ -187,7 +193,12 @@
                                     {
                                         <img height="60"
                                              width="60"
-                                             src="@Url.Content("~/Portadas/" + elemento._Album!.Portada)"
+                                             src="@(elemento._Album!.Portada.Contains('/') ||
+                                             elemento._Album!.Portada.Contains('+') ||
+                                             elemento._Album!.Portada.Contains('=') ||
+                                             elemento._Album!.Portada.Length > 200
+                                             ? "data:image/jpeg;base64," + elemento._Album!.Portada
+                                             : Url.Content("~/Portadas/" + elemento._Album!.Portada))"
                                              alt="@elemento.Titulo" />
                                     }
                                 </td>
@@ -206,12 +217,14 @@
                                            class="btn btn-secondary"
                                            asp-page-handler="BtPregBorrar"
                                            asp-route-data="@elemento.Id" />
-                                    <td>
-                                        <audio controls preload="metadata">
-                                            <source src="@Url.Content($"~/Music/{elemento.Titulo}.mp3")" type="audio/mpeg">
-                                            Tu navegador no soporta el elemento de audio.
-                                        </audio>
-                                    </td>
+                                </td>
+                                <td>
+                                    <audio controls preload="metadata">
+                                        <source src="@Url.Content($"~/Music/{elemento.Titulo}.mp3")"
+                                                type="audio/mpeg">
+                                    </audio>
+                                </td>
+
                             </tr>
                         }
                     }

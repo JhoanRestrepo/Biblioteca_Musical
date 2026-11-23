@@ -18,8 +18,7 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (string.IsNullOrEmpty(entidad.Titulo) ||
-                string.IsNullOrEmpty(entidad.Portada))
+            if (string.IsNullOrEmpty(entidad.Titulo))
                 throw new Exception("Faltan valores");
 
             if (entidad.Fecha_Lanzamiento == null)

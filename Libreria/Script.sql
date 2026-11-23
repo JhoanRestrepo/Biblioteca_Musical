@@ -256,9 +256,9 @@ VALUES
 INSERT INTO [Compositores]
     ([Nombre], [Nacionalidad], [Fecha_Nacimiento])
 VALUES
-('Juan Luis', 'Dominicano', 1957-06-07),
-('Shakira', 'Colombiana', 1977-02-02),
-('Rafael Escalona', 'Colombiano', 1927-05-26);
+('Michael Jackson', 'Estadounidense', 1958-08-29),
+('Quincy Jones', 'Estadounidense', 1933-03-14),
+('Bill Bottrell', 'Estadounidense', 1952-10-27);
 
 -- 4. Sellos discográficos
 INSERT INTO [Sellos_Discograficos]
@@ -317,8 +317,10 @@ INSERT INTO [Canciones_Compositores]
     ([Cancion], [Compositor], [Porcentaje_Autoria], [Fecha_Registro])
 VALUES
 (1, 1, 100.00, 2026-09-29),
-(2, 2, 100.00, 2026-09-29),
-(3, 3, 100.00, 2026-09-29);
+(2, 1, 65.00, 2026-09-29),
+(2, 2, 35.00, 2026-09-29),
+(3, 1, 80.00, 2026-09-29),
+(3, 3, 20.00, 2026-09-29);
 
 -- 12. Canciones y géneros
 INSERT INTO [Canciones_Generos] ([Cancion], [Genero], [Principal])
