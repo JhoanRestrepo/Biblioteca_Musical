@@ -9,7 +9,8 @@ CREATE TABLE [Usuarios] (
     [Nombre] NVARCHAR(100) NULL,
     [Apellido] NVARCHAR(100) NULL,
     [Correo] NVARCHAR(150) NULL,
-    [Fecha_registro] SMALLDATETIME NOT NULL
+    [ContrasenaHash] NVARCHAR(150) NULL,
+    [Fecha_Registro] SMALLDATETIME NOT NULL
 );
 
 -- 2. Artistas
@@ -205,18 +206,18 @@ CREATE TABLE [Auditorias] (
 );
 
 -- 22. Roles
-    CREATE TABLE [Roles] (
+CREATE TABLE [Roles] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(255) NOT NULL,
-    [Descripcion] NVARCHAR(255) NOT NULL,
+    [Descripcion] NVARCHAR(255) NOT NULL
 );
 
 -- 23. Permisos
-    CREATE TABLE [Permisos] (
+CREATE TABLE [Permisos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Nombre] NVARCHAR(255) NOT NULL,
     [Codigo] NVARCHAR(255) NOT NULL,
-    [Descripcion] NVARCHAR(255) NOT NULL,
+    [Descripcion] NVARCHAR(255) NOT NULL
 );
 
 -- 24. Usuarios y Roles
@@ -239,41 +240,41 @@ CREATE TABLE [Roles_Permisos] (
 
 -- Datos iniciales para que las pruebas tengan registros relacionados
 -- 1. Usuarios
-INSERT INTO [Usuarios] ([Nombre], [Apellido], [Correo], [Fecha_registro])
+INSERT INTO [Usuarios] ([Nombre], [Apellido], [Correo], [ContrasenaHash], [Fecha_Registro])
 VALUES
-('Ana', 'Gómez', 'ana@example.com', 2026-09-29),
-('Luis', 'Pérez', 'luis@example.com', 2026-09-29),
-('María', 'Rodríguez', 'maria@example.com', 2026-09-29);
+('Sebastian', 'Restrepo', 'Sebas@admin.com', '369', '20260929'),
+('Melissa', 'Pino', 'Meli@employee.com', '258', '20260929'),
+('Roveiro', 'Osorio', 'Roveiro@employee.com', '147', '20260929');
 
 -- 2. Artistas
 INSERT INTO [Artistas] ([Nombre], [Nacionalidad], [Fecha_Inicio], [Biografia])
 VALUES
-('Michael Jackson', 'Estadounidense', 1964-01-01, 'Cantante y bailarín.'),
-('Ryan Castro', 'Colombiano', 2017-01-01, 'Cantante colombiano.'),
-('Shakira', 'Colombiana', 1990-01-01, 'Cantante y compositora.');
+('Michael Jackson', 'Estadounidense', '19640101', 'Cantante y bailarín.'),
+('Ryan Castro', 'Colombiano', '20170101', 'Cantante colombiano.'),
+('Shakira', 'Colombiana', '19900101', 'Cantante y compositora.');
 
 -- 3. Compositores
 INSERT INTO [Compositores]
     ([Nombre], [Nacionalidad], [Fecha_Nacimiento])
 VALUES
-('Michael Jackson', 'Estadounidense', 1958-08-29),
-('Quincy Jones', 'Estadounidense', 1933-03-14),
-('Bill Bottrell', 'Estadounidense', 1952-10-27);
+('Michael Jackson', 'Estadounidense', '19580829'),
+('Quincy Jones', 'Estadounidense', '19330314'),
+('Bill Bottrell', 'Estadounidense', '19521027');
 
 -- 4. Sellos discográficos
 INSERT INTO [Sellos_Discograficos]
     ([Nombre], [Pais], [Fecha_Fundacion], [Sitio_Web])
 VALUES
-('Sony Music', 'Estados Unidos', 1929-09-01, 'https://www.sonymusic.com'),
-('Universal Music Group', 'Estados Unidos', 1934-09-01, 'https://www.universalmusic.com'),
-('Warner Music Group', 'Estados Unidos', 1958-03-19, 'https://www.wmg.com');
+('Sony Music', 'Estados Unidos', '19290901', 'https://www.sonymusic.com'),
+('Universal Music Group', 'Estados Unidos', '19340901', 'https://www.universalmusic.com'),
+('Warner Music Group', 'Estados Unidos', '19580319', 'https://www.wmg.com');
 
 -- 5. Álbumes
 INSERT INTO [Albumes] ([Titulo], [Fecha_Lanzamiento], [Portada])
 VALUES
-('Thriller', 1982-11-30, 'Thriller.jpg'),
-('Bad', 1987-08-31, 'Bad.jpg'),
-('Dangerous', 1991-11-26, 'Dangerous.jpg');
+('Thriller', '19821130', 'Thriller.jpg'),
+('Bad', '19870831', 'Bad.jpg'),
+('Dangerous', '19911126', 'Dangerous.jpg');
 
 -- 6. Géneros
 INSERT INTO [Generos] ([Nombre], [Descripcion], [Popularidad])
@@ -308,19 +309,19 @@ VALUES
 INSERT INTO [Artistas_Sellos]
     ([Artista], [Sello_Discografico], [Fecha_Inicio], [Fecha_Fin], [Contrato])
 VALUES
-(1, 1, 2020-01-01, NULL, 'Contrato exclusivo'),
-(2, 2, 2022-06-15, NULL, 'Contrato de grabación'),
-(3, 3, 2019-03-10, 2024-03-10, 'Contrato finalizado');
+(1, 1, '20200101', NULL, 'Contrato exclusivo'),
+(2, 2, '20220615', NULL, 'Contrato de grabación'),
+(3, 3, '20190310', '20240310', 'Contrato finalizado');
 
 -- 11. Canciones y compositores
 INSERT INTO [Canciones_Compositores]
     ([Cancion], [Compositor], [Porcentaje_Autoria], [Fecha_Registro])
 VALUES
-(1, 1, 100.00, 2026-09-29),
-(2, 1, 65.00, 2026-09-29),
-(2, 2, 35.00, 2026-09-29),
-(3, 1, 80.00, 2026-09-29),
-(3, 3, 20.00, 2026-09-29);
+(1, 1, 100.00, '20260929'),
+(2, 1, 65.00, '20260929'),
+(2, 2, 35.00, '20260929'),
+(3, 1, 80.00, '20260929'),
+(3, 3, 20.00, '20260929');
 
 -- 12. Canciones y géneros
 INSERT INTO [Canciones_Generos] ([Cancion], [Genero], [Principal])
@@ -333,25 +334,25 @@ VALUES
 INSERT INTO [Canciones_Idiomas]
     ([Cancion], [Idioma], [Porcentaje], [Fecha_Registro])
 VALUES
-(1, 1, 100.00, 2026-09-29),
-(2, 2, 75.00, 2026-09-29),
-(3, 3, 80.00, 2026-09-29);
+(1, 1, 100.00, '20260929'),
+(2, 2, 75.00, '20260929'),
+(3, 3, 80.00, '20260929');
 
 -- 14. Suscripciones
 INSERT INTO [Suscripciones]
     ([Usuario], [tipo_plan], [fecha_inicio], [fecha_fin])
 VALUES
-(1, 'Premium', 2026-09-01, 2026-10-01),
-(2, 'Gratis', 2026-09-15, NULL),
-(3, 'Familiar', 2026-09-20, 2026-12-20);
+(1, 'Premium', '20260901', '20261001'),
+(2, 'Gratis', '20260915', NULL),
+(3, 'Familiar', '20260920', '20261220');
 
 -- 15. Listas de reproducción
 INSERT INTO [Listas_Reproducciones]
     ([nombre], [fecha_creacion], [privacidad], [usuario])
 VALUES
-('Favoritas para estudiar', 2026-09-29, 'Privada', 1),
-('Música para entrenar', 2026-09-29, 'Pública', 2),
-('Clásicos', 2026-09-29, 'Privada', 3);
+('Favoritas para estudiar', '20260929', 'Privada', 1),
+('Música para entrenar', '20260929', 'Pública', 2),
+('Clásicos', '20260929', 'Privada', 3);
 
 -- 16. Listas y canciones (LR_Canciones)
 INSERT INTO [LR_Canciones] ([Lista_Reproduccion], [Cancion])
@@ -364,16 +365,16 @@ VALUES
 INSERT INTO [Listas_Canciones]
     ([Cancion], [posicion], [fecha_agregada], [favorita])
 VALUES
-(1, 1, 2026-09-29, 1),
-(2, 2, 2026-09-29, 0),
-(3, 3, 2026-09-29, 1);
+(1, 1, '20260929', 1),
+(2, 2, '20260929', 0),
+(3, 3, '20260929', 1);
 
 -- 18. Favoritos
 INSERT INTO [Favoritos] ([Usuario], [fecha_marcado], [activo])
 VALUES
-(1, 2026-09-29, 1),
-(2, 2026-09-29, 1),
-(3, 2026-09-29, 1);
+(1, '20260929', 1),
+(2, '20260929', 1),
+(3, '20260929', 1);
 
 -- 19. Canciones guardadas en favoritos
 INSERT INTO [Fav_Canciones] ([Favorito], [Cancion])
@@ -385,9 +386,9 @@ VALUES
 -- 20. Reproducciones
 INSERT INTO [Reproducciones] ([Usuario], [cancion], [fecha_hora], [duracion])
 VALUES
-(1, 1, '2026-09-29 14:30', '00:03:30'),
-(2, 2, '2026-09-29 15:10', '00:04:10'),
-(3, 3, '2026-09-29 16:05', '00:02:55');
+(1, 1, '2026-09-29T14:30:00', '00:03:30'),
+(2, 2, '2026-09-29T15:10:00', '00:04:10'),
+(3, 3, '2026-09-29T16:05:00', '00:02:55');
 
 -- 22. Roles
 INSERT INTO [Roles]

@@ -11,6 +11,7 @@ namespace Libreria.Entidades
             public string? Nombre { get; set; }
             public string? Apellido { get; set; }
             public string? Correo { get; set; }
+            public string? ContrasenaHash { get; set; }
             public DateTime? Fecha_Registro { get; set; }
 
             [NotMapped] public List<Favoritos>? Favoritos { get; set; }
