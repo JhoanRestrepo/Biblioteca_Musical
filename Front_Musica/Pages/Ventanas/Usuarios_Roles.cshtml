@@ -21,11 +21,11 @@
                    value="Guardar"
                    class="btn btn-secondary"
                    asp-page-handler="BtGuardar"/>
-            <input id="flUsuario_Roles"
-                   placeholder="Usuario_Rol"
-                   asp-for="@Model.Filtro!._Usuario!.Titulo" />
-            <input id="flArtistas"
-                   placeholder="Artista"
+            <input id="flUsuario"
+                   placeholder="Usuario"
+                   asp-for="@Model.Filtro!._Usuario!.Nombre" />
+            <input id="flRol"
+                   placeholder="Rol"
                    asp-for="@Model.Filtro!._Rol!.Nombre" />
         </div>
 

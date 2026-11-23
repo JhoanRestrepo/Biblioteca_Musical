@@ -9,11 +9,11 @@ namespace Front_Musica.Pages.Ventanas
 {
     public class IdiomasModel : PageModel
     {
-        private I_IdiomasPresentacion IIdiomasPresentacion;
+        private I_IdiomasPresentacion I_IdiomasPresentacion;
 
-        public IdiomasModel(I_IdiomasPresentacion IIdiomasPresentacion)
+        public IdiomasModel(I_IdiomasPresentacion I_IdiomasPresentacion)
         {
-            this.IIdiomasPresentacion = IIdiomasPresentacion;
+            this.I_IdiomasPresentacion = I_IdiomasPresentacion;
             this.Filtro = new Idiomas();
         }
 
@@ -39,7 +39,7 @@ namespace Front_Musica.Pages.Ventanas
                     return;
                 }
                 Filtro!.Nombre = Filtro!.Nombre ?? "";
-                Lista = this.IIdiomasPresentacion.Buscar(Filtro!);
+                Lista = this.I_IdiomasPresentacion.Buscar(Filtro!);
             }
             catch (Exception ex)
             {
@@ -65,9 +65,9 @@ namespace Front_Musica.Pages.Ventanas
             try
             {
                 if (Actual!.Id == 0)
-                    Actual = IIdiomasPresentacion.Insertar(Actual);
+                    Actual = I_IdiomasPresentacion.Insertar(Actual);
                 else
-                    Actual = IIdiomasPresentacion.Actualizar(Actual);
+                    Actual = I_IdiomasPresentacion.Actualizar(Actual);
             }
             catch (Exception ex)
             {
@@ -113,7 +113,7 @@ namespace Front_Musica.Pages.Ventanas
             {
                 if (this.Actual!.Id == 0)
                     return;
-                this.Actual = this.IIdiomasPresentacion.Borrar(this.Actual!);
+                this.Actual = this.I_IdiomasPresentacion.Borrar(this.Actual!);
             }
             catch (Exception ex)
             {

@@ -34,7 +34,6 @@ namespace Front_Musica.Pages.Ventanas
 
         public void OnGet()
         {
-
             CargarListas();
             OnPostBtConsultar();
         }
@@ -42,6 +41,13 @@ namespace Front_Musica.Pages.Ventanas
         private void CargarListas()
         {
             Albumes = IAlbumesPresentacion.Consultar();
+        }
+
+        private bool TienePermiso(string codigo)
+        {
+            var permisos = HttpContext.Session.GetString("Permisos") ?? "";
+            return permisos.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                           .Contains(codigo, StringComparer.OrdinalIgnoreCase);
         }
 
         public void OnPostBtConsultar()
@@ -68,6 +74,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                if (!TienePermiso("020"))
+                {
+                    ViewData["Mensaje"] = "No tienes permiso para crear registros.";
+                    return;
+                }
+
                 CargarListas();
                 Formulario = true;
                 this.Actual = new Canciones();
@@ -103,6 +115,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                if (!TienePermiso("020"))
+                {
+                    ViewData["Mensaje"] = "No tienes permiso para editar registros.";
+                    return;
+                }
+
                 Formulario = true;
                 OnPostBtConsultar();
                 this.Actual = this.Lista.FirstOrDefault(x => x.Id == Convert.ToInt32(data));
@@ -132,8 +150,26 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                var variable_session = HttpContext.Session.GetString("Usuario");
+                if (string.IsNullOrEmpty(variable_session))
+                {
+                    HttpContext.Response.Redirect("/");
+                    return;
+                }
+
+                var permisos = HttpContext.Session.GetString("Permisos") ?? "";
+                var listaPermisos = permisos.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                // "030" = Eliminar
+                if (!listaPermisos.Contains("030"))
+                {
+                    ViewData["Mensaje"] = "No tienes permiso para eliminar registros.";
+                    return;
+                }
+
                 if (this.Actual!.Id == 0)
                     return;
+
                 this.Actual = this.ICancionesPresentacion.Borrar(this.Actual!);
             }
             catch (Exception ex)

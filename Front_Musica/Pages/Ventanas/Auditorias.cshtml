@@ -123,7 +123,6 @@
                         <th>Accion</th>
                         <th>Usuario</th>
                         <th>Fecha</th>
-                        <th>Acción</th>
                     </tr>
                     @if (Model != null && Model.Lista != null)
                     {
@@ -133,18 +132,6 @@
                                 <td>@elemento.Accion</td>
                                 <td>@elemento.Usuario</td>
                                 <td>@elemento.Fecha.Year</td>
-                                <td>
-                                    <input type="submit"
-                                           value="Editar"
-                                           class="btn btn-secondary"
-                                           asp-page-handler="BtEditar"
-                                           asp-route-data="@elemento.Id" />
-                                    <input type="submit"
-                                           value="Borrar"
-                                           class="btn btn-secondary"
-                                           asp-page-handler="BtPregBorrar"
-                                           asp-route-data="@elemento.Id" />
-                                </td>
                             </tr>
                         }
                     }

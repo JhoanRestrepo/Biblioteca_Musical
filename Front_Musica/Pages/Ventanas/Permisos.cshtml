@@ -127,7 +127,6 @@
                         <th>Nombre</th>
                         <th>Codigo</th>
                         <th>Descripcion</th>
-                        <th>Acción</th>
                     </tr>
                     @if (Model != null && Model.Lista != null)
                     {
@@ -137,18 +136,6 @@
                                 <td>@elemento.Nombre</td>
                                 <td>@elemento.Codigo</td>
                                 <td>@elemento.Descripcion</td>
-                                <td>
-                                    <input type="submit"
-                                           value="Editar"
-                                           class="btn btn-secondary"
-                                           asp-page-handler="BtEditar"
-                                           asp-route-data="@elemento.Id" />
-                                    <input type="submit"
-                                           value="Borrar"
-                                           class="btn btn-secondary"
-                                           asp-page-handler="BtPregBorrar"
-                                           asp-route-data="@elemento.Id" />
-                                </td>
                             </tr>
                         }
                     }
