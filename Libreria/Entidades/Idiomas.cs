@@ -13,6 +13,6 @@ namespace Libreria.Entidades
         public string? Descripcion { get; set; }
         public bool? Activo { get; set; }
 
-        public List<Canciones_Idiomas>? Canciones_Idiomas { get; set; }
+        [NotMapped] public List<Canciones_Idiomas>? Canciones_Idiomas { get; set; }
     }
 }
