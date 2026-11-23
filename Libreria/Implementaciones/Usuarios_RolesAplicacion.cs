@@ -21,9 +21,11 @@ namespace Libreria.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
 
-            if (entidad._Usuario!.Id == 0 ||
-                entidad._Rol!.Id == 0)
+            if (entidad.Usuario == 0 || entidad.Rol == 0)
                 throw new Exception("Faltan valores");
+
+            entidad._Usuario = null;
+            entidad._Rol = null;
 
             if (!this.IConexion.Usuarios!.Any(x => x.Id == entidad.Usuario))
                 throw new Exception("El usuario no existe");
