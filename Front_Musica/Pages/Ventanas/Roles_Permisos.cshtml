@@ -1,0 +1,149 @@
+﻿@page
+@model Roles_PermisosModel
+@{
+    ViewData["Title"] = "Roles_Permisos";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Roles_Permisos</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flRol_Permisoes"
+                   placeholder="Rol_Permiso"
+                   asp-for="@Model.Filtro!._Rol!.Titulo" />
+            <input id="flArtistas"
+                   placeholder="Artista"
+                   asp-for="@Model.Filtro!._Permiso!.Nombre" />
+        </div>
+
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>Rol_Permiso</h3>
+                <label>
+                    Rol
+                </label>
+                <input id="nmRol"
+                       asp-for="@Model.Actual!.Rol" />
+                <br />
+                <label>
+                    Permiso
+                </label>
+                <input id="nmPermiso"
+                       asp-for="@Model.Actual!.Permiso" />
+            </div>
+        }
+
+        
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            ;
+        }
+        
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Rol</h3>
+                <select id="nm_Rol"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Rol!"
+                        asp-items="@(new SelectList(Model.Roles!, "Id", "Nombre"))">
+                </select>
+                <br />
+                <h3>Permiso</h3>
+                <select id="nm_Permiso"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Permiso!"
+                        asp-items="@(new SelectList(Model.Permisos!, "Id", "Nombre"))">
+                </select>
+
+                <p> Total Roles: @Model.Roles?.Count() </p>
+                <p> Total Permisos: @Model.Permisos?.Count() </p>
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar el Rol_Permiso con información
+                        @Model.Actual!._Permisos,
+                        @Model.Actual!._Roles
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Rol</th>
+                        <th>Permiso</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento._Rol!.Nombre</td>
+                                <td>@elemento._Permiso!.Nombre</td>
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
