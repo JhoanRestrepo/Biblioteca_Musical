@@ -12,6 +12,31 @@ namespace Libreria.Implementaciones
             optionsBuilder.UseSqlServer(Datos_Generales.ObtenerStringConexion()!, p => { });
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            var cambios = this.ChangeTracker.Entries()
+                .Where(x => x.Entity is not Libreria.Entidades.Auditorias &&
+                            (x.State == EntityState.Added ||
+                             x.State == EntityState.Modified ||
+                             x.State == EntityState.Deleted))
+                .Select(x => new { Estado = x.State, Entidad = x.Entity.GetType().Name })
+                .ToList();
+
+            foreach (var cambio in cambios)
+            {
+                var accion = cambio.Estado == EntityState.Added ? "Insertar" :
+                             cambio.Estado == EntityState.Modified ? "Actualizar" :
+                             "Borrar";
+
+                this.Add(new Auditorias()
+                {
+                    Accion = accion + " " + cambio.Entidad,
+                    Fecha = DateTime.Now
+                });
+            }
+
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
 
         public DbSet<Albumes>? Albumes { get; set; }
         public DbSet<Albumes_Artistas>? Albumes_Artistas { get; set; }

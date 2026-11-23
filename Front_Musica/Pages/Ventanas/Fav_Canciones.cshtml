@@ -1,0 +1,146 @@
+﻿@page
+@model Fav_CancionesModel
+@{
+    ViewData["Title"] = "Fav_Canciones";
+}
+<form method="post"
+      enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Fav_Canciones</h1>
+        <div>
+            <input type="submit"
+                   value="Consultar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtConsultar"/>
+            <input type="submit"
+                   value="Nuevo"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtNuevo"/>
+            <input type="submit"
+                   value="Guardar"
+                   class="btn btn-secondary"
+                   asp-page-handler="BtGuardar"/>
+            <input id="flCanciones"
+                   placeholder="Cancion"
+                   asp-for="@Model.Filtro!._Cancion!.Titulo" />
+        </div>
+
+        @if (Model.Nuevo)
+        {
+            <div>
+                <h3>Fav_Cancion</h3>
+                <label>
+                    Favorito
+                </label>
+                <input id="nmFavorito"
+                       asp-for="@Model.Actual!.Favorito" />
+                <br />
+                <label>
+                    Cancion
+                </label>
+                <input id="nmCancion"
+                       asp-for="@Model.Actual!.Cancion" />
+            </div>
+        }
+
+        
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            ;
+        }
+        
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input type="hidden"
+                   asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Favorito</h3>
+                <select id="nm_Favorito"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Favorito!"
+                        asp-items="@(new SelectList(Model.Favoritos!, "Id", "Id"))">
+                </select>
+                <br />
+                <h3>Cancion</h3>
+                <select id="nm_Cancion"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Cancion!"
+                        asp-items="@(new SelectList(Model.Canciones!, "Id", "Titulo"))">
+                </select>
+
+                <p> Total favoritos: @Model.Favoritos?.Count() </p>
+                <p> Total canciones: @Model.Canciones?.Count() </p>
+            </div>
+        }
+
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>
+                        Mensaje
+                    </h3>
+
+                    <h4>
+                        ¿Quiere borrar la fav_cancion con información
+                        @Model.Actual!.Favorito,
+                        @Model.Actual!._Cancion
+                    </h4>
+                    <input type="submit"
+                           value="Cancelar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtConsultar" />
+                    <input type="submit"
+                           value="Borrar"
+                           class="btn btn-secondary"
+                           asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <br />
+            <br />
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Favorito</th>
+                        <th>Cancion</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento.Favorito</td>
+                                <td>@elemento._Cancion!.Titulo</td>
+                                <td>
+                                    <input type="submit"
+                                           value="Editar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtEditar"
+                                           asp-route-data="@elemento.Id" />
+                                    <input type="submit"
+                                           value="Borrar"
+                                           class="btn btn-secondary"
+                                           asp-page-handler="BtPregBorrar"
+                                           asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>
