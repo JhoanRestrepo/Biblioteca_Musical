@@ -81,20 +81,22 @@ namespace Front_Musica.Pages
                     Fecha_Registro = DateTime.Now
                 };
 
-                var usuarioCreado = this.IUsuariosPresentacion.Insertar(nuevoUsuario);
+                var UsuarioCreado = this.IUsuariosPresentacion.Insertar(nuevoUsuario);
 
-                // Asignar rol por defecto en Usuarios_Roles (por ejemplo "Consulta")
-                var roles = this.IRolesPresentacion.Consultar();
-                var rolDefecto = roles.FirstOrDefault(r =>
-                    string.Equals(r.Nombre, "Consulta", StringComparison.OrdinalIgnoreCase));
-
-                if (usuarioCreado != null && usuarioCreado.Id > 0 && rolDefecto != null)
+                if (UsuarioCreado != null && UsuarioCreado.Id > 0)
                 {
-                    this.IUsuarios_RolesPresentacion.Insertar(new Usuarios_Roles
+                    var roles = this.IRolesPresentacion.Consultar();
+                    var RolCliente = roles.FirstOrDefault(r =>
+                        string.Equals(r.Nombre?.Trim(), "Cliente", StringComparison.OrdinalIgnoreCase));
+
+                    if (RolCliente != null)
                     {
-                        Usuario = usuarioCreado.Id,
-                        Rol = rolDefecto.Id
-                    });
+                        this.IUsuarios_RolesPresentacion.Insertar(new Usuarios_Roles
+                        {
+                            Usuario = UsuarioCreado.Id,
+                            Rol = RolCliente.Id
+                        });
+                    }
                 }
 
                 NuevoNombre = string.Empty;
