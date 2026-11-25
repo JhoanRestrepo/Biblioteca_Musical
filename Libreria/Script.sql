@@ -131,19 +131,19 @@ CREATE TABLE [Canciones_Idiomas] (
 CREATE TABLE [Suscripciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Usuario] INT NOT NULL,
-    [tipo_plan] NVARCHAR(50) NULL,
-    [fecha_inicio] SMALLDATETIME NULL,
-    [fecha_fin] SMALLDATETIME NULL,
+    [Tipo_Plan] NVARCHAR(50) NULL,
+    [Fecha_Inicio] SMALLDATETIME NULL,
+    [Fecha_Fin] SMALLDATETIME NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 );
 
 -- 15. Listas de reproducción
 CREATE TABLE [Listas_Reproducciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
-    [nombre] NVARCHAR(100) NULL,
-    [fecha_creacion] SMALLDATETIME NULL,
-    [privacidad] NVARCHAR(50) NULL,
-    [usuario] INT NOT NULL,
+    [Nombre] NVARCHAR(100) NULL,
+    [Fecha_Creacion] SMALLDATETIME NULL,
+    [Privacidad] NVARCHAR(50) NULL,
+    [Usuario] INT NOT NULL,
     FOREIGN KEY ([usuario]) REFERENCES [Usuarios]([Id])
 );
 
@@ -161,9 +161,9 @@ CREATE TABLE [LR_Canciones] (
 CREATE TABLE [Listas_Canciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Cancion] INT NOT NULL,
-    [posicion] INT NOT NULL,
-    [fecha_agregada] SMALLDATETIME NOT NULL,
-    [favorita] INT NOT NULL,
+    [Posicion] INT NOT NULL,
+    [Fecha_Agregada] SMALLDATETIME NOT NULL,
+    [Favorita] INT NOT NULL,
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
 
@@ -171,8 +171,8 @@ CREATE TABLE [Listas_Canciones] (
 CREATE TABLE [Favoritos] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Usuario] INT NOT NULL,
-    [fecha_marcado] SMALLDATETIME NULL,
-    [activo] BIT NOT NULL,
+    [Fecha_Marcado] SMALLDATETIME NULL,
+    [Activo] BIT NOT NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id])
 );
 
@@ -189,9 +189,9 @@ CREATE TABLE [Fav_Canciones] (
 CREATE TABLE [Reproducciones] (
     [Id] INT PRIMARY KEY IDENTITY(1,1),
     [Usuario] INT NOT NULL,
-    [cancion] INT NOT NULL,
-    [fecha_hora] DATETIME2 NULL,
-    [duracion] TIME NULL,
+    [Cancion] INT NOT NULL,
+    [Fecha_hora] DATETIME2 NULL,
+    [Duracion] TIME NULL,
     FOREIGN KEY ([Usuario]) REFERENCES [Usuarios]([Id]),
     FOREIGN KEY ([Cancion]) REFERENCES [Canciones]([Id])
 );
@@ -340,7 +340,7 @@ VALUES
 
 -- 14. Suscripciones
 INSERT INTO [Suscripciones]
-    ([Usuario], [tipo_plan], [fecha_inicio], [fecha_fin])
+    ([Usuario], [Tipo_Plan], [Fecha_Inicio], [Fecha_Fin])
 VALUES
 (1, 'Premium', '20260901', '20261001'),
 (2, 'Gratis', '20260915', NULL),
@@ -348,7 +348,7 @@ VALUES
 
 -- 15. Listas de reproducción
 INSERT INTO [Listas_Reproducciones]
-    ([nombre], [fecha_creacion], [privacidad], [usuario])
+    ([Nombre], [Fecha_creacion], [Privacidad], [Usuario])
 VALUES
 ('Favoritas para estudiar', '20260929', 'Privada', 1),
 ('Música para entrenar', '20260929', 'Pública', 2),
@@ -363,14 +363,14 @@ VALUES
 
 -- 17. Listas y canciones con posición
 INSERT INTO [Listas_Canciones]
-    ([Cancion], [posicion], [fecha_agregada], [favorita])
+    ([Cancion], [Posicion], [Fecha_Agregada], [Favorita])
 VALUES
 (1, 1, '20260929', 1),
 (2, 2, '20260929', 0),
 (3, 3, '20260929', 1);
 
 -- 18. Favoritos
-INSERT INTO [Favoritos] ([Usuario], [fecha_marcado], [activo])
+INSERT INTO [Favoritos] ([Usuario], [Fecha_Marcado], [Activo])
 VALUES
 (1, '20260929', 1),
 (2, '20260929', 1),
@@ -384,7 +384,7 @@ VALUES
 (3, 3);
 
 -- 20. Reproducciones
-INSERT INTO [Reproducciones] ([Usuario], [cancion], [fecha_hora], [duracion])
+INSERT INTO [Reproducciones] ([Usuario], [Cancion], [Fecha_Hora], [Duracion])
 VALUES
 (1, 1, '2026-09-29T14:30:00', '00:03:30'),
 (2, 2, '2026-09-29T15:10:00', '00:04:10'),

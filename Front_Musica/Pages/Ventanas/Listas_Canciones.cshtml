@@ -23,7 +23,7 @@
                    asp-page-handler="BtGuardar"/>
             <input id="flCancion"
                    placeholder="Cancion"
-                   asp-for="@Model.Filtro!.Cancion"/>
+                   asp-for="@Model.Filtro!._Cancion.Titulo"/>
         </div>
 
         @if (ViewData.ContainsKey("Mensaje"))
@@ -40,34 +40,31 @@
         @if (Model.Formulario)
         {
             <div>
-                <h3>Lista_Cancion</h3>
-
-                <label>
-                    Cancion
-                </label>
-                <input id="nmCancion"
-                       asp-for="@Model.Actual!.Cancion" />
+                <h3>Cancion</h3>
+                <select id="nm_Cancion"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Cancion!"
+                        asp-items="@(new SelectList(Model.Canciones!, "Id", "Titulo"))">
+                </select>
                 <br />
-
                 <label>
                     Posicion
                 </label>
                 <input id="nmPosiscion"
                        asp-for="@Model.Actual!.Posicion" />
                 <br />
-
                 <label>
                     Fecha_Agregada
                 </label>
                 <input id="nmFecha_Agregada"
                        asp-for="@Model.Actual!.Fecha_Agregada" />
                 <br />
-
-                <label>
-                    Favorita
-                </label>
-                <input id="nmFavorita"
-                       asp-for="@Model.Actual!.Favorita" />
+                <h3>Favorita</h3>
+                <select id="nm_Favorita"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Favorita!"
+                        asp-items="@(new SelectList(Model.Favoritos!, "Id", "Activo"))">
+                </select>
                 <br />
 
                 
@@ -115,7 +112,7 @@
 
                     <h4>
                         ¿Quiere borrar el Lista_Cancion con información
-                        @Model.Actual!.Cancion,
+                        @Model.Actual!._Cancion,
                         @Model.Actual!.Fecha_Agregada
                     </h4>
                     <input type="submit"
@@ -148,10 +145,10 @@
                         foreach (var elemento in Model.Lista)
                         {
                             <tr>
-                                <td>@elemento.Cancion</td>
+                                <td>@elemento._Cancion!.Titulo</td>
                                 <td>@elemento.Posicion</td>
-                                <td>@elemento.Fecha_Agregada!.Value.Year</td>
-                                <td>@elemento.Favorita</td>
+                                <td>@elemento.Fecha_Agregada</td>
+                                <td>@elemento._Favorita!.Activo</td>
                                 <td>
                                     <input type="submit"
                                            value="Editar"

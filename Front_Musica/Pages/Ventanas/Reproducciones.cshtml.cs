@@ -10,15 +10,26 @@ namespace Front_Musica.Pages.Ventanas
     public class ReproduccionesModel : PageModel
     {
         private IReproduccionesPresentacion IReproduccionesPresentacion;
+        private IUsuariosPresentacion IUsuariosPresentacion;
+        private ICancionesPresentacion ICancionesPresentacion;
 
-        public ReproduccionesModel(IReproduccionesPresentacion IReproduccionesPresentacion)
+        public ReproduccionesModel(IReproduccionesPresentacion IReproduccionesPresentacion,
+                                    IUsuariosPresentacion IUsuariosPresentacion,
+                                    ICancionesPresentacion ICancionesPresentacion)
         {
             this.IReproduccionesPresentacion = IReproduccionesPresentacion;
+            this.IUsuariosPresentacion = IUsuariosPresentacion;
+            this.ICancionesPresentacion = ICancionesPresentacion;
+
             this.Filtro = new Reproducciones();
+            Filtro!._Usuario = new Usuarios();
+            Filtro!._Cancion = new Canciones();
         }
 
         public IFormFile? FormFile { get; set; }
         [BindProperty] public List<Reproducciones> Lista { get; set; }
+        [BindProperty] public List<Usuarios> Usuarios { get; set; }
+        [BindProperty] public List<Canciones> Canciones { get; set; }
         [BindProperty] public Reproducciones? Filtro { get; set; }
         [BindProperty] public Reproducciones? Actual { get; set; }
         [BindProperty] public bool Formulario { get; set; } = false;
@@ -26,8 +37,18 @@ namespace Front_Musica.Pages.Ventanas
         [BindProperty] public bool Nuevo { get; set; } = false;
 
 
-        public void OnGet() { OnPostBtConsultar(); }
+        public void OnGet()
+        {
 
+            CargarListas();
+            OnPostBtConsultar();
+        }
+
+        private void CargarListas()
+        {
+            Usuarios = IUsuariosPresentacion.Consultar();
+            Canciones = ICancionesPresentacion.Consultar();
+        }
         public void OnPostBtConsultar()
         {
             try
@@ -38,6 +59,9 @@ namespace Front_Musica.Pages.Ventanas
                     HttpContext.Response.Redirect("/");
                     return;
                 }
+                CargarListas();
+                Filtro!._Usuario.Nombre = Filtro!._Usuario.Nombre ?? "";
+                Filtro!._Cancion.Titulo = Filtro!._Cancion.Titulo ?? "";
                 Lista = this.IReproduccionesPresentacion.Buscar(Filtro!);
             }
             catch (Exception ex)
@@ -50,8 +74,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                CargarListas();
                 Formulario = true;
                 this.Actual = new Reproducciones();
+                Filtro!._Usuario.Nombre = Filtro!._Usuario.Nombre ?? "";
+                Filtro!._Cancion.Titulo = Filtro!._Cancion.Titulo ?? "";
+                Lista = this.IReproduccionesPresentacion.Consultar();
             }
             catch (Exception ex)
             {
@@ -74,6 +102,7 @@ namespace Front_Musica.Pages.Ventanas
             }
             finally
             {
+                CargarListas();
                 OnPostBtConsultar();
             }
         }

@@ -23,7 +23,10 @@
                    asp-page-handler="BtGuardar"/>
             <input id="flUsuario"
                    placeholder="Usuario"
-                   asp-for="@Model.Filtro!.Usuario"/>
+                   asp-for="@Model.Filtro!._Usuario.Nombre"/>
+            <input id="flCancion"
+                   placeholder="Cancion"
+                   asp-for="@Model.Filtro!._Cancion.Titulo" />
         </div>
 
         @if (ViewData.ContainsKey("Mensaje"))
@@ -40,34 +43,32 @@
         @if (Model.Formulario)
         {
             <div>
-                <h3>Reproduccion</h3>
-
-                <label>
-                    Usuario
-                </label>
-                <input id="nmUsuario"
-                       asp-for="@Model.Actual!.Usuario" />
+                <h3>Usuario</h3>
+                <select id="nm_Usuario"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Usuario!"
+                        asp-items="@(new SelectList(Model.Usuarios!, "Id", "Nombre"))">
+                </select>
                 <br />
+                <h3>Cancion</h3>
+                <select id="nm_Cancion"
+                        class="form-control"
+                        asp-for="@Model.Actual!.Cancion!"
+                        asp-items="@(new SelectList(Model.Canciones!, "Id", "Titulo"))">
+                </select>
 
                 <label>
-                    Cancion
-                </label>
-                <input id="nmCancion"
-                       asp-for="@Model.Actual!.Cancion" />
-                <br />
-
-                <label>
-                    Fecha_Hora
+                    Fecha y Hora
                 </label>
                 <input id="nmFecha_Hora"
-                       asp-for="@Model.Actual!.Fecha_Hora" />
+                       asp-for="@Model.Actual!.Fecha_Hora!" />
                 <br />
 
                 <label>
                     Duracion
                 </label>
                 <input id="nmDuracion"
-                       asp-for="@Model.Actual!.Duracion" />
+                       asp-for="@Model.Actual!.Duracion!" />
                 <br />
               
             </div>
@@ -78,31 +79,27 @@
             <div>
                 <h3>Reproduccion</h3>
                 <label>
-                    Usuario
+                    Usuarios
                 </label>
                 <input id="nmUsuario"
                        asp-for="@Model.Actual!.Usuario" />
                  <label>
-                    Cancion
+                    Canciones
                 </label>
                 <input id="nmCancion"
                        asp-for="@Model.Actual!.Cancion" />
                 <br />
-
                 <label>
-                    Fecha_Hora
+                    Fecha y Hora
                 </label>
                 <input id="nmFecha_Hora"
                        asp-for="@Model.Actual!.Fecha_Hora" />
                 <br />
-
                 <label>
                     Duracion
                 </label>
                 <input id="nmDuracion"
                        asp-for="@Model.Actual!.Duracion" />
-                <br />
-              
             </div>
         }
 
@@ -116,8 +113,8 @@
 
                     <h4>
                         ¿Quiere borrar el Reproduccion con información
-                        @Model.Actual!.Usuario,
-                        @Model.Actual!.Cancion
+                        @Model.Actual!._Usuario,
+                        @Model.Actual!._Cancion
                     </h4>
                     <input type="submit"
                            value="Cancelar"
@@ -149,8 +146,8 @@
                         foreach (var elemento in Model.Lista)
                         {
                             <tr>
-                                <td>@elemento.Usuario</td>
-                                <td>@elemento.Cancion</td>
+                                <td>@elemento._Usuario!.Nombre</td>
+                                <td>@elemento._Cancion!.Titulo</td>
                                 <td>@elemento.Fecha_Hora</td>
                                 <td>@elemento.Duracion</td>
                                 <td>

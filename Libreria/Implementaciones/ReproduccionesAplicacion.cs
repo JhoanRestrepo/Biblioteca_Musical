@@ -1,9 +1,6 @@
 ﻿using Libreria.Entidades;
 using Libreria.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Libreria.Implementaciones
 {
@@ -65,13 +62,14 @@ namespace Libreria.Implementaciones
                 .ToList();
         }
 
-        public List<Reproducciones> Buscar(Reproducciones entidad)
+        public List<Reproducciones> Buscar(Reproducciones? entidad)
         {
-            return this.IConexion.Reproducciones!
+            return this.IConexion!.Reproducciones!
                 .Include(x => x._Usuario)
                 .Include(x => x._Cancion)
-                .Where(x => x._Usuario!.Nombre!.Contains(entidad._Usuario!.Nombre!) ||
-                            x._Cancion!.Titulo!.Contains(entidad._Cancion!.Titulo!))
+                .Where(x =>
+                    (entidad.Usuario == 0 || x.Usuario == entidad.Usuario) &&
+                    (entidad.Cancion == 0 || x.Cancion == entidad.Cancion))
                 .Take(10)
                 .ToList();
         }

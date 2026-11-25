@@ -10,14 +10,20 @@ namespace Front_Musica.Pages.Ventanas
     public class SuscripcionesModel : PageModel
     {
         private ISuscripcionesPresentacion ISuscripcionesPresentacion;
+        private IUsuariosPresentacion IUsuariosPresentacion;
 
-        public SuscripcionesModel(ISuscripcionesPresentacion ISuscripcionesPresentacion)
+        public SuscripcionesModel(ISuscripcionesPresentacion ISuscripcionesPresentacion,
+                                    IUsuariosPresentacion IUsuariosPresentacion)
         {
             this.ISuscripcionesPresentacion = ISuscripcionesPresentacion;
+            this.IUsuariosPresentacion = IUsuariosPresentacion;
+
             this.Filtro = new Suscripciones();
+            Filtro!._Usuario = new Usuarios();
         }
 
         public IFormFile? FormFile { get; set; }
+        [BindProperty] public List<Usuarios> Usuarios { get; set; }
         [BindProperty] public List<Suscripciones> Lista { get; set; }
         [BindProperty] public Suscripciones? Filtro { get; set; }
         [BindProperty] public Suscripciones? Actual { get; set; }
@@ -38,6 +44,7 @@ namespace Front_Musica.Pages.Ventanas
                     HttpContext.Response.Redirect("/");
                     return;
                 }
+                Filtro!.Tipo_Plan = Filtro!.Tipo_Plan ?? "";
                 Lista = this.ISuscripcionesPresentacion.Buscar(Filtro!);
             }
             catch (Exception ex)

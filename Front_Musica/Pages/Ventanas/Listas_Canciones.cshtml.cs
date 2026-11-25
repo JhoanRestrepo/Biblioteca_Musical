@@ -10,15 +10,26 @@ namespace Front_Musica.Pages.Ventanas
     public class Listas_CancionesModel : PageModel
     {
         private IListas_CancionesPresentacion IListas_CancionesPresentacion;
+        private ICancionesPresentacion ICancionesPresentacion;
+        private IFavoritosPresentacion IFavoritosPresentacion;
 
-        public Listas_CancionesModel(IListas_CancionesPresentacion IListas_CancionesPresentacion)
+        public Listas_CancionesModel(IListas_CancionesPresentacion IListas_CancionesPresentacion,
+                                        ICancionesPresentacion ICancionesPresentacion,
+                                        IFavoritosPresentacion IFavoritosPresentacion)
         {
             this.IListas_CancionesPresentacion = IListas_CancionesPresentacion;
+            this.ICancionesPresentacion = ICancionesPresentacion;
+            this.IFavoritosPresentacion = IFavoritosPresentacion;
+
             this.Filtro = new Listas_Canciones();
+            Filtro!._Cancion = new Canciones();
+            Filtro!._Favorita = new Favoritos();
         }
 
         public IFormFile? FormFile { get; set; }
         [BindProperty] public List<Listas_Canciones> Lista { get; set; }
+        [BindProperty] public List<Canciones> Canciones { get; set; }
+        [BindProperty] public List<Favoritos> Favoritos { get; set; }
         [BindProperty] public Listas_Canciones? Filtro { get; set; }
         [BindProperty] public Listas_Canciones? Actual { get; set; }
         [BindProperty] public bool Formulario { get; set; } = false;
@@ -26,7 +37,18 @@ namespace Front_Musica.Pages.Ventanas
         [BindProperty] public bool Nuevo { get; set; } = false;
 
 
-        public void OnGet() { OnPostBtConsultar(); }
+        public void OnGet()
+        {
+
+            CargarListas();
+            OnPostBtConsultar();
+        }
+
+        private void CargarListas()
+        {
+            Canciones = ICancionesPresentacion.Consultar();
+            Favoritos = IFavoritosPresentacion.Consultar();
+        }
 
         public void OnPostBtConsultar()
         {
@@ -38,6 +60,9 @@ namespace Front_Musica.Pages.Ventanas
                     HttpContext.Response.Redirect("/");
                     return;
                 }
+                CargarListas();
+                Filtro!._Cancion.Titulo = Filtro!._Cancion.Titulo ?? "";
+                Filtro!._Favorita.Activo = Filtro!._Favorita.Activo;
                 Lista = this.IListas_CancionesPresentacion.Buscar(Filtro!);
             }
             catch (Exception ex)
@@ -50,8 +75,12 @@ namespace Front_Musica.Pages.Ventanas
         {
             try
             {
+                CargarListas();
                 Formulario = true;
                 this.Actual = new Listas_Canciones();
+                Filtro!._Cancion.Titulo = Filtro!._Cancion.Titulo;
+                Filtro!._Favorita.Activo = Filtro!._Favorita.Activo;
+                Lista = this.IListas_CancionesPresentacion.Consultar();
             }
             catch (Exception ex)
             {
@@ -74,6 +103,7 @@ namespace Front_Musica.Pages.Ventanas
             }
             finally
             {
+                CargarListas();
                 OnPostBtConsultar();
             }
         }

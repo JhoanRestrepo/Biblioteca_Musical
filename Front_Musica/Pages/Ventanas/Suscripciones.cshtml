@@ -147,10 +147,10 @@
                         foreach (var elemento in Model.Lista)
                         {
                             <tr>
-                                <td>@elemento.Usuario</td>
-                                <td>@elemento.Tipo_Plan</td>
-                                <td>@elemento.Fecha_Inicio!.Value.Year</td>
-                                <td>@elemento.Fecha_Fin!.Value.Year</td>
+                                <td>@elemento._Usuario!.Nombre</td>
+                                <td>@elemento.Tipo_Plan!</td>
+                                <td>@elemento.Fecha_Inicio</td>
+                                <td>@elemento.Fecha_Fin</td>
                                 <td>
                                     <input type="submit"
                                            value="Editar"
